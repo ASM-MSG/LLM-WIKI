@@ -53,7 +53,7 @@ for (const f of notes) {
   if (!/^title:\s*\S/m.test(fm)) report('frontmatter', f, 'title 누락');
   const srcMatch = fm.match(/^source:\s*["']?([^"'\n]+)/m);
   if (!srcMatch) report('frontmatter', f, 'source 누락');
-  else sources.add(srcMatch[1].trim());
+  else srcMatch[1].split(',').forEach(s => sources.add(s.trim()));
 
   // field: product/class (권장)
   if (!/^product:\s*\S/m.test(fm)) report('field', f, 'product 누락 (권장)');

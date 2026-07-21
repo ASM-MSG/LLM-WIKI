@@ -9,7 +9,7 @@ created: 2026-07-17
 updated: 2026-07-21
 keywords: [Collection, 도감, 컬렉션, 갤러리, 뱃지, badge, 스트릭, streak, 수집률, user_grids, 페이지네이션, pagination, Owner B, 예정 API]
 aliases: [도감 API, 컬렉션 API]
-related: ["[[Grid API]]", "[[Video 재생 조회 API 예정]]", "[[FillMap API 설계 v2 draft]]", "[[2026-07-13 격자 방문 체크 표시 아이디어]]"]
+related: ["[[Grid API]]", "[[Video 재생 조회 API 예정]]", "[[FillMap API 설계 v2 draft]]", "[[2026-07-13 격자 방문 체크 표시 아이디어]]", "[[그라운드 플립 뱃지 시스템 사례]]"]
 ---
 
 # Collection API (예정) — 개인 도감 3뷰

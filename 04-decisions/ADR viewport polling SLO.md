@@ -9,7 +9,7 @@ created: 2026-07-16
 updated: 2026-07-21
 keywords: [ADR, viewport, 뷰포트, polling, 폴링, websocket, 웹소켓, SLO, p95, RPS, 임계점, freshness, 캐시, Redis, k6, fetch-on-pan, 줌 레벨, MSG-134]
 aliases: [viewport ADR, 폴링 결정]
-related: ["[[Grid API]]", "[[2026-07-16 박원형 멘토 멘토링]]", "[[2026-07-17 프론트-백 합의]]"]
+related: ["[[Grid API]]", "[[2026-07-16 박원형 멘토 멘토링]]", "[[2026-07-17 프론트-백 합의]]", "[[그라운드 플립 부하 테스트 사례]]"]
 ---
 
 # ADR — viewport 전송방식 polling · 부하 SLO·임계점 (MSG-134)
