@@ -11,3 +11,4 @@
 - 2026-07-21 — AI 파이프라인 다이어그램 draft 생성 (EDGE 5번 장 스타일, 유스케이스 v2 draft와 함께 Architecture Map/).
 - 2026-07-21 — 멘토 피드백(에픽≠유스케이스) 반영: 유스케이스를 IA 리프 1:1(57개)로 재생성, 기준을 IA v2 노트 §2에 명문화.
 - 2026-07-21 — SA v2 (Application Architecture) draft 생성: IA 화면 → API 10개 도메인 → 저장소 매핑, PRD 기준 연결 35개.
+- 2026-07-21 — SysA v2(논리 뷰) draft 생성 — 기술명 제거·역할 그룹만, EDGE식 개편 5종 세트 완성 (IA·유스케이스·SA v2·AI 파이프라인·SysA v2).
