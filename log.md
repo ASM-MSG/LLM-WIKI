@@ -9,3 +9,4 @@
 - 2026-07-21 — 03-specs 6건을 코드 레포 현행화(컨트롤러 5개·엔드포인트 14개): API 명세 v1·Auth API·Grid API에 reissue/dev·GridVideo(my-videos·cover)·커서 페이지네이션 반영, Refresh Token 예정 문서를 MSG-135 구현 완료로 승격, Grid 확장·v2 draft의 Redis/선행 과제 갱신.
 - 2026-07-21 — IA v2 초안 노트 작성 (02-planning) — 미션·이벤트 반영, 유스케이스 세분화안 포함.
 - 2026-07-21 — AI 파이프라인 다이어그램 draft 생성 (EDGE 5번 장 스타일, 유스케이스 v2 draft와 함께 Architecture Map/).
+- 2026-07-21 — 멘토 피드백(에픽≠유스케이스) 반영: 유스케이스를 IA 리프 1:1(57개)로 재생성, 기준을 IA v2 노트 §2에 명문화.
