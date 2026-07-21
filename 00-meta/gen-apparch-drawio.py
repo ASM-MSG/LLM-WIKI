@@ -6,6 +6,11 @@
 근거: PRD(cf-18972709) · API v1/v2 문서 · infrastructure 계약 · 미션 설계검토(cf-19857410) · SysA 도메인 색"""
 from xml.sax.saxutils import escape, quoteattr
 
+def q(t):
+    """라벨 → XML 속성값. 이스케이프 1회, &#10;(개행)은 보존."""
+    return quoteattr(t).replace('&amp;#10;', '&#10;')
+
+
 # 상태 (행 fill)
 ST = {"구현": ("#d5e8d4", "#82b366"), "부분": ("#fff2cc", "#d6b656"),
       "미구현": ("#ffffff", "#999999"), "신규": ("#FBF6E4", "#D6A34A"),
@@ -146,19 +151,19 @@ def card(key, title, rows, x, y, w, dom):
     cells.append(f'<mxCell id="{gid}" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;'
                  f'fillColor=#FFFFFF;strokeColor={hs};strokeWidth=1.5;shadow=1;" vertex="1" parent="1">'
                  f'<mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
-    cells.append(f'<mxCell id="{nid()}" value={quoteattr(escape(title))} style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;'
+    cells.append(f'<mxCell id="{nid()}" value={q((title))} style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;'
                  f'fillColor={hf};strokeColor=none;fontSize=10.5;fontStyle=1;fontColor=#2B2B2B;" vertex="1" parent="1">'
                  f'<mxGeometry x="{x+4}" y="{y+3}" width="{w-8}" height="{HDRH-6}" as="geometry"/></mxCell>')
     for i, (label, st) in enumerate(rows):
         f_, s_ = ST[st]
-        cells.append(f'<mxCell id="{nid()}" value={quoteattr(escape(label))} style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;'
+        cells.append(f'<mxCell id="{nid()}" value={q((label))} style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;'
                      f'fillColor={f_};strokeColor={s_};fontSize=9;fontColor=#2B2B2B;align=left;spacingLeft=6;" vertex="1" parent="1">'
                      f'<mxGeometry x="{x+8}" y="{y+HDRH+i*(RH+RGAP)}" width="{w-16}" height="{RH}" as="geometry"/></mxCell>')
     return h
 
 def edge(s, t, color, extra="exitX=1;exitY=0.5;entryX=0;entryY=0.5;", dashed=False, label=""):
     eid = nid("e")
-    v = f' value={quoteattr(escape(label))}' if label else ''
+    v = f' value={q((label))}' if label else ''
     d = "dashed=1;dashPattern=6 4;" if dashed else ""
     edges.append(f'<mxCell id="{eid}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
                  f'strokeColor={color};strokeWidth=1.2;endArrow=open;endSize=6;{d}fontSize=9;fontColor={color};'
@@ -196,7 +201,7 @@ for name, dom, st in SERVICES:
     gid = nid("s")
     ids[name] = gid
     suffix = "  ⚠미생성" if st == "미생성" else (f"  [{st}]" if st != "구현" else "")
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(name + suffix))} '
+    cells.append(f'<mxCell id="{gid}" value={q((name + suffix))} '
                  f'style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor={f_ if st != "구현" else hf};'
                  f'strokeColor={hs};strokeWidth=1.5;fontSize=10;fontStyle=1;shadow=1;" vertex="1" parent="1">'
                  f'<mxGeometry x="{X_SVC}" y="{y}" width="{W_SVC}" height="36" as="geometry"/></mxCell>')
@@ -216,7 +221,7 @@ y = Y0 + 200
 for name, f_, s_ in stores:
     gid = nid("st")
     ids[name] = gid
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(name))} style="shape=cylinder3;whiteSpace=wrap;html=1;'
+    cells.append(f'<mxCell id="{gid}" value={q((name))} style="shape=cylinder3;whiteSpace=wrap;html=1;'
                  f'fillColor={f_};strokeColor={s_};strokeWidth=1.5;fontSize=10.5;fontStyle=1;shadow=1;" vertex="1" parent="1">'
                  f'<mxGeometry x="{X_STORE}" y="{y}" width="195" height="64" as="geometry"/></mxCell>')
     y += 150
@@ -238,7 +243,7 @@ prev = None
 for r, (row, aw) in enumerate([(row1, aw1), (row2, aw2)]):
     for i, label in enumerate(row):
         gid = nid("ai")
-        cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(label))} style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;'
+        cells.append(f'<mxCell id="{gid}" value={q((label))} style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;'
                      f'fillColor=#FFFFFF;strokeColor={AIS};strokeWidth=1.3;fontSize=10;shadow=1;" vertex="1" parent="1">'
                      f'<mxGeometry x="{X_API+12+i*(aw+16):.0f}" y="{y_ai+40+r*66}" width="{aw:.0f}" height="44" as="geometry"/></mxCell>')
         if prev:
@@ -270,7 +275,7 @@ env.append(f'<mxCell id="env_dt" value="" style="rounded=1;arcSize=2;whiteSpace=
            f'<mxGeometry x="{X_STORE-25}" y="{Y0-58}" width="250" height="{max(h_api,h_repo)-Y0+90}" as="geometry"/></mxCell>')
 
 def pill(idv, text, x, w, color):
-    env.append(f'<mxCell id="{idv}" value={quoteattr(escape(text))} style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;'
+    env.append(f'<mxCell id="{idv}" value={q((text))} style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;'
                f'fillColor={color};strokeColor=none;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">'
                f'<mxGeometry x="{x}" y="{Y0-92}" width="{w}" height="26" as="geometry"/></mxCell>')
 
@@ -295,7 +300,7 @@ for label, emoji, (f_, s_), ay in [("사용자", "🧑‍🎓", ("#EAF3E2", "#8F
     env.append(f'<mxCell id="{aid}" value={quoteattr(emoji)} style="ellipse;whiteSpace=wrap;html=1;fillColor={f_};'
                f'strokeColor={s_};strokeWidth=1.5;fontSize=34;shadow=1;" vertex="1" parent="1">'
                f'<mxGeometry x="46" y="{ay}" width="64" height="64" as="geometry"/></mxCell>')
-    env.append(f'<mxCell id="{nid()}" value={quoteattr(escape(label))} style="text;html=1;strokeColor=none;fillColor=none;'
+    env.append(f'<mxCell id="{nid()}" value={q((label))} style="text;html=1;strokeColor=none;fillColor=none;'
                f'align=center;fontSize=11;fontStyle=1;" vertex="1" parent="1">'
                f'<mxGeometry x="8" y="{ay+66}" width="140" height="18" as="geometry"/></mxCell>')
 

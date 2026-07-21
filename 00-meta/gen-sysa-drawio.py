@@ -5,6 +5,11 @@
 근거: SysA v4(8서비스·데이터 계층) · 미션 설계검토(cf-19857410) · ADR MSG-143"""
 from xml.sax.saxutils import escape, quoteattr
 
+def q(t):
+    """라벨 → XML 속성값. 이스케이프 1회, &#10;(개행)은 보존."""
+    return quoteattr(t).replace('&amp;#10;', '&#10;')
+
+
 GOLD = "#D6A34A"      # 신규(미션) 강조
 INK = "#333333"
 GRAYS = "#8A8F94"
@@ -35,7 +40,7 @@ def box(key, label, x, y, w=BW, h=BH, new=False, shape=None):
     stroke = GOLD if new else INK
     extra = "strokeWidth=1.5;" if new else "strokeWidth=1;"
     shp = f"shape={shape};" if shape else ""
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(label))} style="{shp}rounded=0;whiteSpace=wrap;html=1;'
+    cells.append(f'<mxCell id="{gid}" value={q((label))} style="{shp}rounded=0;whiteSpace=wrap;html=1;'
                  f'fillColor=#FFFFFF;strokeColor={stroke};{extra}fontSize=10.5;fontColor=#2B2B2B;shadow=0;" vertex="1" parent="1">'
                  f'<mxGeometry x="{x:.0f}" y="{y:.0f}" width="{w}" height="{h}" as="geometry"/></mxCell>')
     return gid
@@ -43,7 +48,7 @@ def box(key, label, x, y, w=BW, h=BH, new=False, shape=None):
 def group(key, title, x, y, w, h):
     gid = nid("grp")
     ids[key] = gid
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(title))} style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;'
+    cells.append(f'<mxCell id="{gid}" value={q((title))} style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;'
                  f'fillColor=none;strokeColor={GRAYS};strokeWidth=1.2;dashed=1;dashPattern=6 4;'
                  f'verticalAlign=top;align=left;spacingLeft=8;fontStyle=1;fontSize=11;fontColor=#5B6066;" vertex="1" parent="1">'
                  f'<mxGeometry x="{x:.0f}" y="{y:.0f}" width="{w:.0f}" height="{h:.0f}" as="geometry"/></mxCell>')
@@ -58,7 +63,7 @@ def vgroup(key, title, x, y, items, w=BW + 2 * GPAD):
 
 def edge(s, t, extra="exitX=1;exitY=0.5;entryX=0;entryY=0.5;", dashed=False, label="", color="#6B7075"):
     eid = nid("e")
-    v = f' value={quoteattr(escape(label))}' if label else ''
+    v = f' value={q((label))}' if label else ''
     d = "dashed=1;dashPattern=5 4;" if dashed else ""
     edges.append(f'<mxCell id="{eid}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
                  f'strokeColor={color};strokeWidth=1;endArrow=open;endSize=6;{d}fontSize=9;fontColor={color};'

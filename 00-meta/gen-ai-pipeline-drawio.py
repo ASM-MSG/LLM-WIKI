@@ -4,6 +4,11 @@
 근거: ADR MSG-143(상시 FastAPI·1080p 다운스케일 전제) · SysA(Kafka→AI Highlight-Blur) · SA(FFmpeg·PySceneDetect·CLIP·pHash)"""
 from xml.sax.saxutils import escape, quoteattr
 
+def q(t):
+    """라벨 → XML 속성값. 이스케이프 1회, &#10;(개행)은 보존."""
+    return quoteattr(t).replace('&amp;#10;', '&#10;')
+
+
 # (제목, 색(fill,stroke), [박스…])  — 좌→우 단계 컬럼
 STAGES = [
     ("Source\n(사용자 영상)", ("#ffe6cc", "#d79b00"), [
@@ -29,13 +34,13 @@ def nid(p="c"):
 
 def box(label, x, y, w, h, style):
     i = nid()
-    cells.append(f'<mxCell id="{i}" value={quoteattr(escape(label))} style="{style}" vertex="1" parent="1">'
+    cells.append(f'<mxCell id="{i}" value={q((label))} style="{style}" vertex="1" parent="1">'
                  f'<mxGeometry x="{x:.0f}" y="{y:.0f}" width="{w}" height="{h}" as="geometry"/></mxCell>')
     return i
 
 def edge(s, t, extra="", label=""):
     i = nid("e")
-    v = f' value={quoteattr(escape(label))}' if label else ''
+    v = f' value={q((label))}' if label else ''
     edges.append(f'<mxCell id="{i}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
                  f'strokeColor=#666666;fontSize=9;fontColor=#666666;{extra}" edge="1" parent="1" '
                  f'source="{s}" target="{t}"><mxGeometry relative="1" as="geometry"/></mxCell>')

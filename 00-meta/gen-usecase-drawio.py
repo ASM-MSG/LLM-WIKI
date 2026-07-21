@@ -4,6 +4,11 @@
 근거: 02-planning/IA v2 초안 §2 (멘토 피드백: 에픽 ≠ 유스케이스)"""
 from xml.sax.saxutils import escape, quoteattr
 
+def q(t):
+    """라벨 → XML 속성값. 이스케이프 1회, &#10;(개행)은 보존."""
+    return quoteattr(t).replace('&amp;#10;', '&#10;')
+
+
 # 원본 팔레트: (연한 fill, stroke)
 BLUE   = ("#E8F0F8", "#4E7EA8")
 ORANGE = ("#FDF1DE", "#E58E1C")
@@ -120,7 +125,7 @@ for r, row in enumerate(GRID):
             f'strokeColor={stroke};strokeWidth=1.3;dashed=1;dashPattern=8 4;" vertex="1" parent="1">'
             f'<mxGeometry x="{gx}" y="{gy}" width="{GW}" height="{gh}" as="geometry"/></mxCell>')
         tid = new_id("t")
-        add(f'<mxCell id="{tid}" value={quoteattr(escape(name))} '
+        add(f'<mxCell id="{tid}" value={q((name))} '
             f'style="text;html=1;strokeColor=none;fillColor=#F1F2F4;align=center;verticalAlign=middle;'
             f'fontSize=11;fontStyle=1;fontColor={stroke};spacingLeft=8;spacingRight=8;" vertex="1" parent="1">'
             f'<mxGeometry x="{gx+12}" y="{gy-10}" width="{max(96, len(name)*11+16)}" height="20" as="geometry"/></mxCell>')
@@ -129,7 +134,7 @@ for r, row in enumerate(GRID):
             ey = gy + HDR + (i // COLS) * (EH + GY)
             eid = new_id("u")
             uc_id[label] = eid
-            add(f'<mxCell id="{eid}" value={quoteattr(escape(label))} '
+            add(f'<mxCell id="{eid}" value={q((label))} '
                 f'style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor={stroke};strokeWidth=1.5;'
                 f'fontSize=10.5;fontColor=#2B2B2B;fontStyle=1;align=center;verticalAlign=middle;shadow=1;" '
                 f'vertex="1" parent="1"><mxGeometry x="{ex}" y="{ey}" width="{EW}" height="{EH}" as="geometry"/></mxCell>')
@@ -153,7 +158,7 @@ for name, emoji, (fill, stroke), targets in ACTORS:
     add(f'<mxCell id="{aid}" value={quoteattr(emoji)} '
         f'style="ellipse;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};strokeWidth=1.5;fontSize=34;shadow=1;" '
         f'vertex="1" parent="1"><mxGeometry x="{ax:.0f}" y="{ay:.0f}" width="64" height="64" as="geometry"/></mxCell>')
-    add(f'<mxCell id="{aid}l" value={quoteattr(escape(name))} '
+    add(f'<mxCell id="{aid}l" value={q((name))} '
         f'style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=1;fontColor=#2B2B2B;" '
         f'vertex="1" parent="1"><mxGeometry x="{ax-18:.0f}" y="{ay+66:.0f}" width="100" height="18" as="geometry"/></mxCell>')
     for t in targets:

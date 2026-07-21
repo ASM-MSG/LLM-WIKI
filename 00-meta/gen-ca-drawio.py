@@ -4,6 +4,11 @@
 근거: 기존 5_final_CA (Multi-AZ·EC2×2·RDS Primary/Standby·ElastiCache·Kafka·FastAPI AI·CI/CD SSM)"""
 from xml.sax.saxutils import escape, quoteattr
 
+def q(t):
+    """라벨 → XML 속성값. 이스케이프 1회, &#10;(개행)은 보존."""
+    return quoteattr(t).replace('&amp;#10;', '&#10;')
+
+
 # AWS 2019 카테고리 그라데이션 (fill, gradient)
 CAT = {
     "net": ("#4D27AA", "#945DF2"),   # 네트워킹 (보라)
@@ -33,7 +38,7 @@ def aws(key, label, res, cat, x, y, s=50):
     gid = nid("i")
     ids[key] = gid
     cells.append(
-        f'<mxCell id="{gid}" value={quoteattr(escape(label))} '
+        f'<mxCell id="{gid}" value={q((label))} '
         f'style="sketch=0;outlineConnect=0;fontColor=#232F3E;gradientColor={g_};gradientDirection=north;'
         f'fillColor={f_};strokeColor=#ffffff;dashed=0;verticalLabelPosition=bottom;verticalAlign=top;align=center;'
         f'html=1;fontSize=9.5;fontStyle=1;aspect=fixed;shape=mxgraph.aws4.resourceIcon;resIcon=mxgraph.aws4.{res};" '
@@ -45,7 +50,7 @@ def grp(key, label, x, y, w, h, stroke, fill="none", dashed=0, gr=None):
     ids[key] = gid
     gri = f"shape=mxgraph.aws4.group;grIcon=mxgraph.aws4.{gr};grStroke=1;" if gr else ""
     cells.append(
-        f'<mxCell id="{gid}" value={quoteattr(escape(label))} '
+        f'<mxCell id="{gid}" value={q((label))} '
         f'style="{gri}rounded=0;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};strokeWidth=1.3;'
         f'dashed={dashed};verticalAlign=top;align=left;spacingLeft={30 if gr else 8};spacingTop=2;'
         f'fontSize=10.5;fontStyle=1;fontColor={stroke};" vertex="1" parent="1">'
@@ -56,7 +61,7 @@ def box(key, label, x, y, w, h, stroke="#232F3E", fill="#FFFFFF"):
     gid = nid("b")
     ids[key] = gid
     cells.append(
-        f'<mxCell id="{gid}" value={quoteattr(escape(label))} style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;'
+        f'<mxCell id="{gid}" value={q((label))} style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;'
         f'fillColor={fill};strokeColor={stroke};strokeWidth=1;fontSize=10;fontColor=#232F3E;shadow=1;" vertex="1" parent="1">'
         f'<mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
     return gid
@@ -64,7 +69,7 @@ def box(key, label, x, y, w, h, stroke="#232F3E", fill="#FFFFFF"):
 def edge(s, t, kind, extra="", label=""):
     color, dashed = kind
     eid = nid("e")
-    v = f' value={quoteattr(escape(label))}' if label else ''
+    v = f' value={q((label))}' if label else ''
     d = "dashed=1;dashPattern=5 4;" if dashed else ""
     edges.append(
         f'<mxCell id="{eid}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor={color};'
@@ -81,7 +86,7 @@ cells.append('<mxCell id="ttl" value="FillMap · Cloud Architecture v2 (2026.07)
 for key, label, y in [("u1", "사용자", 290), ("u2", "운영자", 410)]:
     gid = nid("a")
     ids[key] = gid
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(label))} style="shape=umlActor;verticalLabelPosition=bottom;'
+    cells.append(f'<mxCell id="{gid}" value={q((label))} style="shape=umlActor;verticalLabelPosition=bottom;'
                  f'verticalAlign=top;html=1;fontSize=10;fontStyle=1;strokeColor=#232F3E;strokeWidth=1.5;" vertex="1" parent="1">'
                  f'<mxGeometry x="30" y="{y}" width="30" height="55" as="geometry"/></mxCell>')
 box("client", "Mobile · Web Client&#10;(React Native · React)", 100, 325, 155, 62)
@@ -172,7 +177,7 @@ for i, (name, (color, dashed)) in enumerate(LG):
                  f'strokeWidth=1.6;{d}" edge="1" parent="1"><mxGeometry relative="1" as="geometry">'
                  f'<mxPoint x="{x}" y="{LY+26}" as="sourcePoint"/><mxPoint x="{x+46}" y="{LY+26}" as="targetPoint"/>'
                  f'</mxGeometry></mxCell>')
-    cells.append(f'<mxCell id="lgt{i}" value={quoteattr(escape(name))} style="text;html=1;strokeColor=none;fillColor=none;'
+    cells.append(f'<mxCell id="lgt{i}" value={q((name))} style="text;html=1;strokeColor=none;fillColor=none;'
                  f'fontSize=9;fontColor=#232F3E;" vertex="1" parent="1">'
                  f'<mxGeometry x="{x-8}" y="{LY+36}" width="110" height="16" as="geometry"/></mxCell>')
 

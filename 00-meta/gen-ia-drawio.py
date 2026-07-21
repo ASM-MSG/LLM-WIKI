@@ -2,6 +2,11 @@
 """IA v2 트리 → drawio 생성. 트리(T) 수정 후 실행: python3 00-meta/gen-ia-drawio.py (repo 루트에서)"""
 from xml.sax.saxutils import escape, quoteattr
 
+def q(t):
+    """라벨 → XML 속성값. 이스케이프 1회, &#10;(개행)은 보존."""
+    return quoteattr(t).replace('&amp;#10;', '&#10;')
+
+
 def N(label, status=None, *children):
     return (label, status, list(children))
 
@@ -174,7 +179,7 @@ class B:
         fs = 13 if big else 10
         h = 34 if big else H
         self.cells.append(
-            f'<mxCell id="{i}" value={quoteattr(escape(label))} '
+            f'<mxCell id="{i}" value={q((label))} '
             f'style="rounded=1;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};{bold}fontSize={fs};" '
             f'vertex="1" parent="1"><mxGeometry x="{x:.0f}" y="{y:.0f}" width="{w}" height="{h}" as="geometry"/></mxCell>')
         return i
