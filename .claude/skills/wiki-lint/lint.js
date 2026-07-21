@@ -53,7 +53,7 @@ for (const f of notes) {
   if (!/^title:\s*\S/m.test(fm)) report('frontmatter', f, 'title 누락');
   const srcMatch = fm.match(/^source:\s*["']?([^"'\n]+)/m);
   if (!srcMatch) report('frontmatter', f, 'source 누락');
-  else srcMatch[1].split(',').forEach(s => sources.add(s.trim()));
+  else srcMatch[1].split(',').forEach(s => sources.add(s.trim().normalize('NFC')));
 
   // field: product/class (권장)
   if (!/^product:\s*\S/m.test(fm)) report('field', f, 'product 누락 (권장)');
@@ -84,7 +84,8 @@ if (rawOk) {
   for (const f of walk(rawDir)) {
     const base = path.basename(f);
     if (base.startsWith('.')) continue;
-    const rel = path.relative(ROOT, f).replace(/\\/g, '/');
+    // Drive는 한글 파일명을 NFD로 저장하므로 노트의 NFC 경로와 비교 전 정규화
+    const rel = path.relative(ROOT, f).replace(/\\/g, '/').normalize('NFC');
     if (!/^\d{4}-\d{2}-\d{2} /.test(base)) report('raw-naming', f, 'YYYY-MM-DD 접두사 없음');
     if (![...sources].some(s => rel === s || rel.startsWith(s))) {
       report('un-ingested', f, '어떤 노트도 source로 참조하지 않음');

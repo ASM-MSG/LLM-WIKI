@@ -4,7 +4,7 @@ type: research
 product: fillmap
 class: log
 status: active
-source: "raw/2026-07-21 EDGE_아키텍처.pdf"
+source: "raw/Architecture Map/reference/2026-07-21 EDGE_아키텍처.pdf"
 created: 2026-07-21
 updated: 2026-07-21
 keywords: [EDGE, 아키텍처, architecture, IA, application architecture, system architecture, cloud architecture, 데이터 파이프라인, data pipeline, 다이어그램, 참고자료]
@@ -29,4 +29,4 @@ related: ["[[다이어그램 모음]]"]
 FillMap 쪽 대응물은 [[다이어그램 모음]] (유스케이스·IA·User Journey·SA·SysA·CA).
 
 ## 출처
-raw: `raw/2026-07-21 EDGE_아키텍처.pdf`
+raw: `raw/Architecture Map/reference/2026-07-21 EDGE_아키텍처.pdf`
