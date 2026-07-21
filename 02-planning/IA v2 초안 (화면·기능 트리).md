@@ -4,7 +4,7 @@ type: planning
 product: fillmap
 class: log
 status: draft
-source: "raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-20 설계검토 미션·이벤트 기능 추가 — 지자체 축제·둘레길 코스를 격자 위에 (cf-19857410).md"
+source: "raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-20 설계검토 미션·이벤트 기능 추가 — 지자체 축제·둘레길 코스를 격자 위에 (cf-19857410).md, raw/Architecture Map/2026-07-21 1_FillMap_IA_v2_draft.drawio.xml"
 created: 2026-07-21
 updated: 2026-07-21
 keywords: [IA, information architecture, 정보구조, 화면 트리, 유스케이스, use case, 세분화, drill down, 미션, 이벤트, 축제, 스탬프북, 다이어그램 개편]
@@ -150,7 +150,8 @@ FillMap
 ## 3. 다음 단계
 
 - [ ] 팀 리뷰: [결정필요] 리프 7건은 PRD §4·미션 문서 §12의 미결 사항과 1:1 — 결정되면 태그 제거
-- [ ] 확정 후 `raw/Architecture Map/1_FillMap_IA.xml` drawio 개편 (이 트리 → 다이어그램)
+- [x] drawio 초안 생성: `raw/Architecture Map/2026-07-21 1_FillMap_IA_v2_draft.drawio.xml` (상태별 색: 초록=구현·노랑=부분·흰=미구현·파랑=P2·빨강=결정필요)
+- [ ] 리뷰 확정 후 정식 `1_FillMap_IA` 교체 (새 버전 파일로)
 - [ ] 유스케이스 다이어그램도 §2 분해안으로 리프 교체
 - [ ] EDGE식 개편 나머지: SysA 논리/물리 분리 · AI 파이프라인 장 신설은 별도 작업
 
