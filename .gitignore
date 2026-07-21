@@ -1,0 +1,15 @@
+# raw 원본은 Google Drive — git에 넣지 않음
+raw
+raw/*
+
+# Drive 연결 전 임시 스테이징 (연결 후 raw/로 이동)
+raw-staging/
+
+# 로컬 환경 설정
+.env
+
+# OS/에디터
+.DS_Store
+Thumbs.db
+.obsidian/workspace*
+.obsidian/
