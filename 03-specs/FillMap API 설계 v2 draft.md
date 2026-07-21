@@ -17,24 +17,24 @@ related: ["[[FillMap API 명세 v1]]", "[[Auth 확장 API 예정 Refresh Token]]
 > [!tldr]
 > 앞으로 만들 API를 필드 수준까지 뽑아둔 초안 트리의 허브 — 경로·메서드는 전부 제안(🔴), 구현 기준은 언제나 v1. 구현되면 v1으로 승격 후 폐기.
 > 근거 체계: 기능 목록은 SA/IA, 필드·타입은 V1__init.sql(테이블 14개 이미 존재), 경로·메서드는 어디에도 없음. 근거 등급 🟢스키마/🟡컨벤션/🔴제안.
-> 최대 선행 과제는 **Redis 미도입**(Refresh Token·핫존·로그아웃 블랙리스트 3개가 걸림). 신규 대역 제안: 5xxx collection · 6xxx region · 7xxx social · 8xxx notification.
+> Redis는 MSG-135로 도입 완료 — Refresh Token·로그아웃 블랙리스트 해소, 잔여는 핫존 스키마 설계뿐. 신규 대역 제안: 5xxx collection · 6xxx region · 7xxx social · 8xxx notification.
 
 ## 이 노트로 답할 수 있는 질문
 - 예정 API 초안은 어떤 근거로 작성됐나 (SA/스키마/제안 구분)?
 - v1과 v2 문서의 관계와 승격 규칙은?
 - 도메인별 담당 Owner와 상태는?
 - API보다 먼저 풀어야 할 선행 과제는 뭐가 있나?
-- 왜 Redis가 가장 넓게 막고 있는 선행 과제인가?
+- Redis 선행 과제는 어떻게 해소됐나?
 - 신규 developCode 대역 제안은?
 
 ## 개요
 - 범위: MVP 연장선 + Social·Notification (Moderation·광고 제외).
-- ⚠️ "패키지 없음 = 미구현"이 아님 — auth가 "✅ 완성"인데 Refresh Token 누락. SA 기능 목록과 코드를 직접 대조할 것.
+- ⚠️ "패키지 없음 = 미구현"이 아님 — SA 기능 목록과 코드를 직접 대조할 것. (예시였던 Refresh Token 누락은 MSG-135로 해소됨.)
 
 ## 하위 노트 목록
 | 노트 | 근거 테이블 | 담당 |
 | --- | --- | --- |
-| [[Auth 확장 API 예정 Refresh Token]] | 없음(Redis) | Owner B |
+| [[Auth 확장 API 예정 Refresh Token]] — **구현됨(MSG-135)** → [[Auth API]] | Redis | Owner B |
 | [[User 프로필 API 예정]] | users | Owner B |
 | [[Video 재생 조회 API 예정]] | videos | Owner B |
 | [[Collection API 예정]] | user_grids·streaks·badges | Owner B |
@@ -44,10 +44,10 @@ related: ["[[FillMap API 명세 v1]]", "[[Auth 확장 API 예정 Refresh Token]]
 | [[Notification API 예정]] | push_tokens | 미정 |
 
 ## 선행 과제 (스키마가 없어서 못 쓴 것)
-**Redis 미도입**(최상단 — Refresh·핫존·블랙리스트) · 영상 공개 범위 설정 API(없으면 격자 영상 목록 항상 빈 배열) · 친구 찾기 수단(Social 전체 블로커) · 알림 설정 테이블 · 뱃지 시딩+JSONB 포맷 · regions 시딩·region_stats 배치 · 계정 삭제 마이그레이션 · 핫존 Redis 스키마 · 태그 컬럼.
+~~Redis 미도입~~(**MSG-135로 도입 완료** — Refresh·블랙리스트 해소, 핫존 Redis 스키마 설계만 잔존) · 영상 공개 범위 설정 API(MSG-162, 미구현 — visibility 기본 PRIVATE라 전역 대표/목록이 항상 빈 결과) · 친구 찾기 수단(Social 전체 블로커) · 알림 설정 테이블 · 뱃지 시딩+JSONB 포맷 · regions 시딩·region_stats 배치 · 계정 삭제 마이그레이션 · 핫존 Redis 스키마 · 태그 컬럼.
 
 ## 열린 질문
-Social·Notification Owner · 신규 대역 확정 · Refresh 전달 방식(body vs httpOnly 쿠키) · 페이지네이션 offset vs cursor(첫 관례) · 닉네임 20 vs 50 · 친구 도감(Phase 2+ 보류) · status.md 정정.
+Social·Notification Owner · 신규 대역 확정 · ~~Refresh 전달 방식~~(하이브리드로 확정 — 웹 쿠키/앱 body, MSG-135) · ~~페이지네이션 offset vs cursor~~(cursor로 첫 관례 확정 — GET /api/grids, MSG-90) · 닉네임 20 vs 50 · 친구 도감(Phase 2+ 보류) · status.md 정정.
 
 ## 출처
 raw: `raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md`

@@ -6,3 +6,4 @@
 - 2026-07-21 — Confluence 기존 문서 32건 백필(raw/confluence/) 및 일괄 ingest (compiled 노트 32개 생성, index/hot 갱신).
 - 2026-07-21 — Drive 신규 raw 10건 ingest: velog 아티클 4편 스냅샷(raw/article/), 그라운드 플립·모행·EDGE·축제 데이터셋 research 노트 9개 생성, 다이어그램 모음 노트에 PDF 원본 연결, raw 파일명 정리.
 - 2026-07-21 — raw 폴더 재구성 반영: Architecture Map/(다이어그램 원본 png·drawio 12개 추가), 기획레퍼런스/ 이동에 따른 노트 source 경로 갱신.
+- 2026-07-21 — 03-specs 6건을 코드 레포 현행화(컨트롤러 5개·엔드포인트 14개): API 명세 v1·Auth API·Grid API에 reissue/dev·GridVideo(my-videos·cover)·커서 페이지네이션 반영, Refresh Token 예정 문서를 MSG-135 구현 완료로 승격, Grid 확장·v2 draft의 Redis/선행 과제 갱신.
