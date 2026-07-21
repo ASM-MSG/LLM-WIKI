@@ -1,13 +1,30 @@
 #!/usr/bin/env python3
-"""FillMap Application Architecture (SA v2) → drawio. EDGE 2번 장 스타일 풀 버전.
-UI(IA 리프 전체) → REST API(엔드포인트 전체) → 서비스 계약 → Repository/테이블 → 저장소, 환경 박스 포함.
+"""FillMap Application Architecture (SA v2) → drawio. EDGE 밀도 + 도메인 색 체계.
+티어: 클라이언트 → REST API → 서비스 계약 → Repository → 저장소 (+ AI 처리 환경).
+도메인 색이 API 카드→서비스→Repository→연결선까지 일관되게 흐른다. 행 색 = 구현 상태.
 실행: repo 루트에서 python3 00-meta/gen-apparch-drawio.py
-근거: PRD(cf-18972709) · API v1(cf-17891367)·v2 설계 문서들 · infrastructure 계약(GridQueryService 등) · 미션 설계검토(cf-19857410)"""
+근거: PRD(cf-18972709) · API v1/v2 문서 · infrastructure 계약 · 미션 설계검토(cf-19857410) · SysA 도메인 색"""
 from xml.sax.saxutils import escape, quoteattr
 
+# 상태 (행 fill)
 ST = {"구현": ("#d5e8d4", "#82b366"), "부분": ("#fff2cc", "#d6b656"),
-      "미구현": ("#ffffff", "#666666"), "신규": ("#FBF6E4", "#D6A34A"),
+      "미구현": ("#ffffff", "#999999"), "신규": ("#FBF6E4", "#D6A34A"),
       "미생성": ("#ffffff", "#b85450"), "P2": ("#dae8fc", "#6c8ebf")}
+
+# 도메인 (카드 테두리·헤더 tint·연결선)
+DOM = {
+    "AUTH":    ("#E7F4EE", "#3E9E6D"),
+    "GRID":    ("#E8F0F8", "#4E7EA8"),
+    "VIDEO":   ("#FDF1DE", "#E58E1C"),
+    "COLL":    ("#FBEAF3", "#D96AA1"),
+    "REGION":  ("#E0F2F1", "#4A9086"),
+    "SOCIAL":  ("#F0EBF8", "#8A6ABF"),
+    "MISSION": ("#FBF6E4", "#D6A34A"),
+    "AI":      ("#E8EAF6", "#5C6BC0"),
+    "ADMIN":   ("#FBEBE8", "#C15848"),
+    "SPON":    ("#EFEBE9", "#8D6E63"),
+    "UI":      ("#E8F0F8", "#4E7EA8"),
+}
 
 SCREENS = [
     ("로그인·온보딩", [("카카오 로그인 (OIDC)", "구현"), ("Apple·로컬 로그인 (미정)", "미구현"),
@@ -35,44 +52,49 @@ SCREENS = [
                      ("로그아웃", "구현"), ("계정 삭제", "미구현")]),
 ]
 
+# (이름, 도메인, 상태, 엔드포인트 행)
 APIS = [
-    ("Auth API", "구현", [("POST /auth/signup · login", "구현"), ("POST /auth/logout", "구현"),
-                          ("POST /auth/oauth/{provider}", "구현"), ("POST /auth/refresh (예정)", "미구현")]),
-    ("Grid API", "구현", [("GET /api/grids (뷰포트)", "구현"), ("GET /api/grids/{gridId}", "부분")]),
-    ("Grid 확장 API", "미구현", [("GET /grids/{id}/videos", "미구현"), ("GET /api/grids/hot", "미구현"),
-                                 ("POST /videos/{id}/likes", "미구현"), ("DELETE /videos/{id}/likes", "미구현")]),
-    ("Mission API", "신규", [("GET /api/missions/active", "신규"), ("(bbox 없음 · TTL 1h 전역 캐시)", "신규")]),
-    ("Video 재생 API", "미구현", [("GET /api/videos/{videoId}", "미구현"), ("(presigned GET · 상태 분기)", "미구현")]),
-    ("Social·Report API", "미구현", [("POST /api/reports", "미구현"), ("POST /friends/requests (P2)", "P2"),
-                                     ("PATCH /friends/requests/{id} (P2)", "P2"), ("GET·DELETE /friends (P2)", "P2"),
-                                     ("POST /friends/{id}/block (P2)", "P2")]),
-    ("Video API", "구현", [("POST /videos/presigned-url", "구현"), ("POST /api/videos (점령)", "구현"),
-                           ("PUT /api/videos/{videoId}", "구현"), ("DELETE /api/videos/{videoId}", "구현")]),
-    ("Collection API", "미구현", [("GET /collections/summary", "미구현"), ("GET /collections/grids", "미구현"),
-                                  ("GET /collections/grids/{id}/videos", "미구현"), ("GET /collections/badges", "미구현")]),
-    ("Region API", "미구현", [("GET /regions/search", "미구현"), ("GET /regions/stats", "미구현"),
-                              ("GET /regions/{code}", "미구현"), ("GET /regions/{code}/boundary", "미구현")]),
-    ("User API", "미구현", [("GET /api/users/me", "미구현"), ("PATCH /api/users/me", "미구현"),
-                            ("DELETE /api/users/me", "미구현")]),
+    ("Auth API", "AUTH", "구현", [("POST /auth/signup · login", "구현"), ("POST /auth/logout", "구현"),
+                                  ("POST /auth/oauth/{provider}", "구현"), ("POST /auth/refresh (예정)", "미구현")]),
+    ("Grid API", "GRID", "구현", [("GET /api/grids (뷰포트)", "구현"), ("GET /api/grids/{gridId}", "부분")]),
+    ("Grid 확장 API", "GRID", "미구현", [("GET /grids/{id}/videos", "미구현"), ("GET /api/grids/hot", "미구현"),
+                                         ("POST·DEL /videos/{id}/likes", "미구현")]),
+    ("Mission API", "MISSION", "신규", [("GET /api/missions/active", "신규"), ("(bbox 없음 · TTL 1h 캐시)", "신규")]),
+    ("Video 재생 API", "VIDEO", "미구현", [("GET /api/videos/{videoId}", "미구현"), ("(presigned GET · 상태 분기)", "미구현")]),
+    ("Social·Report API", "SOCIAL", "미구현", [("POST /api/reports", "미구현"), ("POST /friends/requests (P2)", "P2"),
+                                               ("PATCH /friends/requests (P2)", "P2"), ("GET·DELETE /friends (P2)", "P2"),
+                                               ("POST /friends/{id}/block (P2)", "P2")]),
+    ("Video API", "VIDEO", "구현", [("POST /videos/presigned-url", "구현"), ("POST /api/videos (점령)", "구현"),
+                                    ("PUT /api/videos/{videoId}", "구현"), ("DELETE /api/videos/{videoId}", "구현")]),
+    ("Collection API", "COLL", "미구현", [("GET /collections/summary", "미구현"), ("GET /collections/grids", "미구현"),
+                                          ("GET /collections/{id}/videos", "미구현"), ("GET /collections/badges", "미구현")]),
+    ("Region API", "REGION", "미구현", [("GET /regions/search", "미구현"), ("GET /regions/stats", "미구현"),
+                                        ("GET /regions/{code}", "미구현"), ("GET /regions/{code}/boundary", "미구현")]),
+    ("User API", "AUTH", "미구현", [("GET /api/users/me", "미구현"), ("PATCH /api/users/me", "미구현"),
+                                    ("DELETE /api/users/me", "미구현")]),
+    ("Sponsor API", "SPON", "P2", [("(미설계 — P2 캠페인·리포트)", "P2")]),
 ]
 
 SERVICES = [
-    ("AuthService", "구현"), ("GridQueryService", "구현"), ("HotZoneService", "미생성"),
-    ("MissionService", "신규"), ("VideoService + 인코딩 워커", "구현"), ("UserGridQueryService", "미생성"),
-    ("RegionService", "미생성"), ("UserService", "미생성"), ("Social·ModerationService", "미생성"),
+    ("AuthService", "AUTH", "구현"), ("UserService", "AUTH", "미생성"),
+    ("GridQueryService", "GRID", "구현"), ("HotZoneService", "GRID", "미생성"),
+    ("MissionService", "MISSION", "신규"), ("VideoService + 인코딩 워커", "VIDEO", "구현"),
+    ("UserGridQueryService", "COLL", "미생성"), ("RegionService", "REGION", "미생성"),
+    ("Social·ModerationService", "SOCIAL", "미생성"),
 ]
 
+# (Repository 클래스, 도메인, 상태, 테이블 행)
 REPOS = [
-    ("user", ["users"]),
-    ("grid", ["grids", "user_grids"]),
-    ("video", ["videos", "likes"]),
-    ("region", ["regions", "region_stats"]),
-    ("collection", ["badges", "user_badges", "streaks"]),
-    ("social", ["friendships", "reports"]),
-    ("mission (신규)", ["missions", "mission_grids", "user_missions"]),
+    ("UserRepository", "AUTH", "구현", ["users"]),
+    ("GridRepository", "GRID", "구현", ["grids", "user_grids"]),
+    ("VideoRepository", "VIDEO", "구현", ["videos", "likes"]),
+    ("MissionRepository", "MISSION", "신규", ["missions", "mission_grids", "user_missions"]),
+    ("RegionRepository", "REGION", "미생성", ["regions", "region_stats"]),
+    ("CollectionRepository", "COLL", "미생성", ["badges", "user_badges", "streaks"]),
+    ("FriendshipRepository", "SOCIAL", "미생성", ["friendships", "reports"]),
 ]
 
-LINKS = [  # 화면 → API (PRD §2)
+LINKS = [
     ("로그인·온보딩", "Auth API"),
     ("① 지도 홈", "Grid API"), ("① 지도 홈", "Grid 확장 API"), ("① 지도 홈", "Mission API"),
     ("① 지도 홈", "Collection API"), ("① 지도 홈", "Region API"),
@@ -86,26 +108,28 @@ LINKS = [  # 화면 → API (PRD §2)
     ("설정·프로필", "User API"), ("설정·프로필", "Auth API"),
 ]
 API_SVC = [
-    ("Auth API", "AuthService"), ("Grid API", "GridQueryService"),
-    ("Grid 확장 API", "HotZoneService"), ("Grid 확장 API", "VideoService + 인코딩 워커"),
-    ("Mission API", "MissionService"), ("Video 재생 API", "VideoService + 인코딩 워커"),
-    ("Social·Report API", "Social·ModerationService"), ("Video API", "VideoService + 인코딩 워커"),
-    ("Collection API", "UserGridQueryService"), ("Region API", "RegionService"), ("User API", "UserService"),
+    ("Auth API", "AuthService"), ("User API", "UserService"),
+    ("Grid API", "GridQueryService"), ("Grid 확장 API", "HotZoneService"),
+    ("Grid 확장 API", "VideoService + 인코딩 워커"), ("Mission API", "MissionService"),
+    ("Video 재생 API", "VideoService + 인코딩 워커"), ("Video API", "VideoService + 인코딩 워커"),
+    ("Social·Report API", "Social·ModerationService"), ("Collection API", "UserGridQueryService"),
+    ("Region API", "RegionService"),
 ]
 SVC_REPO = [
-    ("AuthService", "user"), ("GridQueryService", "grid"), ("MissionService", "mission (신규)"),
-    ("VideoService + 인코딩 워커", "video"), ("UserGridQueryService", "collection"),
-    ("UserGridQueryService", "grid"), ("RegionService", "region"), ("UserService", "user"),
-    ("Social·ModerationService", "social"),
+    ("AuthService", "UserRepository"), ("UserService", "UserRepository"),
+    ("GridQueryService", "GridRepository"), ("MissionService", "MissionRepository"),
+    ("VideoService + 인코딩 워커", "VideoRepository"), ("UserGridQueryService", "CollectionRepository"),
+    ("UserGridQueryService", "GridRepository"), ("RegionService", "RegionRepository"),
+    ("Social·ModerationService", "FriendshipRepository"),
 ]
 
-RH, RGAP, HDRH, CGAP = 22, 5, 26, 22
-X_UI, W_UI = 170, 255
-X_API, W_API = 520, 255
-X_SVC, W_SVC = 870, 215
-X_REPO, W_REPO = 1170, 195
-X_STORE = 1450
-Y0 = 150
+RH, RGAP, HDRH, CGAP = 22, 5, 26, 24
+X_UI, W_UI = 190, 255
+X_API, W_API = 560, 255
+X_SVC, W_SVC = 930, 220
+X_REPO, W_REPO = 1265, 200
+X_STORE = 1580
+Y0 = 170
 
 cells, edges, n = [], [], [0]
 ids = {}
@@ -114,12 +138,13 @@ def nid(p="c"):
     n[0] += 1
     return f"{p}{n[0]}"
 
-def card(key, title, rows, x, y, w, hf, hs):
+def card(key, title, rows, x, y, w, dom):
+    hf, hs = DOM[dom]
     h = HDRH + len(rows) * (RH + RGAP) + 8
     gid = nid("g")
     ids[key] = gid
     cells.append(f'<mxCell id="{gid}" value="" style="rounded=1;arcSize=4;whiteSpace=wrap;html=1;'
-                 f'fillColor=#FFFFFF;strokeColor={hs};strokeWidth=1.3;shadow=1;" vertex="1" parent="1">'
+                 f'fillColor=#FFFFFF;strokeColor={hs};strokeWidth=1.5;shadow=1;" vertex="1" parent="1">'
                  f'<mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
     cells.append(f'<mxCell id="{nid()}" value={quoteattr(escape(title))} style="rounded=1;arcSize=8;whiteSpace=wrap;html=1;'
                  f'fillColor={hf};strokeColor=none;fontSize=10.5;fontStyle=1;fontColor=#2B2B2B;" vertex="1" parent="1">'
@@ -131,155 +156,176 @@ def card(key, title, rows, x, y, w, hf, hs):
                      f'<mxGeometry x="{x+8}" y="{y+HDRH+i*(RH+RGAP)}" width="{w-16}" height="{RH}" as="geometry"/></mxCell>')
     return h
 
-def edge(s, t, extra="exitX=1;exitY=0.5;entryX=0;entryY=0.5;", arrow="open"):
+def edge(s, t, color, extra="exitX=1;exitY=0.5;entryX=0;entryY=0.5;", dashed=False, label=""):
     eid = nid("e")
-    edges.append(f'<mxCell id="{eid}" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
-                 f'strokeColor=#B4B9BE;strokeWidth=1;endArrow={arrow};endSize=6;{extra}" edge="1" parent="1" '
+    v = f' value={quoteattr(escape(label))}' if label else ''
+    d = "dashed=1;dashPattern=6 4;" if dashed else ""
+    edges.append(f'<mxCell id="{eid}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
+                 f'strokeColor={color};strokeWidth=1.2;endArrow=open;endSize=6;{d}fontSize=9;fontColor={color};'
+                 f'labelBackgroundColor=#FFFFFF;{extra}" edge="1" parent="1" '
                  f'source="{ids[s]}" target="{ids[t]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
 
-# ── UI 컬럼 ──
+api_dom = {a[0]: a[1] for a in APIS}
+svc_dom = {s[0]: s[1] for s in SERVICES}
+repo_dom = {r[0]: r[1] for r in REPOS}
+
+# ── ① 클라이언트 ──
 y = Y0
 for name, rows in SCREENS:
-    y += card(name, name, rows, X_UI, y, W_UI, "#E8F0F8", "#4E7EA8") + CGAP
+    y += card(name, name, rows, X_UI, y, W_UI, "UI") + CGAP
 h_ui = y
-
-# 운영자 콘솔 (UI 밴드 하단)
-y_admin = h_ui + 30
+y_admin = h_ui + 40
 card("운영자 콘솔", "운영자 콘솔 (Admin · Web)", [("신고 처리 → 블라인드", "미구현"),
      ("사용자 차단·Trust Score", "미구현"), ("통계 모니터링", "미구현"), ("미션 수동 등록", "신규")],
-     X_UI, y_admin, W_UI, "#FBEBE8", "#C15848")
+     X_UI, y_admin, W_UI, "ADMIN")
+y_spon = y_admin + 190
+card("스폰서 포털", "스폰서 포털 (광고주 · Web · P2)", [("캠페인 관리", "P2"),
+     ("스폰서 격자 지정", "P2"), ("성과 리포트 조회", "P2")], X_UI, y_spon, W_UI, "SPON")
 
-# ── API 컬럼 ──
+# ── ② REST API ──
 y = Y0
-for name, st, eps in APIS:
-    f_, s_ = ST[st]
-    y += card(name, f"{name}  [{st}]", eps, X_API, y, W_API, f_, s_) + CGAP
+for name, dom, st, eps in APIS:
+    y += card(name, f"{name}  [{st}]", eps, X_API, y, W_API, dom) + CGAP
 h_api = y
 
-# ── 서비스 계약 컬럼 ──
-y = Y0 + 40
-for name, st in SERVICES:
+# ── ③ 서비스 계약 ──
+y = Y0 + 30
+for name, dom, st in SERVICES:
+    hf, hs = DOM[dom]
     f_, s_ = ST[st]
     gid = nid("s")
     ids[name] = gid
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(name + ("  ⚠미생성" if st == "미생성" else "")))} '
-                 f'style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor={f_};strokeColor={s_};strokeWidth=1.3;'
-                 f'fontSize=10;fontStyle=1;shadow=1;" vertex="1" parent="1">'
-                 f'<mxGeometry x="{X_SVC}" y="{y}" width="{W_SVC}" height="34" as="geometry"/></mxCell>')
-    y += 34 + 46
+    suffix = "  ⚠미생성" if st == "미생성" else (f"  [{st}]" if st != "구현" else "")
+    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(name + suffix))} '
+                 f'style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor={f_ if st != "구현" else hf};'
+                 f'strokeColor={hs};strokeWidth=1.5;fontSize=10;fontStyle=1;shadow=1;" vertex="1" parent="1">'
+                 f'<mxGeometry x="{X_SVC}" y="{y}" width="{W_SVC}" height="36" as="geometry"/></mxCell>')
+    y += 36 + 52
 h_svc = y
 
-# ── Repository/테이블 컬럼 ──
-y = Y0 + 40
-for name, tables in REPOS:
-    st = "신규" if "신규" in name else "미구현"
-    f_, s_ = ("#FBF6E4", "#D6A34A") if st == "신규" else ("#F1F2F4", "#8A8F94")
-    y += card(name, f"{name} 도메인", [(t, st if st == "신규" else "미구현") for t in tables],
-              X_REPO, y, W_REPO, f_, s_) + 30
+# ── ④ Repository ──
+y = Y0 + 30
+for name, dom, st, tables in REPOS:
+    y += card(name, f"{name}  [{st}]", [(t, st) for t in tables], X_REPO, y, W_REPO, dom) + 28
 h_repo = y
 
-# ── 저장소 실린더 ──
+# ── ⑤ 저장소 ──
 stores = [("PostgreSQL + PostGIS", "#dae8fc", "#6c8ebf"), ("Redis (Hot ZSET·캐시)", "#FBEBE8", "#C15848"),
           ("S3 (원본·인코딩본)", "#d5e8d4", "#82b366")]
-y = Y0 + 160
+y = Y0 + 200
 for name, f_, s_ in stores:
     gid = nid("st")
     ids[name] = gid
     cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(name))} style="shape=cylinder3;whiteSpace=wrap;html=1;'
                  f'fillColor={f_};strokeColor={s_};strokeWidth=1.5;fontSize=10.5;fontStyle=1;shadow=1;" vertex="1" parent="1">'
-                 f'<mxGeometry x="{X_STORE}" y="{y}" width="190" height="60" as="geometry"/></mxCell>')
-    y += 130
+                 f'<mxGeometry x="{X_STORE}" y="{y}" width="195" height="64" as="geometry"/></mxCell>')
+    y += 150
 
-# ── AI 처리 환경 (하단 가로 밴드) ──
-y_ai = max(h_ui, h_api, h_svc, h_repo) + 90
-ai_boxes = ["Kafka video.uploaded 컨슈머", "1080p·30fps 다운스케일 + FFmpeg", "PySceneDetect·CLIP 하이라이트",
-            "YOLO 얼굴·차번호 블러", "pHash 중복 검사 → READY 갱신"]
-aw = 230
-cells.append(f'<mxCell id="aienv" value="AI 처리 환경 — 상시 Python FastAPI 서버 (ADR MSG-143 · Lambda/GPU 기각)" '
-             f'style="rounded=1;arcSize=3;whiteSpace=wrap;html=1;fillColor=#F0EBF8;strokeColor=#8A6ABF;strokeWidth=1.3;'
-             f'dashed=1;dashPattern=8 4;verticalAlign=top;fontStyle=1;fontSize=11;fontColor=#8A6ABF;" vertex="1" parent="1">'
-             f'<mxGeometry x="{X_API}" y="{y_ai}" width="{len(ai_boxes)*(aw+16)+16}" height="96" as="geometry"/></mxCell>')
+# ── AI 처리 환경 (하단 대형 박스, 2단 구조) ──
+AIF, AIS = DOM["AI"]
+y_ai = max(h_ui, h_api, h_svc, h_repo, y_spon + 160) + 70
+ai_w = X_REPO + W_REPO - X_API
+cells.append(f'<mxCell id="aienv" value="AI 처리 환경 — 상시 Python FastAPI 서버 · EC2 (ADR MSG-143: Lambda·GPU 기각, 1080p 다운스케일 필수 전제)" '
+             f'style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor={AIF};strokeColor={AIS};strokeWidth=2;'
+             f'verticalAlign=top;fontStyle=1;fontSize=12;fontColor={AIS};" vertex="1" parent="1">'
+             f'<mxGeometry x="{X_API}" y="{y_ai}" width="{ai_w}" height="210" as="geometry"/></mxCell>')
 ids["AI환경"] = "aienv"
+row1 = ["Kafka video.uploaded 컨슈머", "1080p·30fps 다운스케일", "FFmpeg 인코딩·썸네일"]
+row2 = ["PySceneDetect 장면 분할", "CLIP 하이라이트 스코어링", "YOLO 얼굴·차번호 블러", "pHash 중복 검사"]
+aw1 = (ai_w - 20 - 16 * len(row1)) / len(row1)
+aw2 = (ai_w - 20 - 16 * len(row2)) / len(row2)
 prev = None
-for i, label in enumerate(ai_boxes):
-    gid = nid("ai")
-    cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(label))} style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;'
-                 f'fillColor=#FFFFFF;strokeColor=#8A6ABF;fontSize=9.5;" vertex="1" parent="1">'
-                 f'<mxGeometry x="{X_API+16+i*(aw+16)}" y="{y_ai+34}" width="{aw}" height="40" as="geometry"/></mxCell>')
-    if prev:
-        eid = nid("e")
-        edges.append(f'<mxCell id="{eid}" style="html=1;strokeColor=#8A6ABF;strokeWidth=1;endArrow=block;endSize=5;" '
-                     f'edge="1" parent="1" source="{prev}" target="{gid}"><mxGeometry relative="1" as="geometry"/></mxCell>')
-    prev = gid
+for r, (row, aw) in enumerate([(row1, aw1), (row2, aw2)]):
+    for i, label in enumerate(row):
+        gid = nid("ai")
+        cells.append(f'<mxCell id="{gid}" value={quoteattr(escape(label))} style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;'
+                     f'fillColor=#FFFFFF;strokeColor={AIS};strokeWidth=1.3;fontSize=10;shadow=1;" vertex="1" parent="1">'
+                     f'<mxGeometry x="{X_API+12+i*(aw+16):.0f}" y="{y_ai+40+r*66}" width="{aw:.0f}" height="44" as="geometry"/></mxCell>')
+        if prev:
+            eid = nid("e")
+            ex = "exitX=1;exitY=0.5;entryX=0;entryY=0.5;" if i > 0 else "exitX=0;exitY=1;entryX=0;entryY=0;"
+            edges.append(f'<mxCell id="{eid}" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor={AIS};'
+                         f'strokeWidth=1.2;endArrow=block;endSize=5;{ex}" edge="1" parent="1" '
+                         f'source="{prev}" target="{gid}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+        prev = gid
+ids["AI말단"] = prev
+cells.append(f'<mxCell id="aiout" value="산출: 인코딩본·썸네일 → S3  ·  videos.processing_status = READY  ·  하이라이트 구간 메타" '
+             f'style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontStyle=2;fontColor={AIS};" vertex="1" parent="1">'
+             f'<mxGeometry x="{X_API+12}" y="{y_ai+178}" width="{ai_w-24}" height="18" as="geometry"/></mxCell>')
 
-# ── 환경 박스 (뒤에 깔기 위해 앞쪽 삽입) ──
+# ── 배경·환경 박스·티어 pill (뒤에 깔기) ──
 env = []
+total_w = X_STORE + 350
+total_h = y_ai + 320
 env.append(f'<mxCell id="bg" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#F1F2F4;strokeColor=none;" vertex="1" parent="1">'
-           f'<mxGeometry x="-30" y="-40" width="{X_STORE+340}" height="{y_ai+260}" as="geometry"/></mxCell>')
-env.append(f'<mxCell id="env_ui" value="모바일 앱 — React Native (사용자) / Web (운영자)" '
-           f'style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#4E7EA8;strokeWidth=1.3;'
-           f'dashed=1;dashPattern=8 4;verticalAlign=top;fontStyle=1;fontSize=11;fontColor=#4E7EA8;" vertex="1" parent="1">'
-           f'<mxGeometry x="{X_UI-25}" y="{Y0-45}" width="{W_UI+50}" height="{y_admin - Y0 + 220}" as="geometry"/></mxCell>')
-env.append(f'<mxCell id="env_be" value="Spring Boot API 서버 — EC2 ×2 · Multi-AZ (SysA 8서비스)" '
-           f'style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#3E9E6D;strokeWidth=1.3;'
-           f'dashed=1;dashPattern=8 4;verticalAlign=top;fontStyle=1;fontSize=11;fontColor=#3E9E6D;" vertex="1" parent="1">'
-           f'<mxGeometry x="{X_API-25}" y="{Y0-45}" width="{X_REPO+W_REPO-X_API+50}" height="{max(h_api,h_svc,h_repo)-Y0+70}" as="geometry"/></mxCell>')
-env.append(f'<mxCell id="env_dt" value="Data Tier" '
-           f'style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#6c8ebf;strokeWidth=1.3;'
-           f'dashed=1;dashPattern=8 4;verticalAlign=top;fontStyle=1;fontSize=11;fontColor=#6c8ebf;" vertex="1" parent="1">'
-           f'<mxGeometry x="{X_STORE-20}" y="{Y0-45}" width="240" height="{max(h_api,h_repo)-Y0+70}" as="geometry"/></mxCell>')
-env.append('<mxCell id="ttl" value="FillMap · Application Architecture (SA v2 · 2026.07)" '
-           'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=16;fontStyle=1;fontColor=#2B2B2B;" vertex="1" parent="1">'
-           '<mxGeometry x="40" y="-10" width="700" height="26" as="geometry"/></mxCell>')
-env.append('<mxCell id="sub" value="UI(IA 리프) → REST API → 서비스 계약 → Repository/테이블 → 저장소 · 행 색 = 구현 상태 (초록 구현 · 노랑 부분 · 흰 미구현 · 금색 신규 미션 · 빨강 테두리 계약 미생성)" '
-           'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#6B7075;" vertex="1" parent="1">'
-           '<mxGeometry x="40" y="18" width="1100" height="18" as="geometry"/></mxCell>')
+           f'<mxGeometry x="-30" y="-50" width="{total_w+120}" height="{total_h+140}" as="geometry"/></mxCell>')
+env.append(f'<mxCell id="env_ui" value="" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#FFFFFF;'
+           f'strokeColor=#4E7EA8;strokeWidth=1.5;dashed=1;dashPattern=10 5;" vertex="1" parent="1">'
+           f'<mxGeometry x="{X_UI-28}" y="{Y0-58}" width="{W_UI+56}" height="{y_spon+180-Y0+70}" as="geometry"/></mxCell>')
+env.append(f'<mxCell id="env_be" value="" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#FFFFFF;'
+           f'strokeColor=#3E9E6D;strokeWidth=1.5;dashed=1;dashPattern=10 5;" vertex="1" parent="1">'
+           f'<mxGeometry x="{X_API-28}" y="{Y0-58}" width="{X_REPO+W_REPO-X_API+56}" height="{max(h_api,h_svc,h_repo)-Y0+90}" as="geometry"/></mxCell>')
+env.append(f'<mxCell id="env_dt" value="" style="rounded=1;arcSize=2;whiteSpace=wrap;html=1;fillColor=#FFFFFF;'
+           f'strokeColor=#6c8ebf;strokeWidth=1.5;dashed=1;dashPattern=10 5;" vertex="1" parent="1">'
+           f'<mxGeometry x="{X_STORE-25}" y="{Y0-58}" width="250" height="{max(h_api,h_repo)-Y0+90}" as="geometry"/></mxCell>')
 
-# 액터
-aid = nid("a")
-env.append(f'<mxCell id="{aid}" value="🧑‍🎓" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EAF3E2;strokeColor=#8FBF7B;'
-           f'strokeWidth=1.5;fontSize=34;shadow=1;" vertex="1" parent="1">'
-           f'<mxGeometry x="40" y="{Y0+250}" width="64" height="64" as="geometry"/></mxCell>')
-env.append(f'<mxCell id="{nid()}" value="사용자" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=1;" '
-           f'vertex="1" parent="1"><mxGeometry x="22" y="{Y0+316}" width="100" height="18" as="geometry"/></mxCell>')
-aid2 = nid("a")
-env.append(f'<mxCell id="{aid2}" value="🧑‍💼" style="ellipse;whiteSpace=wrap;html=1;fillColor=#F6E4DC;strokeColor=#C0684A;'
-           f'strokeWidth=1.5;fontSize=34;shadow=1;" vertex="1" parent="1">'
-           f'<mxGeometry x="40" y="{y_admin+20}" width="64" height="64" as="geometry"/></mxCell>')
-env.append(f'<mxCell id="{nid()}" value="운영자" style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=1;" '
-           f'vertex="1" parent="1"><mxGeometry x="22" y="{y_admin+86}" width="100" height="18" as="geometry"/></mxCell>')
-edges.append(f'<mxCell id="{nid("e")}" style="html=1;strokeColor=#B4B9BE;endArrow=none;" edge="1" parent="1" '
-             f'source="{aid}" target="env_ui"><mxGeometry relative="1" as="geometry"/></mxCell>')
-edges.append(f'<mxCell id="{nid("e")}" style="html=1;strokeColor=#B4B9BE;endArrow=none;" edge="1" parent="1" '
-             f'source="{aid2}" target="{ids["운영자 콘솔"]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+def pill(idv, text, x, w, color):
+    env.append(f'<mxCell id="{idv}" value={quoteattr(escape(text))} style="rounded=1;arcSize=40;whiteSpace=wrap;html=1;'
+               f'fillColor={color};strokeColor=none;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">'
+               f'<mxGeometry x="{x}" y="{Y0-92}" width="{w}" height="26" as="geometry"/></mxCell>')
+
+pill("p1", "① 클라이언트", X_UI - 28, 200, "#4E7EA8")
+pill("p2", "② REST API", X_API - 28, 180, "#3E9E6D")
+pill("p3", "③ 서비스 계약", X_SVC - 10, 180, "#E58E1C")
+pill("p4", "④ Repository · 테이블", X_REPO - 10, 210, "#8A6ABF")
+pill("p5", "⑤ 저장소 (Data Tier)", X_STORE - 25, 210, "#6c8ebf")
+env.append('<mxCell id="ttl" value="FillMap · Application Architecture (SA v2 · 2026.07)" '
+           'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=17;fontStyle=1;fontColor=#2B2B2B;" vertex="1" parent="1">'
+           '<mxGeometry x="30" y="-36" width="760" height="26" as="geometry"/></mxCell>')
+env.append('<mxCell id="sub" value="선·카드 색 = 도메인 (Auth 초록 · Grid 파랑 · Video 주황 · Collection 분홍 · Region 청록 · Social 보라 · Mission 금색 · AI 남색) — 행 색 = 구현 상태 (초록 구현 · 노랑 부분 · 흰 미구현 · 금색 신규 · 파랑 P2 · 빨강 테두리 미생성)" '
+           'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#6B7075;" vertex="1" parent="1">'
+           '<mxGeometry x="30" y="-8" width="1300" height="18" as="geometry"/></mxCell>')
+
+# 액터 3
+for label, emoji, (f_, s_), ay in [("사용자", "🧑‍🎓", ("#EAF3E2", "#8FBF7B"), Y0 + 300),
+                                    ("운영자", "🧑‍💼", ("#F6E4DC", "#C0684A"), y_admin + 30),
+                                    ("스폰서 (광고주)", "🧑‍💼", ("#FBF6E4", "#D6A34A"), y_spon + 10)]:
+    aid = nid("a")
+    ids[f"actor_{label}"] = aid
+    env.append(f'<mxCell id="{aid}" value={quoteattr(emoji)} style="ellipse;whiteSpace=wrap;html=1;fillColor={f_};'
+               f'strokeColor={s_};strokeWidth=1.5;fontSize=34;shadow=1;" vertex="1" parent="1">'
+               f'<mxGeometry x="46" y="{ay}" width="64" height="64" as="geometry"/></mxCell>')
+    env.append(f'<mxCell id="{nid()}" value={quoteattr(escape(label))} style="text;html=1;strokeColor=none;fillColor=none;'
+               f'align=center;fontSize=11;fontStyle=1;" vertex="1" parent="1">'
+               f'<mxGeometry x="8" y="{ay+66}" width="140" height="18" as="geometry"/></mxCell>')
 
 cells = env + cells
+edges.append(f'<mxCell id="{nid("e")}" style="html=1;strokeColor=#B4B9BE;endArrow=none;" edge="1" parent="1" '
+             f'source="{ids["actor_사용자"]}" target="env_ui"><mxGeometry relative="1" as="geometry"/></mxCell>')
+edges.append(f'<mxCell id="{nid("e")}" style="html=1;strokeColor=#B4B9BE;endArrow=none;" edge="1" parent="1" '
+             f'source="{ids["actor_운영자"]}" target="{ids["운영자 콘솔"]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+edges.append(f'<mxCell id="{nid("e")}" style="html=1;strokeColor=#B4B9BE;endArrow=none;" edge="1" parent="1" '
+             f'source="{ids["actor_스폰서 (광고주)"]}" target="{ids["스폰서 포털"]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
 
-# ── 연결 ──
+# 연결 (도메인 색)
 for s, t in LINKS:
-    edge(s, t)
-edge("운영자 콘솔", "Social·Report API")
-edge("운영자 콘솔", "Mission API")
+    edge(s, t, DOM[api_dom[t]][1])
+edge("운영자 콘솔", "Social·Report API", DOM["ADMIN"][1])
+edge("운영자 콘솔", "Mission API", DOM["ADMIN"][1])
+edge("스폰서 포털", "Sponsor API", DOM["SPON"][1], dashed=True, label="미설계")
 for s, t in API_SVC:
-    edge(s, t)
+    edge(s, t, DOM[svc_dom[t]][1])
 for s, t in SVC_REPO:
-    edge(s, t)
-for r, _ in REPOS:
-    edge(r, "PostgreSQL + PostGIS")
-edge("HotZoneService", "Redis (Hot ZSET·캐시)", "exitX=1;exitY=0.5;entryX=0;entryY=0.5;")
-edge("Video API", "S3 (원본·인코딩본)", "exitX=1;exitY=0.2;entryX=0;entryY=1;")
-edge("Video 재생 API", "S3 (원본·인코딩본)", "exitX=1;exitY=0.2;entryX=0;entryY=0.5;")
-edges.append(f'<mxCell id="{nid("e")}" value="video.uploaded" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
-             f'strokeColor=#8A6ABF;strokeWidth=1.2;dashed=1;endArrow=open;fontSize=9;fontColor=#8A6ABF;'
-             f'exitX=0.5;exitY=1;entryX=0;entryY=0.5;" edge="1" parent="1" '
-             f'source="{ids["VideoService + 인코딩 워커"]}" target="aienv"><mxGeometry relative="1" as="geometry"/></mxCell>')
-edges.append(f'<mxCell id="{nid("e")}" value="인코딩본·READY" style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
-             f'strokeColor=#8A6ABF;strokeWidth=1.2;dashed=1;endArrow=open;fontSize=9;fontColor=#8A6ABF;'
-             f'exitX=1;exitY=0.5;entryX=0.5;entryY=1;" edge="1" parent="1" '
-             f'source="aienv" target="{ids["S3 (원본·인코딩본)"]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+    edge(s, t, DOM[repo_dom[t]][1])
+for r, dom, _, _ in REPOS:
+    edge(r, "PostgreSQL + PostGIS", DOM[dom][1])
+edge("HotZoneService", "Redis (Hot ZSET·캐시)", DOM["GRID"][1])
+edge("Video API", "S3 (원본·인코딩본)", DOM["VIDEO"][1], "exitX=1;exitY=0.2;entryX=0;entryY=1;")
+edge("Video 재생 API", "S3 (원본·인코딩본)", DOM["VIDEO"][1], "exitX=1;exitY=0.2;entryX=0;entryY=0.5;")
+edge("VideoService + 인코딩 워커", "AI환경", DOM["AI"][1], "exitX=0.5;exitY=1;entryX=0.3;entryY=0;", dashed=True, label="Kafka video.uploaded")
+edge("AI환경", "S3 (원본·인코딩본)", DOM["AI"][1], "exitX=1;exitY=0.3;entryX=0.5;entryY=1;", dashed=True, label="인코딩본·썸네일")
+edge("AI환경", "PostgreSQL + PostGIS", DOM["AI"][1], "exitX=1;exitY=0.15;entryX=0.3;entryY=1;", dashed=True, label="READY 갱신")
 
-total_w = X_STORE + 320
-total_h = y_ai + 240
 xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<mxfile host="app.diagrams.net">\n'
        '<diagram name="SA v2 — Application Architecture" id="sa-v2-apparch">'
        f'<mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" '
@@ -292,5 +338,4 @@ open(out, "w").write(xml)
 
 import xml.etree.ElementTree as ET
 ET.parse(out)
-rows = sum(len(r) for _, r in SCREENS) + sum(len(e) for _, _, e in APIS)
-print(f"OK: screens={len(SCREENS)} apis={len(APIS)} svc={len(SERVICES)} repos={len(REPOS)} 행={rows} 연결={len(edges)}")
+print(f"OK: screens={len(SCREENS)}+콘솔2 apis={len(APIS)} svc={len(SERVICES)} repos={len(REPOS)} 연결={len(edges)}")
