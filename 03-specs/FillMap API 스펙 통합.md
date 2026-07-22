@@ -141,3 +141,4 @@ AGPL 때문에 별도 레포·HTTP 통신 — [[2026-07-21 AI Highlight-Blur 개
 ## 출처
 raw: `raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md` 외 v2 draft·도감 확정·AI 개발 기록 (frontmatter source 참조)
 각 도메인 상세 정본: [[FillMap API 명세 v1]] · [[FillMap API 설계 v2 draft]] 하위 노트
+Confluence 발행본: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/21430294 (cf-21430294 — 이 노트에서 발행한 사본. sync 때 새 문서로 재ingest하지 말고 이 노트에 연결할 것)
