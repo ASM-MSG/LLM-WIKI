@@ -16,3 +16,4 @@
 - 2026-07-22 — 재-ingest 점검: 신규 raw 없음. IA v2 drawio 수동 레이아웃 조정분 확인(내용·상태 동일, 배치만 변경) — IA v2 노트에 재생성 시 덮어쓰기 주의 명기.
 - 2026-07-22 — Confluence 신규 1건 sync+ingest (개인 도감 화면 확정 UX·API 설계, cf-21528615) → 03-specs 노트 생성, 관련 노트 6건 역링크·대체 포인터 반영. lastSync 갱신.
 - 2026-07-22 — [[FillMap API 스펙 통합]] 신설: 멘토링 스펙 점검 대비 전체 API 통합 뷰(hub). index 등록.
+- 2026-07-22 — Drive 신규 raw ingest: postgresql-main 레포 덤프(154파일) → [[PostgreSQL 실무 가이드 모음]] 허브 노트. 폴더 "2026-07-22 postgresql-main"으로 리네임, lint.js raw-naming이 폴더 날짜 접두사도 인정하도록 수정. Confluence sync: 신규 없음(데일리 스크럼 제외, API 스펙 통합 발행본은 재ingest 안 함), lastSync 06:41Z.

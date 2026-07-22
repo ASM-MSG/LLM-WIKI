@@ -86,7 +86,8 @@ if (rawOk) {
     if (base.startsWith('.')) continue;
     // Drive는 한글 파일명을 NFD로 저장하므로 노트의 NFC 경로와 비교 전 정규화
     const rel = path.relative(ROOT, f).replace(/\\/g, '/').normalize('NFC');
-    if (!/^\d{4}-\d{2}-\d{2} /.test(base)) report('raw-naming', f, 'YYYY-MM-DD 접두사 없음');
+    // 통째로 넣은 폴더(레포 덤프 등)는 폴더명의 날짜 접두사로 갈음 — 내부 파일 리네임은 상대경로 링크를 깨뜨림
+    if (!rel.split('/').some(seg => /^\d{4}-\d{2}-\d{2} /.test(seg))) report('raw-naming', f, 'YYYY-MM-DD 접두사 없음');
     if (![...sources].some(s => rel === s || rel.startsWith(s))) {
       report('un-ingested', f, '어떤 노트도 source로 참조하지 않음');
     }
