@@ -6,10 +6,10 @@ class: log
 status: draft
 source: "raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-20 설계검토 미션·이벤트 기능 추가 — 지자체 축제·둘레길 코스를 격자 위에 (cf-19857410).md, raw/Architecture Map/2026-07-21 1_FillMap_IA_v2_draft.drawio.xml, raw/Architecture Map/2026-07-21 0_FillMap_UseCase_v2_draft.drawio.xml"
 created: 2026-07-21
-updated: 2026-07-21
+updated: 2026-07-22
 keywords: [IA, information architecture, 정보구조, 화면 트리, 유스케이스, use case, 세분화, drill down, 미션, 이벤트, 축제, 스탬프북, 다이어그램 개편]
 aliases: [IA 초안, IA v2, 화면 트리]
-related: ["[[다이어그램 모음]]", "[[EDGE 아키텍처 문서 모음]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[설계검토 미션·이벤트 기능 추가]]", "[[갭 분석 디자인 문서 코드 싱크]]"]
+related: ["[[다이어그램 모음]]", "[[EDGE 아키텍처 문서 모음]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[설계검토 미션·이벤트 기능 추가]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[개인 도감 화면 확정 UX·API 설계]]"]
 ---
 
 # IA v2 초안 — 화면·기능 트리 (EDGE 수준 drill-down)
@@ -101,7 +101,7 @@ FillMap
 ├─ ⑦ 개인 도감
 │   ├─ 요약 (총 격자·방문 지역·업로드 영상·현재 스트릭)    [미구현]
 │   ├─ 3뷰: 지도 / 갤러리 / 뱃지                          [미구현]
-│   ├─ 지역별 수집 현황                                   [미구현]
+│   ├─ 지역별 수집 현황 → 격자 중심 UX로 대체 확정 (7/22)  [미구현·확정]
 │   ├─ 스트릭·뱃지 성취                                   [미구현]
 │   ├─ 스탬프북 (미션 — "부산 축제 15개 중 3개")           [미구현·결정필요(MVP/P2)]
 │   └─ 공개 범위 설정 (MVP: 공개/비공개 · 친구공개는 P2)   [미구현·결정필요]
@@ -155,6 +155,7 @@ FillMap
 - [ ] 팀 리뷰: [결정필요] 리프 7건은 PRD §4·미션 문서 §12의 미결 사항과 1:1 — 결정되면 태그 제거
 - [x] drawio 초안 생성: `raw/Architecture Map/2026-07-21 1_FillMap_IA_v2_draft.drawio.xml` (상태별 색: 초록=구현·노랑=부분·흰=미구현·파랑=P2·빨강=결정필요)
 - [x] 레이아웃 확정: 루트 상단 중앙 + 3컬럼 — "사용자 앱 탐색·시청" | "사용자 앱 기록·도감" | 운영자·스폰서 세로 스택 (EDGE 구도, 깊이 최대 4단)
+  - ⚠️ 2026-07-22: draw.io에서 레이아웃 수동 조정됨(범례·스폰서 포털 노드 위치). `gen-ia-drawio.py` 재실행 시 이 수동 배치가 덮어써지므로, 재생성 전에 스크립트의 좌표를 맞추거나 파일을 백업할 것.
 - [ ] 리뷰 확정 후 정식 `1_FillMap_IA` 교체 (새 버전 파일로)
 - [x] 유스케이스 다이어그램 v2 초안 생성: `raw/Architecture Map/2026-07-21 0_FillMap_UseCase_v2_draft.drawio.xml` (§2 분해안 그대로 — 유스케이스 37개, 재생성: `00-meta/gen-usecase-drawio.py`)
 - [ ] EDGE식 개편 나머지: SysA 논리/물리 분리 · AI 파이프라인 장 신설은 별도 작업

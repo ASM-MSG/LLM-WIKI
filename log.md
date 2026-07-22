@@ -13,3 +13,5 @@
 - 2026-07-21 — SA v2 (Application Architecture) draft 생성: IA 화면 → API 10개 도메인 → 저장소 매핑, PRD 기준 연결 35개.
 - 2026-07-21 — SysA v2(논리 뷰) draft 생성 — 기술명 제거·역할 그룹만, EDGE식 개편 5종 세트 완성 (IA·유스케이스·SA v2·AI 파이프라인·SysA v2).
 - 2026-07-21 — Confluence 신규 1건 ingest (AI Highlight-Blur 개발 기록, cf-21102593). lastSync 갱신.
+- 2026-07-22 — 재-ingest 점검: 신규 raw 없음. IA v2 drawio 수동 레이아웃 조정분 확인(내용·상태 동일, 배치만 변경) — IA v2 노트에 재생성 시 덮어쓰기 주의 명기.
+- 2026-07-22 — Confluence 신규 1건 sync+ingest (개인 도감 화면 확정 UX·API 설계, cf-21528615) → 03-specs 노트 생성, 관련 노트 6건 역링크·대체 포인터 반영. lastSync 갱신.

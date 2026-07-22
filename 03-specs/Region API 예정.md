@@ -9,7 +9,7 @@ created: 2026-07-17
 updated: 2026-07-21
 keywords: [Region, 행정동, 지역, 검색, search, 수집률, region_stats, regions, GeoJSON, 시딩, seeding, 경계, boundary, ST_Envelope, fitBounds, Owner A, 예정 API]
 aliases: [지역 API, 행정동 API]
-related: ["[[FillMap API 설계 v2 draft]]", "[[Grid API]]", "[[ADR 격자 표시명 zone]]", "[[Collection API 예정]]"]
+related: ["[[FillMap API 설계 v2 draft]]", "[[Grid API]]", "[[ADR 격자 표시명 zone]]", "[[Collection API 예정]]", "[[개인 도감 화면 확정 UX·API 설계]]"]
 ---
 
 # Region API (예정) — 행정동 검색·수집률·경계

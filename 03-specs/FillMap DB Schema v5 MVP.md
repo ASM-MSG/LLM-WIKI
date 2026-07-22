@@ -9,7 +9,7 @@ created: 2026-07-18
 updated: 2026-07-21
 keywords: [DB, 스키마, schema, v5, ERD, users, grids, regions, videos, user_grids, view_count, 지오코딩, geocoding, GeoJSON, MVP 테이블, 도감]
 aliases: [DB Schema v5, MomentMap DB Schema]
-related: ["[[FillMap 지도·격자 DB 설계 MVP]]", "[[FillMap DB 자료형·ENUM·GeoJSON 기준]]", "[[ERD 정렬 디자인 기준 데이터모델]]", "[[2026-07-18 김태완 멘토 DB 피드백]]"]
+related: ["[[FillMap 지도·격자 DB 설계 MVP]]", "[[FillMap DB 자료형·ENUM·GeoJSON 기준]]", "[[ERD 정렬 디자인 기준 데이터모델]]", "[[2026-07-18 김태완 멘토 DB 피드백]]", "[[개인 도감 화면 확정 UX·API 설계]]"]
 ---
 
 # FillMap DB Schema v5 — MVP 개인 도감

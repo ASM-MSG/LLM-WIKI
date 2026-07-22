@@ -12,6 +12,7 @@ _아직 없음_
 
 ## 03-specs (SPEC / PRD)
 - [[PRD FillMap MVP 화면별 기능·API]] — 피그마 7화면 ↔ API 매핑, MVP 미확정 7항목
+- [[개인 도감 화면 확정 UX·API 설계]] — PO 확정(7/22): 격자 중심 도감, 탐험률=격자 중심점 축, 신규는 MSG-153뿐
 - [[FillMap API 명세 v1]] — 구현 기준 단일 진실 (허브) · 하위: [[Auth API]] · [[Grid API]] · [[Video API]]
 - [[FillMap API 설계 v2 draft]] — 예정 API 허브 · 하위: [[Auth 확장 API 예정 Refresh Token]] · [[User 프로필 API 예정]] · [[Video 재생 조회 API 예정]] · [[Collection API 예정]] · [[Region API 예정]] · [[Grid 확장 API 예정]] · [[Social API 예정]] · [[Notification API 예정]]
 - [[FillMap DB Schema v5 MVP]] — MVP 테이블 기준 (KangJeong)
