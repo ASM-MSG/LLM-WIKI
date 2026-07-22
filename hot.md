@@ -2,6 +2,7 @@
 
 > ingest/편집 때마다 맨 위에 최신 항목 추가. 오래된 건 자연히 밀려남.
 
+- 2026-07-22 — [[ADR 격자 행정동 라벨 grids.region_code]] ingest: MSG-167 확정 — grids.region_code 저장(함수 종속 근거), 동 단위 내 영상 조회 신설, region_stats 라이브 집계는 보류. 통합 명세판에 by-grid·동 단위 API 반영 필요.
 - 2026-07-22 — [[PostgreSQL 실무 가이드 모음]] ingest: Drive에 들어온 junhkang/postgresql 레포 덤프(md 52편+이미지)를 허브 노트 1개로 연결. 폴더 날짜 접두사 리네임, lint에 폴더 접두사 인정 규칙 추가.
 - 2026-07-22 — [[FillMap API 스펙 통합]] 작성: 흩어진 API 노트 13개를 한 페이지 현황판으로 통합(구현 17+AI 3, 열린 결정 10) — 일요일 멘토링 "API 스펙 점검" 대비.
 - 2026-07-22 — [[개인 도감 화면 확정 UX·API 설계]] ingest: PO 확정 — 격자 중심 도감 UX(RECENT 30개·페이지네이션 없음), 탐험률 축=격자 중심점. 남은 구현은 MSG-153. [[Collection API 예정]] 일부 대체.

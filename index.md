@@ -22,6 +22,7 @@ _아직 없음_
 - [[다이어그램 모음]] — 제출용 다이어그램 6종 포인터
 
 ## 04-decisions (ADR)
+- [[ADR 격자 행정동 라벨 grids.region_code]] — 행정동 라벨은 grids에 격자당 1회 저장, 동 단위 영상 조회 신설 (MSG-167)
 - [[ADR AI 처리 실행 환경 FastAPI]] — 상시 FastAPI 확정, Lambda·GPU 기각 (MSG-143)
 - [[ADR 격자 표시명 zone]] — "홍대 A-14" = 수동 zone + 좌표 산술
 - [[ADR 지도 SDK 네이버 전환]] — 카카오→네이버, POI OFF·RN·무료 600만
