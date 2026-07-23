@@ -9,7 +9,7 @@ created: 2026-07-21
 updated: 2026-07-22
 keywords: [IA, information architecture, 정보구조, 화면 트리, 유스케이스, use case, 세분화, drill down, 미션, 이벤트, 축제, 스탬프북, 다이어그램 개편]
 aliases: [IA 초안, IA v2, 화면 트리]
-related: ["[[다이어그램 모음]]", "[[EDGE 아키텍처 문서 모음]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[설계검토 미션·이벤트 기능 추가]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[개인 도감 화면 확정 UX·API 설계]]"]
+related: ["[[다이어그램 모음]]", "[[EDGE 아키텍처 문서 모음]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[설계검토 미션·이벤트 기능 추가]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[2026-07-23 기획회의 미션·이벤트 표시 방식]]"]
 ---
 
 # IA v2 초안 — 화면·기능 트리 (EDGE 수준 drill-down)

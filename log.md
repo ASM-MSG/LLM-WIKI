@@ -18,3 +18,5 @@
 - 2026-07-22 — [[FillMap API 스펙 통합]] 신설: 멘토링 스펙 점검 대비 전체 API 통합 뷰(hub). index 등록.
 - 2026-07-22 — Drive 신규 raw ingest: postgresql-main 레포 덤프(154파일) → [[PostgreSQL 실무 가이드 모음]] 허브 노트. 폴더 "2026-07-22 postgresql-main"으로 리네임, lint.js raw-naming이 폴더 날짜 접두사도 인정하도록 수정. Confluence sync: 신규 없음(데일리 스크럼 제외, API 스펙 통합 발행본은 재ingest 안 함), lastSync 06:41Z.
 - 2026-07-22 — Confluence 신규 1건 ingest: MSG-167 격자 행정동 라벨 설계 결정(cf-22216705) → [[ADR 격자 행정동 라벨 grids.region_code]]. lastSync 08:20Z.
+- 2026-07-23 — 기획회의 녹음(25분 m4a) whisper-cpp(large-v3-turbo+VAD) 전사 → raw 회의록·srt 생성, [[2026-07-23 기획회의 미션·이벤트 표시 방식]] ingest (05-meetings). 화자 분리는 내용 기반 추정.
+- 2026-07-23 — Confluence sync 3건 (스크럼 2건 제외, 기수집 2건 skip): API 스펙 통합 발행본(cf-21430294) 스냅샷 백필, AI 블러 실측(cf-22773767)·MSG-167 후속 결정(cf-23035906) → [[AI 블러 파이프라인 실측 현황]]·[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]] ingest. 역링크 6건, index/hot 갱신. lastSync 05:29Z.

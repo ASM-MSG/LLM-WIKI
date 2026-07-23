@@ -4,9 +4,9 @@ type: hub
 product: fillmap
 class: log
 status: active
-source: "raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md, raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md, raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md, raw/confluence/2026-07-21 FillMap AI Highlight-Blur — 레포 생성부터 dev 배포까지 (cf-21102593).md"
+source: "raw/confluence/2026-07-22 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md, raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md, raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md, raw/confluence/2026-07-21 FillMap AI Highlight-Blur — 레포 생성부터 dev 배포까지 (cf-21102593).md"
 created: 2026-07-22
-updated: 2026-07-22
+updated: 2026-07-23
 keywords: [API 스펙, API 명세, 통합, 전체, 한눈에, one page, 멘토링, 스펙 점검, 구현 현황, 예정 API, 에러 코드, developCode, jobs API, AI 서버, 열린 질문]
 aliases: [API 통합 뷰, API 전체 스펙, API 스펙 한눈에]
 related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[2026-07-21 AI Highlight-Blur 개발 기록]]", "[[2026-07-16 박원형 멘토 멘토링]]"]
@@ -139,7 +139,8 @@ AGPL 때문에 별도 레포·HTTP 통신 — [[2026-07-21 AI Highlight-Blur 개
 10. AI jobs API의 BE 연동 계약(콜백 vs 폴링 주기·실패 재시도) 미정
 
 ## 출처
-raw: `raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md` 외 v2 draft·도감 확정·AI 개발 기록 (frontmatter source 참조)
+raw: `raw/confluence/2026-07-22 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md` (발행본 스냅샷) 외 v1 명세·v2 draft·도감 확정·AI 개발 기록 (frontmatter source 참조)
+Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/21430294
 각 도메인 상세 정본: [[FillMap API 명세 v1]] · [[FillMap API 설계 v2 draft]] 하위 노트
 Confluence 발행본: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/21430294 (cf-21430294 — 이 노트에서 발행. sync 때 새 문서로 재ingest하지 말고 이 노트에 연결할 것)
 발행본 v2(2026-07-22)는 이 현황판을 넘어 **API별 요청/응답 필드·에러·쟁점까지 담은 도메인별 전체 명세판** — 일요일 멘토링 "API 스펙 점검"용. 원재료는 raw/confluence의 v1·v2 draft 스냅샷 + MSG-135/90 이후 변경분 보정.

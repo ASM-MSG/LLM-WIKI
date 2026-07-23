@@ -9,7 +9,7 @@ created: 2026-07-22
 updated: 2026-07-22
 keywords: [격자, 행정동, 라벨, region_code, grids, 도감 갤러리, regionName, 동 단위 영상, by-grid, ST_Covers, geospatial 금지, equi-join, lazy insert, 백필, region_stats, 라이브 집계, MSG-167, MSG-153, MSG-155, MSG-164, 함수 종속, 비정규화]
 aliases: [MSG-167 결정, 격자 행정동 라벨, grids region_code]
-related: ["[[개인 도감 화면 확정 UX·API 설계]]", "[[Region API 예정]]", "[[Collection API 예정]]", "[[FillMap 지도·격자 DB 설계 MVP]]", "[[FillMap API 스펙 통합]]"]
+related: ["[[개인 도감 화면 확정 UX·API 설계]]", "[[Region API 예정]]", "[[Collection API 예정]]", "[[FillMap 지도·격자 DB 설계 MVP]]", "[[FillMap API 스펙 통합]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]"]
 ---
 
 # ADR 격자 행정동 라벨 — grids.region_code 저장 (MSG-167)

@@ -9,7 +9,7 @@ created: 2026-07-18
 updated: 2026-07-21
 keywords: [ADR, 격자 표시명, zone, 구역, 홍대, 가로수길, 표시명, display name, A-14, 행정동 폴백, 지하철역, 산술, zones 테이블, 검색]
 aliases: [격자 표시명 ADR, zone ADR]
-related: ["[[Region API 예정]]", "[[ADR 지도 SDK 네이버 전환]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[Grid 확장 API 예정]]"]
+related: ["[[Region API 예정]]", "[[ADR 지도 SDK 네이버 전환]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[Grid 확장 API 예정]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]"]
 ---
 
 # ADR — 격자 표시명 체계 (수동 지정 구역 zone + 격자 좌표 산술)

@@ -9,7 +9,7 @@ created: 2026-07-21
 updated: 2026-07-21
 keywords: [AI, 블러, blur, 하이라이트, highlight, YOLO, YOLOv11, PySceneDetect, ultralytics, AGPL, 라이선스, FastAPI, dev 배포, Graviton, 실측, conf, 얼굴 탐지, 번호판, torch, torchvision, x86, MSG-142, MSG-143, MSG-144, MSG-158, MSG-159, MSG-161]
 aliases: [AI 서버 개발 기록, Highlight-Blur 배포]
-related: ["[[ADR AI 처리 실행 환경 FastAPI]]", "[[다이어그램 모음]]", "[[PRD FillMap MVP 화면별 기능·API]]"]
+related: ["[[ADR AI 처리 실행 환경 FastAPI]]", "[[다이어그램 모음]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[AI 블러 파이프라인 실측 현황]]"]
 ---
 
 # AI Highlight-Blur 개발 기록 — 레포 생성부터 dev 배포까지 (2026-07-20~21)
