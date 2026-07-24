@@ -66,16 +66,17 @@ def box(key, label, x, y, w, h, stroke="#232F3E", fill="#FFFFFF"):
         f'<mxGeometry x="{x}" y="{y}" width="{w}" height="{h}" as="geometry"/></mxCell>')
     return gid
 
-def edge(s, t, kind, extra="", label=""):
+def edge(s, t, kind, extra="", label="", points=None):
     color, dashed = kind
     eid = nid("e")
     v = f' value={q((label))}' if label else ''
     d = "dashed=1;dashPattern=5 4;" if dashed else ""
+    pts = ('<Array as="points">' + "".join(f'<mxPoint x="{px}" y="{py}"/>' for px, py in points) + '</Array>') if points else ''
     edges.append(
         f'<mxCell id="{eid}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;strokeColor={color};'
         f'strokeWidth=1.6;endArrow=blockThin;endFill=1;endSize=5;{d}jumpStyle=arc;jumpSize=8;'
         f'fontSize=9;fontStyle=1;fontColor={color};labelBackgroundColor=#FFFFFF;{extra}" '
-        f'edge="1" parent="1" source="{ids[s]}" target="{ids[t]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+        f'edge="1" parent="1" source="{ids[s]}" target="{ids[t]}"><mxGeometry relative="1" as="geometry">{pts}</mxGeometry></mxCell>')
 
 # ── 제목 ──
 cells.append('<mxCell id="ttl" value="FillMap · Cloud Architecture v2 (2026.07) — AWS ap-northeast-2 · Multi-AZ · fillmap.kr" '
@@ -90,48 +91,51 @@ for key, label, y in [("u1", "사용자", 290), ("u2", "운영자", 410)]:
                  f'verticalAlign=top;html=1;fontSize=10;fontStyle=1;strokeColor=#232F3E;strokeWidth=1.5;" vertex="1" parent="1">'
                  f'<mxGeometry x="30" y="{y}" width="30" height="55" as="geometry"/></mxCell>')
 box("client", "Mobile · Web Client&#10;(React Native · React)", 100, 325, 155, 62)
-edge("u1", "client", TRAFFIC, "exitX=1;exitY=0.5;entryX=0;entryY=0.3;")
-edge("u2", "client", TRAFFIC, "exitX=1;exitY=0.5;entryX=0;entryY=0.8;")
+edge("u1", "client", TRAFFIC, "exitX=1;exitY=0.5;entryX=0;entryY=0.15;")
+edge("u2", "client", TRAFFIC, "exitX=1;exitY=0.5;entryX=0;entryY=0.38;")
 
 # ── AWS Cloud > Region > VPC ──
-grp("cloud", "AWS Cloud", 300, 60, 1580, 1010, "#232F3E", gr="group_aws_cloud_alt")
-grp("region", "Region · ap-northeast-2", 320, 100, 1270, 950, "#00A4A6", dashed=1, gr="group_region")
+grp("cloud", "AWS Cloud", 300, 60, 1650, 1010, "#232F3E", gr="group_aws_cloud_alt")
+grp("region", "Region · ap-northeast-2", 320, 100, 1340, 950, "#00A4A6", dashed=1, gr="group_region")
 
 aws("r53", "Route 53&#10;fillmap.kr", "route_53", "net", 360, 170)
 aws("cf", "CloudFront&#10;static.fillmap.kr", "cloudfront", "net", 360, 320)
 aws("s3s", "S3 · 정적 웹", "s3", "stg", 360, 470)
 
-grp("vpc", "VPC · 10.0.0.0/16", 510, 140, 1050, 890, "#8C4FFF", gr="group_vpc2")
-aws("igw", "Internet&#10;Gateway", "internet_gateway", "net", 990, 175)
-aws("alb", "ALB&#10;(Active-Active)", "elastic_load_balancing", "net", 990, 305)
+grp("vpc", "VPC · 10.0.0.0/16", 510, 140, 1120, 890, "#8C4FFF", gr="group_vpc2")
+aws("igw", "Internet&#10;Gateway", "internet_gateway", "net", 1048, 170)
+# EDGE 방식: ALB는 두 AZ 사이 통로에, 서비스와 같은 높이로 → 좌우 짧은 화살표 2개
+aws("waf", "AWS WAF&#10;(ALB·CloudFront)", "waf", "sec", 1048, 375)
+aws("alb", "ALB&#10;(Active-Active)", "elastic_load_balancing", "net", 1048, 622)
 
-for az, x0, tag in [("aza", 545, "가용영역 a"), ("azc", 1070, "가용영역 c")]:
+for az, x0, tag in [("aza", 545, "가용영역 a"), ("azc", 1140, "가용영역 c")]:
     grp(az, tag, x0, 425, 460, 585, "#147EBA", dashed=1)
 
 grp("puba", "Public subnet", 565, 455, 420, 112, "#7AA116", "#F2F6E8")
 aws("nata", "NAT Gateway", "nat_gateway", "net", 730, 478)
-grp("pubc", "Public subnet", 1090, 455, 420, 112, "#7AA116", "#F2F6E8")
-aws("natc", "NAT Gateway", "nat_gateway", "net", 1255, 478)
+grp("pubc", "Public subnet", 1160, 455, 420, 112, "#7AA116", "#F2F6E8")
+aws("natc", "NAT Gateway", "nat_gateway", "net", 1325, 478)
 
+# ALB 타깃(API #1)이 통로 쪽 최우측, 이벤트 흐름은 API→Kafka→AI 좌향
 grp("appa", "Private subnet · App", 565, 585, 420, 225, "#00A4A6", "#E6F6F7")
-aws("ec2a", "Spring Boot&#10;API #1", "ec2", "cmp", 592, 622)
-aws("ai", "FastAPI&#10;AI 서버 (상시)", "ec2", "cmp", 728, 622)
-aws("kafka", "Kafka&#10;(EC2)", "ec2", "cmp", 864, 622)
-grp("appc", "Private subnet · App", 1090, 585, 420, 225, "#00A4A6", "#E6F6F7")
-aws("ec2c", "Spring Boot&#10;API #2", "ec2", "cmp", 1120, 622)
+aws("ai", "FastAPI&#10;AI 서버 (상시)", "ec2", "cmp", 592, 622)
+aws("kafka", "Kafka&#10;(EC2)", "ec2", "cmp", 728, 622)
+aws("ec2a", "Spring Boot&#10;API #1", "ec2", "cmp", 864, 622)
+grp("appc", "Private subnet · App", 1160, 585, 420, 225, "#00A4A6", "#E6F6F7")
+aws("ec2c", "Spring Boot&#10;API #2", "ec2", "cmp", 1190, 622)
 
 grp("dataa", "Private subnet · Data", 565, 828, 420, 165, "#D6A34A", "#FDF6E3")
 aws("rdsp", "RDS PostgreSQL&#10;+PostGIS (Primary)", "rds", "db", 592, 864)
 aws("redp", "ElastiCache&#10;Redis (Primary)", "elasticache", "db", 756, 864)
-grp("datac", "Private subnet · Data", 1090, 828, 420, 165, "#D6A34A", "#FDF6E3")
-aws("rdss", "RDS&#10;(Standby·Read)", "rds", "db", 1120, 864)
-aws("reds", "ElastiCache&#10;(Replica)", "elasticache", "db", 1284, 864)
+grp("datac", "Private subnet · Data", 1160, 828, 420, 165, "#D6A34A", "#FDF6E3")
+aws("rdss", "RDS&#10;(Standby·Read)", "rds", "db", 1190, 864)
+aws("reds", "ElastiCache&#10;(Replica)", "elasticache", "db", 1354, 864)
 
-aws("s3v", "S3&#10;영상 원본·인코딩본", "s3", "stg", 1640, 230)
-aws("ecr", "ECR", "elastic_container_registry", "cmp", 1640, 390)
-aws("ssm", "Systems Manager&#10;(배포 Run Command)", "systems_manager", "mgt", 1640, 540)
-aws("cw", "CloudWatch&#10;Logs·Metrics", "cloudwatch_2", "mgt", 1640, 700)
-aws("sm", "Secrets&#10;Manager", "secrets_manager", "sec", 1640, 850)
+aws("s3v", "S3&#10;영상 원본·인코딩본", "s3", "stg", 1710, 230)
+aws("ecr", "ECR", "ecr", "cmp", 1710, 390)
+aws("ssm", "Systems Manager&#10;(배포 Run Command)", "systems_manager", "mgt", 1710, 540)
+aws("cw", "CloudWatch&#10;Logs·Metrics", "cloudwatch_2", "mgt", 1710, 700)
+aws("sm", "Secrets&#10;Manager", "secrets_manager", "sec", 1710, 850)
 
 # ── 하단: CI/CD · 외부 SaaS ──
 box("gh", "GitHub · Actions&#10;(Build → Test → Push)", 100, 1110, 175, 58)
@@ -144,28 +148,31 @@ edge("client", "r53", TRAFFIC, "exitX=1;exitY=0.3;entryX=0;entryY=0.5;", "HTTPS"
 edge("r53", "cf", TRAFFIC, "exitX=0.5;exitY=1;entryX=0.5;entryY=0;")
 edge("cf", "s3s", TRAFFIC, "exitX=0.5;exitY=1;entryX=0.5;entryY=0;")
 edge("r53", "igw", TRAFFIC, "exitX=1;exitY=0.5;entryX=0;entryY=0.5;", "api.fillmap.kr")
-edge("igw", "alb", TRAFFIC, "exitX=0.5;exitY=1;entryX=0.5;entryY=0;")
-edge("alb", "ec2a", TRAFFIC, "exitX=0.25;exitY=1;entryX=0.5;entryY=0;")
-edge("alb", "ec2c", TRAFFIC, "exitX=0.75;exitY=1;entryX=0.5;entryY=0;")
-edge("ec2a", "rdsp", DATA, "exitX=0.3;exitY=1;entryX=0.5;entryY=0;")
-edge("ec2c", "rdsp", DATA, "exitX=0.3;exitY=1;entryX=0.9;entryY=0;")
-edge("ec2a", "redp", DATA, "exitX=0.7;exitY=1;entryX=0.5;entryY=0;")
-edge("rdsp", "rdss", EXT, "exitX=1;exitY=0.5;entryX=0;entryY=0.5;", "복제·Failover")
-edge("redp", "reds", EXT, "exitX=1;exitY=0.7;entryX=0;entryY=0.7;")
-edge("ec2a", "kafka", ASYNC, "exitX=1;exitY=0.5;entryX=0;entryY=0.5;", "이벤트")
-edge("kafka", "ai", ASYNC, "exitX=0.5;exitY=1;entryX=0.9;entryY=1;")
-edge("ai", "s3v", ASYNC, "exitX=1;exitY=0.2;entryX=0;entryY=0.9;", "인코딩본")
-edge("ec2a", "s3v", DATA, "exitX=1;exitY=0.1;entryX=0;entryY=0.5;", "presigned")
-edge("gh", "ecr", DEPLOY, "exitX=1;exitY=0.5;entryX=0;entryY=1;", "Docker push")
+edge("igw", "waf", TRAFFIC, "exitX=0.5;exitY=1;entryX=0.5;entryY=0;")
+edge("waf", "alb", TRAFFIC, "exitX=0.5;exitY=1;entryX=0.5;entryY=0;")
+edge("alb", "ec2a", TRAFFIC, "exitX=0;exitY=0.5;entryX=1;entryY=0.5;")
+edge("alb", "ec2c", TRAFFIC, "exitX=1;exitY=0.5;entryX=0;entryY=0.5;")
+edge("ec2a", "rdsp", DATA, "exitX=0.3;exitY=1;entryX=0.5;entryY=0;", points=[(879, 790), (617, 790)])
+edge("ec2c", "rdsp", DATA, "exitX=0.3;exitY=1;entryX=0.9;entryY=0;", points=[(1205, 818), (637, 818)])
+edge("ec2a", "redp", DATA, "exitX=0.7;exitY=1;entryX=0.5;entryY=0;", points=[(899, 760), (781, 760)])
+edge("ai", "rdsp", DATA, "exitX=0.3;exitY=1;entryX=0.2;entryY=0;", "READY 갱신")
+edge("rdsp", "rdss", EXT, "exitX=0.5;exitY=1;entryX=0.5;entryY=1;", "복제·Failover", points=[(617, 950), (1215, 950)])
+edge("redp", "reds", EXT, "exitX=0.5;exitY=1;entryX=0.5;entryY=1;", points=[(781, 968), (1379, 968)])
+edge("ec2a", "kafka", ASYNC, "exitX=0;exitY=0.5;entryX=1;entryY=0.5;", "이벤트")
+edge("kafka", "ai", ASYNC, "exitX=0;exitY=0.5;entryX=1;entryY=0.5;")
+edge("ai", "s3v", ASYNC, "exitX=0.5;exitY=0;entryX=0;entryY=0.3;", "인코딩본")
+edge("ec2a", "s3v", DATA, "exitX=0.5;exitY=0;entryX=0;entryY=0.7;", "presigned")
+edge("gh", "ecr", DEPLOY, "exitX=1;exitY=0.5;entryX=0;entryY=0.5;", "Docker push", points=[(1120, 1139), (1120, 415)])
 edge("ecr", "ssm", DEPLOY, "exitX=0.5;exitY=1;entryX=0.5;entryY=0;")
-edge("ssm", "ec2c", DEPLOY, "exitX=0;exitY=0.5;entryX=1;entryY=0.3;", "배포")
+edge("ssm", "ec2c", DEPLOY, "exitX=0;exitY=0.5;entryX=1;entryY=0.5;", "배포", points=[(1615, 565), (1615, 647)])
 edge("cw", "vpc", EXT, "exitX=0;exitY=0.5;entryX=1;entryY=0.65;", "관측")
 edge("sm", "vpc", EXT, "exitX=0;exitY=0.5;entryX=1;entryY=0.85;")
-edge("client", "kakao", EXT, "exitX=0.3;exitY=1;entryX=0.3;entryY=0;", "OAuth·SDK")
-edge("client", "fcm", EXT, "exitX=0.7;exitY=1;entryX=0.1;entryY=0;")
+edge("client", "kakao", EXT, "exitX=0;exitY=0.6;entryX=0.4;entryY=1;", "OAuth", points=[(84, 362), (84, 1196), (674, 1196)])
+edge("client", "naver", EXT, "exitX=0;exitY=0.75;entryX=0.5;entryY=1;", "지도 타일", points=[(78, 371), (78, 1204), (847, 1204)])
+edge("fcm", "client", EXT, "exitX=0.5;exitY=1;entryX=0;entryY=0.9;", "푸시 수신", points=[(1012, 1212), (72, 1212), (72, 381)])
 
 # ── 범례 ──
-LX, LY = 1240, 1105
+LX, LY = 1310, 1105
 cells.append(f'<mxCell id="lg" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;'
              f'strokeColor=#D3D3D3;strokeWidth=1;shadow=1;" vertex="1" parent="1">'
              f'<mxGeometry x="{LX}" y="{LY}" width="620" height="72" as="geometry"/></mxCell>')
@@ -184,7 +191,7 @@ for i, (name, (color, dashed)) in enumerate(LG):
 xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<mxfile host="app.diagrams.net">\n'
        '<diagram name="CA v2 — Cloud Architecture" id="ca-v2">'
        '<mxGraphModel dx="1400" dy="900" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" '
-       'arrows="1" fold="1" page="1" pageScale="1" pageWidth="1940" pageHeight="1240" math="0" shadow="0" background="#FFFFFF">'
+       'arrows="1" fold="1" page="1" pageScale="1" pageWidth="2010" pageHeight="1240" math="0" shadow="0" background="#FFFFFF">'
        '<root><mxCell id="0"/><mxCell id="1" parent="0"/>\n'
        + "\n".join(cells + edges) + '\n</root></mxGraphModel></diagram></mxfile>\n')
 

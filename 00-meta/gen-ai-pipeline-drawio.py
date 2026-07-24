@@ -16,7 +16,7 @@ STAGES = [
     ("Ingestion\n(적재 · 원본 불변)", ("#dae8fc", "#6c8ebf"), [
         "presigned PUT → S3 pending/", "메타 저장 (videos row)", "상태 = UPLOADED"]),
     ("Preprocess\n(전처리)", ("#fff2cc", "#d6b656"), [
-        "1080p·30fps 다운스케일 ★필수 전제", "FFmpeg 인코딩·썸네일 추출", "상태 = ENCODING"]),
+        "1080p·30fps 다운스케일 — 필수 전제", "FFmpeg 인코딩·썸네일 추출", "상태 = ENCODING"]),
     ("AI Analyze\n(분석)", ("#d0e8e4", "#4a9086"), [
         "PySceneDetect 장면 분할", "CLIP 하이라이트 스코어링", "YOLO 얼굴·차량번호 탐지 → 블러", "pHash 중복 검사", "상태 = BLURRING"]),
     ("Output\n(산출)", ("#d5e8d4", "#82b366"), [
@@ -38,12 +38,13 @@ def box(label, x, y, w, h, style):
                  f'<mxGeometry x="{x:.0f}" y="{y:.0f}" width="{w}" height="{h}" as="geometry"/></mxCell>')
     return i
 
-def edge(s, t, extra="", label=""):
+def edge(s, t, extra="", label="", points=None):
     i = nid("e")
     v = f' value={q((label))}' if label else ''
+    pts = ('<Array as="points">' + "".join(f'<mxPoint x="{px:.0f}" y="{py:.0f}"/>' for px, py in points) + '</Array>') if points else ''
     edges.append(f'<mxCell id="{i}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
-                 f'strokeColor=#666666;fontSize=9;fontColor=#666666;{extra}" edge="1" parent="1" '
-                 f'source="{s}" target="{t}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+                 f'strokeColor=#666666;fontSize=9;fontColor=#666666;jumpStyle=arc;jumpSize=8;{extra}" edge="1" parent="1" '
+                 f'source="{s}" target="{t}"><mxGeometry relative="1" as="geometry">{pts}</mxGeometry></mxCell>')
 
 # 단계 컬럼
 stage_ids, col_h = [], []
@@ -55,7 +56,7 @@ for i, (title, (fill, stroke), items) in enumerate(STAGES):
               f"rounded=1;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};verticalAlign=top;fontStyle=1;fontSize=11;")
     for j, it in enumerate(items):
         st = "rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#666666;fontSize=10;"
-        if "★" in it:
+        if "필수 전제" in it:
             st = "rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;"
         box(it, x + PAD, Y0 + 34 + j * (BH + 8), CW - 2 * PAD, BH, st)
     stage_ids.append(gid)
@@ -67,7 +68,7 @@ W_total = X0 + len(STAGES) * (CW + GAPX) - GAPX
 H_max = max(col_h)
 
 # 제어 밴드 (상단)
-ctrl = box("제어 — 상시 Python FastAPI AI 서버 (ADR MSG-143 · Lambda/GPU 기각)", X0, 40, W_total - X0, 70,
+ctrl = box("제어 — 상시 Python FastAPI AI 서버 (Lambda·GPU 대안 기각)", X0, 40, W_total - X0, 70,
            "rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;verticalAlign=top;fontStyle=1;fontSize=11;")
 k1 = box("Kafka video.uploaded 컨슈머", X0 + PAD, 40 + 30, 230, BH,
          "rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10;")
@@ -75,6 +76,8 @@ k2 = box("상태 머신 UPLOADED→ENCODING→BLURRING→READY/FAILED", X0 + PAD
          "rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10;")
 k3 = box("실패 시 재시도·FAILED 마킹", X0 + PAD + 690, 40 + 30, 220, BH,
          "rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10;")
+k4 = box("실측 (dev EC2): 1080p 30초 E2E 4.3분", X0 + PAD + 930, 40 + 30, 300, BH,
+         "rounded=1;whiteSpace=wrap;html=1;fillColor=#ffffff;strokeColor=#9673a6;fontSize=10;fontStyle=2;")
 edge(ctrl, stage_ids[2], "exitX=0.5;exitY=1;entryX=0.5;entryY=0;dashed=1;endArrow=open;", "트리거")
 
 # 저장 계층 (하단)
@@ -94,7 +97,13 @@ edge(stage_ids[4], s3, "exitX=0.7;exitY=1;entryX=0.5;entryY=0;endArrow=open;", "
 # 소비자 (우측)
 cons = box("소비자&#10;앱 재생 (presigned GET)&#10;격자 썸네일 · 하이라이트 확인", W_total + 30, Y0 + 40, 200, 80,
            "rounded=1;whiteSpace=wrap;html=1;dashed=1;fillColor=#ffffff;strokeColor=#666666;fontSize=10;verticalAlign=top;")
-edge(s2, cons, "exitX=1;exitY=0.5;entryX=0;entryY=1;dashed=1;endArrow=open;", "read")
+edge(s2, cons, "exitX=0.5;exitY=1;entryX=0.5;entryY=1;dashed=1;endArrow=open;", "read",
+     points=[(X0 + PAD + 405, SY + 115), (W_total + 130, SY + 115)])
+
+# 색 규칙 캡션
+box("색 = 파이프라인 단계 · 저장소 실린더 = 담긴 데이터의 단계 색 (원본=Source · 메타=Ingestion · 산출=Output)",
+    X0, SY + 128, 760, 18,
+    "text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9.5;fontColor=#6B7075;")
 
 xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<mxfile host="app.diagrams.net">\n'
        '<diagram name="+ AI Pipeline Architecture" id="ai-pipeline">'

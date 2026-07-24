@@ -17,12 +17,15 @@ GRAYS = "#8A8F94"
 # (그룹명, x, y, w, 박스 [ (이름, 신규여부) ], cols)
 # 좌표는 아래에서 계산 — 여기선 내용만
 CLIENTS = [("Mobile App (사용자)", 0), ("Web App (사용자)", 0), ("Admin Console (운영자)", 0), ("Sponsor Portal (광고주·P2)", 0)]
-SERVICES = [("Auth Service", 0), ("Grid Service", 0), ("Video Service", 0),
-            ("Region Service", 0), ("Collection Service", 0), ("Mission Service", 1),
-            ("Social Service", 0), ("Notification Service", 0), ("Moderation Service", 0)]
-CACHES = [("Hot Zone Cache", 0), ("Token Cache", 0), ("Mission Cache", 1)]
-WORKERS = [("Encoding Worker", 0), ("AI Highlight·Blur Worker", 0), ("Badge·Streak Batch Worker", 0),
-           ("Region Stats Batch Worker", 0), ("Mission Sync Worker (축제·코스)", 1)]
+# 배치 원칙: 오른쪽(캐시·데이터)으로 선이 나가는 박스는 맨 오른쪽 열(c2)에 — 같은 행 박스 관통 방지
+SERVICES = [("Auth Service", 0), ("Social Service", 0), ("Collection Service", 0),
+            ("Region Service", 0), ("Moderation Service", 0), ("Grid Service", 0),
+            ("Notification Service", 0), ("Video Service", 0), ("Mission Service", 1)]
+CACHES = [("Token Cache", 0), ("Hot Zone Cache", 0), ("Mission Cache", 1)]
+# 트리거 경로별 분리: Event Queue → 이벤트 소비형 · Batch Scheduler → 주기 실행형
+EVENT_WORKERS = [("Encoding Worker", 0), ("AI Highlight·Blur Worker", 0)]
+BATCH_WORKERS = [("Badge·Streak Batch Worker", 0), ("Region Stats Batch Worker", 0),
+                 ("Mission Sync Worker (축제·코스)", 1)]
 EXTERNALS = [("OAuth 제공자", 0), ("지도 타일 제공자", 0), ("푸시 게이트웨이", 0)]
 
 BW, BH, GPAD, GHDR, BGAP = 190, 36, 14, 30, 12
@@ -61,14 +64,16 @@ def vgroup(key, title, x, y, items, w=BW + 2 * GPAD):
         box(name, name, x + GPAD, y + GHDR + i * (BH + BGAP), new=bool(new))
     return h
 
-def edge(s, t, extra="exitX=1;exitY=0.5;entryX=0;entryY=0.5;", dashed=False, label="", color="#6B7075"):
+def edge(s, t, extra="exitX=1;exitY=0.5;entryX=0;entryY=0.5;", dashed=False, label="", color="#6B7075", points=None):
     eid = nid("e")
     v = f' value={q((label))}' if label else ''
     d = "dashed=1;dashPattern=5 4;" if dashed else ""
+    pts = ('<Array as="points">' + "".join(f'<mxPoint x="{px}" y="{py}"/>' for px, py in points) + '</Array>') if points else ''
     edges.append(f'<mxCell id="{eid}"{v} style="edgeStyle=orthogonalEdgeStyle;rounded=1;html=1;'
-                 f'strokeColor={color};strokeWidth=1;endArrow=open;endSize=6;{d}fontSize=9;fontColor={color};'
+                 f'strokeColor={color};strokeWidth=1;endArrow=open;endSize=6;{d}jumpStyle=arc;jumpSize=8;'
+                 f'fontSize=9;fontColor={color};'
                  f'labelBackgroundColor=#FFFFFF;{extra}" edge="1" parent="1" '
-                 f'source="{ids[s]}" target="{ids[t]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+                 f'source="{ids[s]}" target="{ids[t]}"><mxGeometry relative="1" as="geometry">{pts}</mxGeometry></mxCell>')
 
 Y0 = 90
 
@@ -89,24 +94,28 @@ group("ServiceG", "Service", SX, SY, sw, sh)
 for i, (name, new) in enumerate(SERVICES):
     box(name, name, SX + GPAD + (i % scols) * (BW + BGAP), SY + GHDR + (i // scols) * (BH + BGAP), new=bool(new))
 
-# ── Message Queue (Service 아래) ──
+# ── Message Queue (Video Service(c1) 바로 아래 — 업로드 이벤트 수직 직결) ──
 QY = SY + sh + 40
-group("QueueG", "Message Queue", SX, QY, BW + 2 * GPAD, GHDR + BH + 2 * GPAD)
-box("Event Queue", "Event Queue", SX + GPAD, QY + GHDR)
+QX = SX + BW + BGAP
+group("QueueG", "Message Queue", QX, QY, BW + 2 * GPAD, GHDR + BH + 2 * GPAD)
+box("Event Queue", "Event Queue", QX + GPAD, QY + GHDR)
 
 # ── Scheduler (Queue 옆) ──
-group("SchedG", "Scheduler", SX + BW + 2 * GPAD + 40, QY, BW + 2 * GPAD, GHDR + BH + 2 * GPAD)
-box("Batch Scheduler", "Batch Scheduler", SX + BW + 3 * GPAD + 40, QY + GHDR)
+SCX = QX + BW + 2 * GPAD + 30
+group("SchedG", "Scheduler", SCX, QY, BW + 2 * GPAD, GHDR + BH + 2 * GPAD)
+box("Batch Scheduler", "Batch Scheduler", SCX + GPAD, QY + GHDR)
 
-# ── Worker (하단) ──
+# ── Worker (하단, 트리거 경로별 2그룹: Queue 아래 이벤트형 · Scheduler 아래 배치형) ──
 WY = QY + GHDR + BH + 2 * GPAD + 40
-wcols = 3
-ww = wcols * (BW + BGAP) - BGAP + 2 * GPAD
-wrows = -(-len(WORKERS) // wcols)
-wh = GHDR + wrows * (BH + BGAP) - BGAP + 2 * GPAD
-group("WorkerG", "Worker", SX, WY, ww, wh)
-for i, (name, new) in enumerate(WORKERS):
-    box(name, name, SX + GPAD + (i % wcols) * (BW + BGAP), WY + GHDR + (i // wcols) * (BH + BGAP), new=bool(new))
+evw = 2 * (BW + BGAP) - BGAP + 2 * GPAD
+group("EventWorkerG", "Worker · Event-driven", SX, WY, evw, GHDR + BH + 2 * GPAD)
+for i, (name, new) in enumerate(EVENT_WORKERS):
+    box(name, name, SX + GPAD + i * (BW + BGAP), WY + GHDR, new=bool(new))
+BWX = 1090
+wh = GHDR + 2 * (BH + BGAP) - BGAP + 2 * GPAD
+group("BatchWorkerG", "Worker · Batch", BWX, WY, evw, wh)
+for i, (name, new) in enumerate(BATCH_WORKERS):
+    box(name, name, BWX + GPAD + (i % 2) * (BW + BGAP), WY + GHDR + (i // 2) * (BH + BGAP), new=bool(new))
 
 # ── Cache (Service 오른쪽) ──
 CX = SX + sw + 60
@@ -126,17 +135,17 @@ h_ext = vgroup("ExternalG", "External", 40, EY, EXTERNALS)
 for name, _ in CLIENTS:
     edge(name, "API Gateway")
 edge("API Gateway", "ServiceG")
-edge("ServiceG", "Main Database", "exitX=1;exitY=0.3;entryX=0;entryY=0.5;")
+edge("ServiceG", "Main Database", "exitX=1;exitY=0.1;entryX=0.5;entryY=0;", points=[(1699, 109)])
 edge("Grid Service", "Hot Zone Cache")
-edge("Auth Service", "Token Cache", "exitX=1;exitY=0.2;entryX=0;entryY=0.3;")
+edge("Auth Service", "Token Cache", "exitX=0.7;exitY=0;entryX=0.5;entryY=0;", points=[(777, 66), (1421, 66)])
 edge("Mission Service", "Mission Cache", color=GOLD)
-edge("Video Service", "Object Storage", "exitX=1;exitY=0.8;entryX=0;entryY=0.2;")
-edge("Video Service", "Event Queue", "exitX=0.5;exitY=1;entryX=0.5;entryY=0;", dashed=True, label="업로드 이벤트")
+edge("Video Service", "Object Storage", "exitX=0.8;exitY=1;entryX=0.5;entryY=1;", points=[(998, 300), (1699, 300)])
+edge("Video Service", "Event Queue", "exitX=0.3;exitY=1;entryX=0.5;entryY=0;", dashed=True, label="업로드 이벤트")
 edge("Event Queue", "AI Highlight·Blur Worker", "exitX=0.5;exitY=1;entryX=0.5;entryY=0;", dashed=True)
-edge("Batch Scheduler", "WorkerG", "exitX=0.5;exitY=1;entryX=0.7;entryY=0;", dashed=True, label="주기 실행")
-edge("WorkerG", "Main Database", "exitX=1;exitY=0.5;entryX=0.5;entryY=1;")
-edge("AI Highlight·Blur Worker", "Object Storage", "exitX=1;exitY=0.5;entryX=0;entryY=0.9;", dashed=True)
-edge("Mission Sync Worker (축제·코스)", "Main Database", "exitX=1;exitY=0.5;entryX=0.2;entryY=1;", color=GOLD)
+edge("Event Queue", "Encoding Worker", "exitX=0.2;exitY=1;entryX=0.5;entryY=0;", dashed=True)
+edge("Batch Scheduler", "BatchWorkerG", "exitX=0.5;exitY=1;entryX=0.24;entryY=0;", dashed=True, label="주기 실행")
+edge("BatchWorkerG", "Main Database", "exitX=1;exitY=0.5;entryX=1;entryY=0.5;", points=[(1840, 525), (1840, 148)])
+edge("AI Highlight·Blur Worker", "Object Storage", "exitX=0.5;exitY=1;entryX=0;entryY=0.9;", dashed=True, points=[(941, 616), (1560, 616), (1560, 238)])
 edge("Auth Service", "OAuth 제공자", "exitX=0;exitY=0.5;entryX=1;entryY=0.2;", dashed=True)
 edge("Mobile App (사용자)", "지도 타일 제공자", "exitX=0;exitY=0.5;entryX=0;entryY=0;", dashed=True)
 edge("Notification Service", "푸시 게이트웨이", "exitX=0;exitY=1;entryX=1;entryY=0.5;", dashed=True)

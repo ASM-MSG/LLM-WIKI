@@ -24,7 +24,7 @@ GROUPS = [
     ("계정·권한", BLUE, [
         "카카오 로그인", "Apple·로컬 로그인", "위치·카메라 권한 동의",
         "프로필 조회", "프로필 수정 (닉네임·색상·이미지)", "로그아웃", "계정 삭제"]),
-    ("5초 촬영·업로드", ORANGE, [
+    ("촬영·업로드 (≤30초)", ORANGE, [
         "현재 위치 영상 촬영", "갤러리 영상 선택", "업로드 진행 확인",
         "AI 하이라이트 구간 조정", "AI 블러 확인·토글", "공개 범위 선택",
         "영상 교체", "영상 삭제"]),
@@ -39,7 +39,7 @@ GROUPS = [
     ("개인 도감·게임화", PINK, [
         "수집 요약 조회", "도감 지도 뷰 확인", "갤러리 열람·정렬 변경",
         "격자별 내 영상 열람", "뱃지 목록·필터 확인", "스트릭 확인",
-        "지역별 수집률 조회", "도감 공개범위 변경"]),
+        "지역별 탐험률 조회", "도감 공개범위 변경"]),
     ("안전", RED, ["영상 신고 사유 선택·제출", "신고 처리", "사용자 차단"]),
     ("운영", PURPLE, ["통계 모니터링", "Trust Score 관리", "미션 수동 등록"]),
     ("소셜 (P2)", GRAY, [
@@ -57,15 +57,15 @@ RELS = [
     ("사용자 차단", "신고 처리", "extend"),
 ]
 
-# (액터명, 이모지, 색, 연결 그룹)
+# (액터명, 색, 연결 그룹)
 ACTORS = [
-    ("사용자", "🧑‍🎓", ("#EAF3E2", "#8FBF7B"),
-     ["계정·권한", "5초 촬영·업로드", "지도 탐색·시청", "미션·이벤트 (신규)", "개인 도감·게임화", "안전", "소셜 (P2)"]),
-    ("운영자", "🧑‍💼", ("#F6E4DC", "#C0684A"), ["안전", "운영"]),
-    ("스폰서", "🧑‍💼", ("#FBF6E4", "#D6A34A"), ["스폰서 활동 (P2)"]),
+    ("사용자", ("#EAF3E2", "#8FBF7B"),
+     ["계정·권한", "촬영·업로드 (≤30초)", "지도 탐색·시청", "미션·이벤트 (신규)", "개인 도감·게임화", "안전", "소셜 (P2)"]),
+    ("운영자", ("#F6E4DC", "#C0684A"), ["안전", "운영"]),
+    ("스폰서", ("#FBF6E4", "#D6A34A"), ["스폰서 활동 (P2)"]),
 ]
 
-GRID = [["계정·권한", "5초 촬영·업로드", "지도 탐색·시청"],
+GRID = [["계정·권한", "촬영·업로드 (≤30초)", "지도 탐색·시청"],
         ["미션·이벤트 (신규)", "개인 도감·게임화", "안전"],
         ["소셜 (P2)", "스폰서 활동 (P2)", "운영"]]
 
@@ -142,25 +142,24 @@ for r, row in enumerate(GRID):
 # ── include / extend ──
 for src, dst, kind in RELS:
     eid = new_id("e")
+    off = ' x="-0.45"' if src.startswith("AI") else ''
     edges.append(
         f'<mxCell id="{eid}" value="&#171;{kind}&#187;" '
         f'style="endArrow=open;endFill=0;endSize=8;html=1;strokeColor=#7F868E;strokeWidth=1;dashed=1;dashPattern=6 4;'
         f'fontSize=9;fontStyle=2;fontColor=#6B7075;labelBackgroundColor=#F1F2F4;" edge="1" parent="1" '
-        f'source="{uc_id[src]}" target="{uc_id[dst]}"><mxGeometry relative="1" as="geometry"/></mxCell>')
+        f'source="{uc_id[src]}" target="{uc_id[dst]}"><mxGeometry{off} relative="1" as="geometry"/></mxCell>')
 
-# ── 액터 (이모지 원 + 라벨) ──
+# ── 액터 (UML 스틱 피겨) ──
 actor_xy = {"사용자": (60, row_y[0] + 160),
             "운영자": (X0 + 3 * (GW + GAPX) - GAPX + 60, row_y[1] + 40),
             "스폰서": (60, row_y[2] + 40)}
-for name, emoji, (fill, stroke), targets in ACTORS:
+for name, (fill, stroke), targets in ACTORS:
     ax, ay = actor_xy[name]
     aid = new_id("a")
-    add(f'<mxCell id="{aid}" value={quoteattr(emoji)} '
-        f'style="ellipse;whiteSpace=wrap;html=1;fillColor={fill};strokeColor={stroke};strokeWidth=1.5;fontSize=34;shadow=1;" '
-        f'vertex="1" parent="1"><mxGeometry x="{ax:.0f}" y="{ay:.0f}" width="64" height="64" as="geometry"/></mxCell>')
-    add(f'<mxCell id="{aid}l" value={q((name))} '
-        f'style="text;html=1;strokeColor=none;fillColor=none;align=center;fontSize=11;fontStyle=1;fontColor=#2B2B2B;" '
-        f'vertex="1" parent="1"><mxGeometry x="{ax-18:.0f}" y="{ay+66:.0f}" width="100" height="18" as="geometry"/></mxCell>')
+    add(f'<mxCell id="{aid}" value={q((name))} '
+        f'style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;'
+        f'fontSize=11;fontStyle=1;strokeColor={stroke};strokeWidth=2;" '
+        f'vertex="1" parent="1"><mxGeometry x="{ax+14:.0f}" y="{ay:.0f}" width="36" height="60" as="geometry"/></mxCell>')
     for t in targets:
         eid = new_id("e")
         edges.append(
@@ -171,8 +170,8 @@ for name, emoji, (fill, stroke), targets in ACTORS:
 lx, ly = X0, total_h + 10
 add(f'<mxCell id="lgbox" value="" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#D3D3D3;strokeWidth=1;shadow=1;" '
     f'vertex="1" parent="1"><mxGeometry x="{lx}" y="{ly}" width="760" height="66" as="geometry"/></mxCell>')
-add(f'<mxCell id="lg_a" value="🧑‍🎓" style="ellipse;whiteSpace=wrap;html=1;fillColor=#EAF3E2;strokeColor=#8FBF7B;strokeWidth=1.5;fontSize=18;" '
-    f'vertex="1" parent="1"><mxGeometry x="{lx+16}" y="{ly+16}" width="34" height="34" as="geometry"/></mxCell>')
+add(f'<mxCell id="lg_a" value="" style="shape=umlActor;html=1;strokeColor=#5B6066;strokeWidth=1.5;" '
+    f'vertex="1" parent="1"><mxGeometry x="{lx+22}" y="{ly+14}" width="22" height="38" as="geometry"/></mxCell>')
 add(f'<mxCell id="lg_a2" value="액터" style="text;html=1;strokeColor=none;fillColor=none;fontSize=10;fontColor=#2B2B2B;" '
     f'vertex="1" parent="1"><mxGeometry x="{lx+54}" y="{ly+24}" width="40" height="18" as="geometry"/></mxCell>')
 add(f'<mxCell id="lg_u" value="유즈케이스 (IA 리프)" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#6B7075;strokeWidth=1.5;fontSize=9;fontStyle=1;" '
