@@ -19,10 +19,12 @@ _아직 없음_
 - [[FillMap DB Schema v5 MVP]] — MVP 테이블 기준 (KangJeong)
 - [[FillMap 지도·격자 DB 설계 MVP]] — 지도 도메인 DB 상세·쿼리·인덱스
 - [[FillMap DB 자료형·ENUM·GeoJSON 기준]] — 타입·ENUM 10종·PostGIS·GeoJSON
-- [[다이어그램 모음]] — 제출용 다이어그램 6종 포인터
+- [[FE 격자 계약 프론트-백 합의]] — 격자=전역 고정 눈금 정정, 네이버 v3 직결, zone은 MSG-234 보류(행정동 폴백)
+- [[다이어그램 모음]] — 제출용 다이어그램 7종 포인터 (v2 세트 + AI Pipeline·User Journey v2)
 
 ## 04-decisions (ADR)
 - [[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]] — 영상 직접 연결 기각, 탐험률=동 단위 확정, FE 격자 로컬 산술 계약
+- [[미션 후속 결정 코스 포토스팟 방식]] — 코스 판정=포토스팟 N곳 중 target, 표시·판정 저장 분리, 무기간·스탬프 비회수, 팝업 크롤링 자문 해소
 - [[ADR 격자 행정동 라벨 grids.region_code]] — 행정동 라벨은 grids에 격자당 1회 저장, 동 단위 영상 조회 신설 (MSG-167)
 - [[ADR AI 처리 실행 환경 FastAPI]] — 상시 FastAPI 확정, Lambda·GPU 기각 (MSG-143)
 - [[ADR 격자 표시명 zone]] — "홍대 A-14" = 수동 zone + 좌표 산술

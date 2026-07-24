@@ -20,3 +20,6 @@
 - 2026-07-22 — Confluence 신규 1건 ingest: MSG-167 격자 행정동 라벨 설계 결정(cf-22216705) → [[ADR 격자 행정동 라벨 grids.region_code]]. lastSync 08:20Z.
 - 2026-07-23 — 기획회의 녹음(25분 m4a) whisper-cpp(large-v3-turbo+VAD) 전사 → raw 회의록·srt 생성, [[2026-07-23 기획회의 미션·이벤트 표시 방식]] ingest (05-meetings). 화자 분리는 내용 기반 추정.
 - 2026-07-23 — Confluence sync 3건 (스크럼 2건 제외, 기수집 2건 skip): API 스펙 통합 발행본(cf-21430294) 스냅샷 백필, AI 블러 실측(cf-22773767)·MSG-167 후속 결정(cf-23035906) → [[AI 블러 파이프라인 실측 현황]]·[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]] ingest. 역링크 6건, index/hot 갱신. lastSync 05:29Z.
+- 2026-07-24 — Confluence sync 3건(코스 포토스팟 결정·FE 격자 계약·MSG-167 v2) → decisions 1·specs 1 신규 ingest, MSG-167 ADR·zone ADR(MSG-234 보류) 갱신, 역링크 3건.
+- 2026-07-24 — 다이어그램 v2 세트 전면 정비(gen 스크립트 8개): EDGE 문법 정렬 — CA(ALB 통로 배치·SaaS 우회·WAF 복원·ECR 아이콘 수정), SA(화면 색 축·상태 태그 제거·무손실 압축·AI 환경 재배치), SysA(관통선 수정·워커 트리거 분리), IA(무채색·리프 96 드릴다운·라벨 다이어트), UseCase(30초 정정), User Journey v2 신설(6행 매트릭스), AI Pipeline(실측 각주·read 선 우회). 전 장 용어 정합(서면 A-14·탐험률 동 단위·코스 포토스팟)·티켓번호·이모지 제거. 제출 PPTX 7장 재조립.
+
