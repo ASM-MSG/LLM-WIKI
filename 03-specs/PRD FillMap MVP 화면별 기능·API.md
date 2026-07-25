@@ -4,12 +4,12 @@ type: spec
 product: fillmap
 class: log
 status: active
-source: "raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md"
+source: "raw/confluence/2026-07-25 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md"
 created: 2026-07-18
-updated: 2026-07-21
-keywords: [PRD, 화면, 피그마, Figma, 와이어프레임, 7개 화면, 지도 홈, 격자 상세, 핫구역, 업로드, 개인 도감, 신고, API 매핑, MVP 범위]
+updated: 2026-07-25
+keywords: [PRD, 화면, 피그마, Figma, 와이어프레임, 7개 화면, 지도 홈, 격자 상세, 핫구역, 업로드, 개인 도감, 신고, API 매핑, MVP 범위, 상단 셀, 칩, 전체 모드 폐지, 단일 선택 토글]
 aliases: [화면별 PRD, PRD]
-related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[ADR 격자 표시명 zone]]", "[[Collection API 예정]]", "[[Region API 예정]]", "[[개인 도감 화면 확정 UX·API 설계]]"]
+related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[ADR 격자 표시명 zone]]", "[[Collection API 예정]]", "[[Region API 예정]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[기획확정 지도 홈 개편 상단 셀]]"]
 ---
 
 # PRD — FillMap MVP 화면별 기능·API 명세
@@ -34,9 +34,9 @@ related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[갭
 ## 제품 범위 (화면 지도)
 | 화면 | 상태 |
 | --- | --- |
-| ① 지도 홈 | 격자 색칠 [구현] · 핫구역/수집현황/추천 [미구현] |
+| ① 지도 홈 | 격자 색칠 [구현] · 핫구역/수집현황/추천 [미구현] · **(2026-07-25 개편)** 디폴트 개인 모드 + 상단 셀 4종(핫구역·축제·팝업·코스, 단일 선택 토글) — 전체/개인 모드 토글 폐지, [[기획확정 지도 홈 개편 상단 셀]] |
 | ② 격자 썸네일 뷰 | 단건 조회 [부분] · 영상목록 [미구현] |
-| ③ 핫구역 뷰 | [미구현] |
+| ③ 핫구역 뷰 | [미구현] · MVP 포함 확정(2026-07-24), 진입은 상단 셀 "핫구역" 칩 |
 | ④ 격자 상세 | 단건 [부분] · 표시명/영상목록/지표/신고 [미구현] |
 | ⑤ 영상 신고 모달 | [미구현] (reports 테이블만) |
 | ⑥ 영상 업로드 | 파이프라인 [구현] · AI [미구현] |
@@ -45,8 +45,8 @@ related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[갭
 구현 10개: auth 4종([[Auth API]]) · `GET /api/grids`(±{gridId})([[Grid API]]) · videos 4종([[Video API]]).
 
 ## MVP 결정 필요 (§4)
-핫구역 MVP 포함 여부 · AI 하이라이트/블러 필수 여부 · 미방문 격자 추천 로직 · 격자 표시명 쟁점([[ADR 격자 표시명 zone]]) · 신고 사유 enum/플로우 · 도감 공개 범위(친구는 Phase 2 → 공개/비공개 2단?) · Apple/로컬 로그인 화면.
+~~핫구역 MVP 포함 여부~~(2026-07-24 포함 확정, 2026-07-25 상단 셀 진입 — [[기획확정 지도 홈 개편 상단 셀]]) · AI 하이라이트/블러 필수 여부 · 미방문 격자 추천 로직 · 격자 표시명 쟁점([[ADR 격자 표시명 zone]]) · 신고 사유 enum/플로우 · 도감 공개 범위(친구는 Phase 2 → 공개/비공개 2단?) · Apple/로컬 로그인 화면.
 
 ## 출처
-raw: `raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md`
+raw: `raw/confluence/2026-07-25 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md` (이전: 2026-07-18 스냅샷)
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/18972709
