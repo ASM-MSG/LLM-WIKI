@@ -24,3 +24,5 @@
 - 2026-07-24 — 다이어그램 v2 세트 전면 정비(gen 스크립트 8개): EDGE 문법 정렬 — CA(ALB 통로 배치·SaaS 우회·WAF 복원·ECR 아이콘 수정), SA(화면 색 축·상태 태그 제거·무손실 압축·AI 환경 재배치), SysA(관통선 수정·워커 트리거 분리), IA(무채색·리프 96 드릴다운·라벨 다이어트), UseCase(30초 정정), User Journey v2 신설(6행 매트릭스), AI Pipeline(실측 각주·read 선 우회). 전 장 용어 정합(서면 A-14·탐험률 동 단위·코스 포토스팟)·티켓번호·이모지 제거. 제출 PPTX 7장 재조립.
 
 - 2026-07-25 — Confluence sync 4건(스크럼 1건 제외): 기획확정 지도 홈 개편(cf-24805388)·확정 기획 허브(cf-24739846) 신규, MSG-134 polling v4(§6 핫구역)·PRD v4(지도 홈 개편) 갱신분 → [[기획확정 지도 홈 개편 상단 셀]](04-decisions)·[[FillMap 확정 기획 모음]](02-planning) 신규 ingest, [[ADR viewport polling SLO]]·[[PRD FillMap MVP 화면별 기능·API]] 갱신, 역링크·index/hot 반영. lastSync 05:20Z.
+
+- 2026-07-26 — [[ADR region_stats recompute equi-join 치환]](04-decisions) 신규 작성: MSG-236 구현분(BE feature/MSG-236-recompute-equi, b23e148) 반영 — refreshRegionStats ST_Covers→equi 치환·등가성 논거·테스트 23개·벤치 설계(미실행). index/hot 갱신.
