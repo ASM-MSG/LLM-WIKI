@@ -2,6 +2,7 @@
 
 > ingest/편집 때마다 맨 위에 최신 항목 추가. 오래된 건 자연히 밀려남.
 
+- 2026-07-28 — [[ADR 장소 검색 카카오 로컬 프록시]] 작성: 검색 공급자 카카오 확정(데브톡 150397 공식 답변 — 네이버 지도 혼용 허용·실시간 호출만), 스모크 4곳 전건 적중(부산대→장전2동 등). MSG-251 신설, 234 지역 검색 이관, 238 축=행정동 확정(디자인 구 단위는 오기).
 - 2026-07-26 — [[ADR region_stats recompute equi-join 치환]] 작성: MSG-236 구현 완료(167 §D6 후속 실행) — refreshRegionStats의 ST_Covers LATERAL 2회를 grids.region_code equi로 치환, 무라벨 no-op 가드, 테스트 23개 통과. 잔여: 벤치 실측(bench-msg236.sql) → PR.
 - 2026-07-25 — [[기획확정 지도 홈 개편 상단 셀]] ingest: **전체 모드 완전 폐지**, 디폴트 개인 모드 + 상단 셀 4종(핫구역·지역 축제·팝업 스토어·코스 추천) 단일 선택 토글 (네이버 지도 칩 참고). 셀 UI 티켓 MSG-248 신설, MSG-189 폐지 후보. [[FillMap 확정 기획 모음]] 허브 신설, PRD·polling ADR §6 갱신.
 - 2026-07-24 — [[ADR viewport polling SLO]] 갱신(§6): MVP 확대로 핫구역 포함 — polling 유지, Redis ZSET(`ZINCRBY hotzone:{시간버킷}`)이 집계 원본, websocket은 라이브 UX 확정 시에만.

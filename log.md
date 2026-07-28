@@ -26,3 +26,5 @@
 - 2026-07-25 — Confluence sync 4건(스크럼 1건 제외): 기획확정 지도 홈 개편(cf-24805388)·확정 기획 허브(cf-24739846) 신규, MSG-134 polling v4(§6 핫구역)·PRD v4(지도 홈 개편) 갱신분 → [[기획확정 지도 홈 개편 상단 셀]](04-decisions)·[[FillMap 확정 기획 모음]](02-planning) 신규 ingest, [[ADR viewport polling SLO]]·[[PRD FillMap MVP 화면별 기능·API]] 갱신, 역링크·index/hot 반영. lastSync 05:20Z.
 
 - 2026-07-26 — [[ADR region_stats recompute equi-join 치환]](04-decisions) 신규 작성: MSG-236 구현분(BE feature/MSG-236-recompute-equi, b23e148) 반영 — refreshRegionStats ST_Covers→equi 치환·등가성 논거·테스트 23개·벤치 설계(미실행). index/hot 갱신.
+
+- 2026-07-28 — [[ADR 장소 검색 카카오 로컬 프록시]](04-decisions) 신규: MSG-251 공급자 결정 ingest — 카카오 로컬 채택 근거·약관 조건(캐시 금지)·스모크 실측, 지도 SDK ADR 재검토 트리거 발동 기록. index/hot 갱신.
