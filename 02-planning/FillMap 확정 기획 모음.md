@@ -9,7 +9,7 @@ created: 2026-07-25
 updated: 2026-07-25
 keywords: [확정 기획, 기획 모음, 허브, hub, 결정 목록, decisions index, 기획확정, 설계결정, ADR 목록, 지도 홈 개편, MVP 범위, 확정 사항]
 aliases: [확정 기획 허브, 기획 결정 모음, 확정 기획서]
-related: ["[[기획확정 지도 홈 개편 상단 셀]]", "[[ADR viewport polling SLO]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[ADR 격자 행정동 라벨 grids.region_code]]", "[[ADR AI 처리 실행 환경 FastAPI]]", "[[설계검토 미션·이벤트 기능 추가]]", "[[ADR 격자 표시명 zone]]", "[[ADR 지도 SDK 네이버 전환]]"]
+related: ["[[기획확정 지도 홈 개편 상단 셀]]", "[[ADR viewport polling SLO]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[ADR 격자 행정동 라벨 grids.region_code]]", "[[ADR AI 처리 실행 환경 FastAPI]]", "[[설계검토 미션·이벤트 기능 추가]]", "[[ADR 격자 표시명 zone]]", "[[ADR 지도 SDK 네이버 전환]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]"]
 ---
 
 # FillMap 확정 기획 모음 (허브)

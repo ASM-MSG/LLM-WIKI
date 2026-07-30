@@ -2,8 +2,10 @@
 
 > ingest/편집 때마다 맨 위에 최신 항목 추가. 오래된 건 자연히 밀려남.
 
+- 2026-07-30 — Confluence sync 잔여분 ingest: 신규 [[MSG-234 상권 작도 결정 공공데이터 검수]](공공데이터 초안 231건, **zone ADR 보류 해제·MSG-234 재개**) · 멘토링 2건([[2026-07-26 이광헌 멘토 멘토링]] PRD·스킬 분해·AI 검증 / [[2026-07-26 박원형 멘토 멘토링]] queryDSL·CQRS). 갱신: [[ADR 격자 표시명 zone]] 재개 상태, [[FillMap API 스펙 통합]] source→7/26 발행 스냅샷. (지도 홈 개편·확정 허브·viewport §6·PRD는 7/25 세션이 기수집)
 - 2026-07-28 — [[ADR 장소 검색 카카오 로컬 프록시]] 작성: 검색 공급자 카카오 확정(데브톡 150397 공식 답변 — 네이버 지도 혼용 허용·실시간 호출만), 스모크 4곳 전건 적중(부산대→장전2동 등). MSG-251 신설, 234 지역 검색 이관, 238 축=행정동 확정(디자인 구 단위는 오기).
 - 2026-07-26 — [[ADR region_stats recompute equi-join 치환]] 작성: MSG-236 구현 완료(167 §D6 후속 실행) — refreshRegionStats의 ST_Covers LATERAL 2회를 grids.region_code equi로 치환, 무라벨 no-op 가드, 테스트 23개 통과. 잔여: 벤치 실측(bench-msg236.sql) → PR.
+- 2026-07-26 — [[아키텍처 V2final 멘토 리뷰]] ingest + Quick Fix 반영: SA·SysA 캡션에 서비스 매핑 명시, API 경로 33개 `/api/v1` 통일, "API Gateway = ALB+WAF" 각주 (gen 스크립트 수정·재생성). **다이어그램 동결**. CQRS 라벨은 팀 확인 보류, B(이중 인코딩 제거·p95 실측)는 코드 저장소 작업.
 - 2026-07-25 — [[기획확정 지도 홈 개편 상단 셀]] ingest: **전체 모드 완전 폐지**, 디폴트 개인 모드 + 상단 셀 4종(핫구역·지역 축제·팝업 스토어·코스 추천) 단일 선택 토글 (네이버 지도 칩 참고). 셀 UI 티켓 MSG-248 신설, MSG-189 폐지 후보. [[FillMap 확정 기획 모음]] 허브 신설, PRD·polling ADR §6 갱신.
 - 2026-07-24 — [[ADR viewport polling SLO]] 갱신(§6): MVP 확대로 핫구역 포함 — polling 유지, Redis ZSET(`ZINCRBY hotzone:{시간버킷}`)이 집계 원본, websocket은 라이브 UX 확정 시에만.
 - 2026-07-24 — [[미션 후속 결정 코스 포토스팟 방식]] ingest: 코스 판정을 전체 격자→포토스팟(스팟 N곳 중 target)으로 변경, 표시(missions.path)·판정(mission_grids) 분리, 무기간·스탬프 비회수. 팝업 크롤링 법적 리스크 해소.

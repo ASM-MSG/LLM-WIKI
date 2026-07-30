@@ -9,7 +9,7 @@ created: 2026-07-23
 updated: 2026-07-24
 keywords: [MSG-167, 후속 결정, region_code, grids, 라벨, 탐험률, 동 단위, 행정동, 격자 표시명, zone, 서면 A-14, FE 계약, grid contract, 격자 사전 생성, 전역 고정 눈금, GridEncoder, Math.floor, GRID_LAT_STEP, GRID_LNG_STEP, 0.0009, 0.00115, regionName, nullable, PR 52, 멘토 피드백, 영상 직접 연결 기각]
 aliases: [MSG-167 후속, 격자 계약, FE 격자 계약, 탐험률 축 확정]
-related: ["[[ADR 격자 행정동 라벨 grids.region_code]]", "[[ADR 격자 표시명 zone]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[Grid API]]", "[[FillMap API 스펙 통합]]", "[[2026-07-23 기획회의 미션·이벤트 표시 방식]]", "[[FE 격자 계약 프론트-백 합의]]"]
+related: ["[[ADR 격자 행정동 라벨 grids.region_code]]", "[[ADR 격자 표시명 zone]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[Grid API]]", "[[FillMap API 스펙 통합]]", "[[2026-07-23 기획회의 미션·이벤트 표시 방식]]", "[[FE 격자 계약 프론트-백 합의]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]"]
 ---
 
 # ADR MSG-167 후속 결정 — 라벨 저장 위치 Q&A · 탐험률 축 · 격자 표시명 · FE 격자 계약

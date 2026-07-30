@@ -23,8 +23,13 @@
 - 2026-07-24 — Confluence sync 3건(코스 포토스팟 결정·FE 격자 계약·MSG-167 v2) → decisions 1·specs 1 신규 ingest, MSG-167 ADR·zone ADR(MSG-234 보류) 갱신, 역링크 3건.
 - 2026-07-24 — 다이어그램 v2 세트 전면 정비(gen 스크립트 8개): EDGE 문법 정렬 — CA(ALB 통로 배치·SaaS 우회·WAF 복원·ECR 아이콘 수정), SA(화면 색 축·상태 태그 제거·무손실 압축·AI 환경 재배치), SysA(관통선 수정·워커 트리거 분리), IA(무채색·리프 96 드릴다운·라벨 다이어트), UseCase(30초 정정), User Journey v2 신설(6행 매트릭스), AI Pipeline(실측 각주·read 선 우회). 전 장 용어 정합(서면 A-14·탐험률 동 단위·코스 포토스팟)·티켓번호·이모지 제거. 제출 PPTX 7장 재조립.
 
+- 2026-07-24 — [[FillMap API 스펙 통합]] 현황판 코드 실사 갱신 (BE main 04f1ae0 + Figma 화면 실사): 구현 17→23개 승격(재생 MSG-206·visibility MSG-162·탐험률 by-point/by-grid·도감 grids·동 단위 videos), 6xxx 대역·3420 확정, 구현 예정을 Mission 도메인으로 교체, Figma 파생 갭 3건(신고·공유·통합 검색)·도감 뱃지/스트릭 갭 신설, 열린 결정 4건 해소 반영.
+- 2026-07-24 — IA v2 Figma 코멘트 리뷰 반영 (kangjeongmin·최규호, node 13775-6269 핀 12건): 게스트 모드 신설(비로그인 지도·핫구역 열람, 업로드·도감 로그인 유도), 세션 유지·내 색 팔레트·구역/행정동 경계 레이어·내 동네 채우기·거리별 버튼·요약 카드 삭제, 미션 진행도 표기는 개인 도감 스탬프북으로 이동, 격자 표시명 '서면 A-14' 제거(행정동 이름 기본 — MSG-234 보류 정합). gen-ia 재생성(리프 96→86)·PPTX s1 교체.
+- 2026-07-24 — IA 사용자 직접 수정분(16:15) 백포트 + 파급 반영: IA에서 (미정) 7건 해소(핫구역 순위 산정=조회수 확정, AI 하이라이트·블러, 계정 삭제, 친구 찾기, 사유 선택, 실패·블라인드, 조회수), 미션 칩 '팝업' 추가, 핫구역 지수→순위 용어 통일, 교체·삭제에 '공유' 추가 → gen-ia 백포트·재생성(리프 87). 파급: UseCase(공유·비로그인 열람 추가, 미방문 추천·내 동네·진행도 제거, 55개), SA(요약 카드 행 삭제·지도홈→Collection 연결 제거, 게스트 열람 행, 조회수 산정, 표시명 행정동, visibility·reissue·videos?regionCode 라벨 현행화, boundary 행 제거). UserJourney·SysA·CA·AI Pipeline은 무영향 확인. PPTX s0(유스케이스 복구)·s1(IA)·s3(SA) 교체.
 - 2026-07-25 — Confluence sync 4건(스크럼 1건 제외): 기획확정 지도 홈 개편(cf-24805388)·확정 기획 허브(cf-24739846) 신규, MSG-134 polling v4(§6 핫구역)·PRD v4(지도 홈 개편) 갱신분 → [[기획확정 지도 홈 개편 상단 셀]](04-decisions)·[[FillMap 확정 기획 모음]](02-planning) 신규 ingest, [[ADR viewport polling SLO]]·[[PRD FillMap MVP 화면별 기능·API]] 갱신, 역링크·index/hot 반영. lastSync 05:20Z.
-
+- 2026-07-26 — 멘토 아키텍처 V2final 리뷰(7/25 docx) ingest → [[아키텍처 V2final 멘토 리뷰]] (06-research). raw는 `raw/Architecture Map/2026-07-25 FillMap 아키텍처 V2final 멘토 리뷰.docx`.
+- 2026-07-26 — 멘토 리뷰 Quick Fix 반영: gen-apparch(A-2 API 경로 33개 /api/v1 통일 + A-1 서비스 매핑 캡션), gen-sysa(A-1 매핑 캡션 + A-3 "API Gateway = ALB+WAF" 각주) 수정 후 SA·SysA v2 draft xml 재생성. CQRS 라벨은 팀 확인 보류. 이후 다이어그램 동결(멘토 권고).
+- 2026-07-26 — Confluence 발행본(cf-21430294) v4 갱신: 7/24 코드 실사분을 발행본에 반영 — 구현 17→23 승격(MSG-206·162·153·167·by-point/by-grid), 6xxx·3420 확정, Mission 🔜·Figma 갭 3건·열린 결정 9건 갱신, AI E2E 개통(MSG-168) 표기. 오늘 16시 박원형 멘토링 "API 스펙 점검" 대비.
 - 2026-07-26 — [[ADR region_stats recompute equi-join 치환]](04-decisions) 신규 작성: MSG-236 구현분(BE feature/MSG-236-recompute-equi, b23e148) 반영 — refreshRegionStats ST_Covers→equi 치환·등가성 논거·테스트 23개·벤치 설계(미실행). index/hot 갱신.
-
 - 2026-07-28 — [[ADR 장소 검색 카카오 로컬 프록시]](04-decisions) 신규: MSG-251 공급자 결정 ingest — 카카오 로컬 채택 근거·약관 조건(캐시 금지)·스모크 실측, 지도 SDK ADR 재검토 트리거 발동 기록. index/hot 갱신.
+- 2026-07-30 — Confluence sync 9건 조회(스크럼 6·회고 1 제외 — 지도 홈 개편·확정 허브·viewport §6·PRD v4는 7/25 세션 기수집이라 skip) → 신규 3: [[MSG-234 상권 작도 결정 공공데이터 검수]](04-decisions, cf-26181633+cf-26116098), [[2026-07-26 이광헌 멘토 멘토링]]·[[2026-07-26 박원형 멘토 멘토링]](05-meetings). 갱신: [[ADR 격자 표시명 zone]](MSG-234 보류 해제·재개), [[FillMap API 스펙 통합]](source→7/26 발행 스냅샷). 역링크 6건. lastSync 00:24Z.

@@ -9,7 +9,7 @@ created: 2026-07-23
 updated: 2026-07-23
 keywords: [AI, 블러, blur, 처리 시간, latency, 실측, benchmark, E2E, READY, NFR-003, 인코딩, YOLOv11n, 추론, inference, CPU, GPU, g4dn, OpenVINO, 프레임 스킵, stride, 워커, 처리량, throughput, 콜드 로드, t3.small, c7g, MSG-142, MSG-151, MSG-158, MSG-207]
 aliases: [AI 처리 시간 실측, 블러 파이프라인 벤치마크, AI 실측 현황]
-related: ["[[2026-07-21 AI Highlight-Blur 개발 기록]]", "[[ADR AI 처리 실행 환경 FastAPI]]", "[[FillMap API 스펙 통합]]", "[[PRD FillMap MVP 화면별 기능·API]]"]
+related: ["[[아키텍처 V2final 멘토 리뷰]]", "[[2026-07-21 AI Highlight-Blur 개발 기록]]", "[[ADR AI 처리 실행 환경 FastAPI]]", "[[FillMap API 스펙 통합]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[2026-07-26 이광헌 멘토 멘토링]]"]
 ---
 
 # AI 블러 파이프라인 — 모델·처리 시간 실측 현황
