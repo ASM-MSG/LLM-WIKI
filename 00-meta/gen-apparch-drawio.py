@@ -40,19 +40,19 @@ SCREENS = [
     ("① 지도 홈", [("내 격자 색칠 (뷰포트 폴링)", "구현"), ("미점령 격자 미표시 정책", "구현"),
                    ("미션 레이어 (면·선·점·경계)", "신규"), ("미션 칩 + 숫자 배지", "신규"),
                    ("미션 바텀시트 (3단)", "신규"), ("행정동 검색·자동완성", "미구현"),
-                   ("요약: 핫구역 TOP 5", "미구현"), ("요약: 추천·수집·탐험률", "미구현")]),
+                   ("게스트 열람 (지도·핫구역)", "신규")]),
     ("② 격자 썸네일", [("격자 요약 (점령·영상 수)", "부분"), ("최근 업로드·누적 조회수", "미구현"),
                        ("썸네일 그리드 (정렬 고정)", "미구현"), ("좋아요 · 취소", "미구현")]),
-    ("③ 핫구역", [("순위 리스트 (10분 업로드)", "미구현"), ("갱신 시각·카운트다운", "미구현"),
+    ("③ 핫구역", [("순위 리스트 (조회수 산정)", "미구현"), ("갱신 시각·카운트다운", "미구현"),
                   ("항목 탭 → 격자 상세", "미구현")]),
-    ("④ 격자 상세", [("격자 표시명 '서면 A-14'", "미구현"), ("행정 지역명·활동 지표", "미구현"),
+    ("④ 격자 상세", [("격자 표시명 (행정동)", "미구현"), ("행정 지역명·활동 지표", "미구현"),
                      ("격자 내 영상 목록", "미구현"), ("영상 재생 (상태 분기)", "미구현"),
-                     ("인근 미방문 격자 추천", "미구현"), ("영상 신고 진입", "미구현")]),
+                     ("영상 신고 진입", "미구현")]),
     ("⑤ 신고 모달", [("신고 사유 선택", "미구현"), ("제출 → 접수 안내", "미구현")]),
     ("⑥ 촬영·업로드", [("촬영 (격자 내 GPS 검증)", "구현"), ("갤러리 선택 (1~30초)", "구현"),
                        ("업로드·인코딩 진행 표시", "구현"), ("AI 하이라이트 구간 조정", "미구현"),
                        ("AI 블러 확인·토글", "미구현"), ("공개 범위 선택", "미구현"),
-                       ("스탬프 획득 연출", "신규"), ("영상 교체·삭제", "구현")]),
+                       ("스탬프 획득 연출", "신규"), ("영상 교체·삭제·공유", "구현")]),
     ("⑦ 개인 도감", [("요약 (격자·영상·뱃지·스트릭)", "미구현"), ("지도 뷰 (기존 API 재사용)", "구현"),
                      ("갤러리 뷰·정렬", "미구현"), ("뱃지 뷰·필터", "미구현"),
                      ("지역별 탐험률 (동 단위)", "미구현"), ("스탬프북", "신규"), ("공개범위 설정", "미구현")]),
@@ -62,24 +62,25 @@ SCREENS = [
 
 # (이름, 상태, 엔드포인트 행) — 행: (라벨, 상태, 주 호출 화면 | None)
 APIS = [
-    ("Auth API", "구현", [("POST /auth/signup · login", "구현", "로그인·온보딩"), ("POST /auth/logout", "구현", "설정·프로필"),
-                          ("POST /auth/oauth/{provider}", "구현", "로그인·온보딩"), ("POST /auth/refresh (예정)", "미구현", "로그인·온보딩")]),
-    ("Grid API", "구현", [("GET /api/grids (뷰포트)", "구현", "① 지도 홈"), ("GET /api/grids/{gridId}", "부분", "② 격자 썸네일")]),
-    ("Grid 확장 API", "미구현", [("GET /grids/{id}/videos", "미구현", "④ 격자 상세"), ("GET /api/grids/hot", "미구현", "③ 핫구역"),
-                                 ("POST·DEL /videos/{id}/likes", "미구현", "② 격자 썸네일")]),
-    ("Mission API", "신규", [("GET /api/missions/active", "신규", "① 지도 홈"), ("(bbox 없음 · TTL 1h 캐시)", "신규", "① 지도 홈")]),
-    ("Video 재생 API", "미구현", [("GET /api/videos/{videoId}", "미구현", "④ 격자 상세"), ("(presigned GET · 상태 분기)", "미구현", "④ 격자 상세")]),
-    ("Social·Report API", "미구현", [("POST /api/reports", "미구현", "⑤ 신고 모달"), ("POST /friends/requests (P2)", "P2", None),
-                                     ("PATCH /friends/requests (P2)", "P2", None), ("GET·DELETE /friends (P2)", "P2", None),
-                                     ("POST /friends/{id}/block (P2)", "P2", None)]),
-    ("Video API", "구현", [("POST /videos/presigned-url", "구현", "⑥ 촬영·업로드"), ("POST /api/videos (점령)", "구현", "⑥ 촬영·업로드"),
-                           ("PUT /api/videos/{videoId}", "구현", "⑥ 촬영·업로드"), ("DELETE /api/videos/{videoId}", "구현", "⑥ 촬영·업로드")]),
-    ("Collection API", "미구현", [("GET /collections/summary", "미구현", "⑦ 개인 도감"), ("GET /collections/grids", "미구현", "⑦ 개인 도감"),
-                                  ("GET /collections/{id}/videos", "미구현", "⑦ 개인 도감"), ("GET /collections/badges", "미구현", "⑦ 개인 도감")]),
-    ("Region API", "미구현", [("GET /regions/search", "미구현", "① 지도 홈"), ("GET /regions/stats", "미구현", "⑦ 개인 도감"),
-                              ("GET /regions/{code}", "미구현", "④ 격자 상세"), ("GET /regions/{code}/boundary", "미구현", "① 지도 홈")]),
-    ("User API", "미구현", [("GET /api/users/me", "미구현", "설정·프로필"), ("PATCH /api/users/me", "미구현", "설정·프로필"),
-                            ("DELETE /api/users/me", "미구현", "설정·프로필")]),
+    ("Auth API", "구현", [("POST /api/v1/auth/signup · login", "구현", "로그인·온보딩"), ("POST /api/v1/auth/logout", "구현", "설정·프로필"),
+                          ("POST /api/v1/auth/oauth/{provider}", "구현", "로그인·온보딩"), ("POST /api/v1/auth/reissue", "구현", "로그인·온보딩")]),
+    ("Grid API", "구현", [("GET /api/v1/grids (뷰포트)", "구현", "① 지도 홈"), ("GET /api/v1/grids/{gridId}", "부분", "② 격자 썸네일")]),
+    ("Grid 확장 API", "미구현", [("GET /api/v1/grids/{id}/videos", "미구현", "④ 격자 상세"), ("GET /api/v1/grids/hot", "미구현", "③ 핫구역"),
+                                 ("POST·DEL /api/v1/videos/{id}/likes", "미구현", "② 격자 썸네일")]),
+    ("Mission API", "신규", [("GET /api/v1/missions/active", "신규", "① 지도 홈"), ("(bbox 없음 · TTL 1h 캐시)", "신규", "① 지도 홈")]),
+    ("Video 재생 API", "미구현", [("GET /api/v1/videos/{videoId}", "미구현", "④ 격자 상세"), ("(presigned GET · 상태 분기)", "미구현", "④ 격자 상세")]),
+    ("Social·Report API", "미구현", [("POST /api/v1/reports", "미구현", "⑤ 신고 모달"), ("POST /api/v1/friends/requests (P2)", "P2", None),
+                                     ("PATCH /api/v1/friends/requests (P2)", "P2", None), ("GET·DELETE /api/v1/friends (P2)", "P2", None),
+                                     ("POST /api/v1/friends/{id}/block (P2)", "P2", None)]),
+    ("Video API", "구현", [("POST /api/v1/videos/presigned-url", "구현", "⑥ 촬영·업로드"), ("POST /api/v1/videos (점령)", "구현", "⑥ 촬영·업로드"),
+                           ("PUT /api/v1/videos/{videoId}", "구현", "⑥ 촬영·업로드"), ("PATCH /api/v1/videos/{id}/visibility", "구현", "⑥ 촬영·업로드"),
+                           ("DELETE /api/v1/videos/{videoId}", "구현", "⑥ 촬영·업로드")]),
+    ("Collection API", "미구현", [("GET /api/v1/collections/summary", "구현", "⑦ 개인 도감"), ("GET /api/v1/collections/grids", "구현", "⑦ 개인 도감"),
+                                  ("GET /api/v1/collections/videos?regionCode", "구현", "⑦ 개인 도감"), ("GET /api/v1/collections/badges", "미구현", "⑦ 개인 도감")]),
+    ("Region API", "미구현", [("GET /api/v1/regions/search", "미구현", "① 지도 홈"), ("GET /api/v1/regions/stats", "미구현", "⑦ 개인 도감"),
+                              ("GET /api/v1/regions/stats/by-point·by-grid", "구현", "⑦ 개인 도감"), ("GET /api/v1/regions/{code}", "미구현", "④ 격자 상세")]),
+    ("User API", "미구현", [("GET /api/v1/users/me", "미구현", "설정·프로필"), ("PATCH /api/v1/users/me", "미구현", "설정·프로필"),
+                            ("DELETE /api/v1/users/me", "미구현", "설정·프로필")]),
     ("Sponsor API", "P2", [("(미설계 — P2 캠페인·리포트)", "P2", "스폰서 포털")]),
 ]
 
@@ -105,7 +106,7 @@ REPOS = [
 LINKS = [
     ("로그인·온보딩", "Auth API"),
     ("① 지도 홈", "Grid API"), ("① 지도 홈", "Grid 확장 API"), ("① 지도 홈", "Mission API"),
-    ("① 지도 홈", "Collection API"), ("① 지도 홈", "Region API"),
+    ("① 지도 홈", "Region API"),
     ("② 격자 썸네일", "Grid API"), ("② 격자 썸네일", "Grid 확장 API"), ("② 격자 썸네일", "Video 재생 API"),
     ("③ 핫구역", "Grid 확장 API"),
     ("④ 격자 상세", "Grid API"), ("④ 격자 상세", "Grid 확장 API"), ("④ 격자 상세", "Video 재생 API"),
@@ -302,6 +303,10 @@ for name in SCR:
 env.append('<mxCell id="lgd3" value="API 카드 헤더 연초록 = 종류 표시 · 서비스·Repository·저장소 연결 = 무채색 · AI 처리 환경 = 남색 강조 · 구현 상태는 API 스펙 통합 문서 참조" '
            'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#6B7075;" vertex="1" parent="1">'
            '<mxGeometry x="30" y="14" width="820" height="18" as="geometry"/></mxCell>')
+# 서비스 매핑(SA ↔ SysA 논리 뷰) — 멘토 리뷰 A-1: 두 그림의 서비스 대응을 못 박는 한 줄
+env.append('<mxCell id="lgd4" value="서비스 매핑(SA ↔ SysA): AuthService·UserService = Auth Service · GridQueryService·HotZoneService = Grid Service · UserGridQueryService = Collection Service · VideoService+인코딩 워커 = Video Service · Social·ModerationService = Social + Moderation Service · (Notification Service는 P2로 SA 미표기) · API 경로 규칙 = /api/v1/*" '
+           'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontStyle=1;fontColor=#4A5560;" vertex="1" parent="1">'
+           '<mxGeometry x="30" y="32" width="1750" height="16" as="geometry"/></mxCell>')
 
 # 액터 3 (UML 스틱 피겨)
 for label, s_, ay in [("사용자", "#8FBF7B", Y0 + 300),

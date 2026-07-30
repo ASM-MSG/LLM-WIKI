@@ -165,6 +165,14 @@ env.append('<mxCell id="ttl" value="FillMap · System Architecture v2 — 논리
 env.append(f'<mxCell id="sub" value="역할(Client·Gateway·Service·Cache·Queue·Worker·Scheduler·Data)만 표기 — 기술 선택·구현 상태는 SA v2와 CA가 담당 · 금색 = 신규 미션 도메인" '
            f'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=10;fontColor=#6B7075;" vertex="1" parent="1">'
            f'<mxGeometry x="30" y="-18" width="1100" height="18" as="geometry"/></mxCell>')
+# 서비스 매핑(SysA ↔ SA v2) — 멘토 리뷰 A-1: 두 그림의 서비스 대응을 못 박는 한 줄
+env.append(f'<mxCell id="svcmap" value="서비스 매핑(SysA ↔ SA v2): Auth = AuthService·UserService · Grid = GridQueryService·HotZoneService · Collection = UserGridQueryService(Collection API) · Video = VideoService+인코딩 워커 · Social + Moderation = Social·ModerationService · Mission = MissionService · Region = RegionService · Notification = SA 미표기(P2)" '
+           f'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#4A5560;fontStyle=1;" vertex="1" parent="1">'
+           f'<mxGeometry x="30" y="2" width="{total_w - 40}" height="16" as="geometry"/></mxCell>')
+# 논리↔물리 각주 — 멘토 리뷰 A-3
+env.append(f'<mxCell id="gwnote" value="※ API Gateway(논리) = CA 물리 배치에선 ALB + WAF로 구현" '
+           f'style="text;html=1;strokeColor=none;fillColor=none;align=left;fontSize=9;fontColor=#6B7075;" vertex="1" parent="1">'
+           f'<mxGeometry x="30" y="20" width="700" height="16" as="geometry"/></mxCell>')
 cells[:0] = env
 
 xml = ('<?xml version="1.0" encoding="UTF-8"?>\n<mxfile host="app.diagrams.net">\n'
