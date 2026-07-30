@@ -33,3 +33,4 @@
 - 2026-07-26 — [[ADR region_stats recompute equi-join 치환]](04-decisions) 신규 작성: MSG-236 구현분(BE feature/MSG-236-recompute-equi, b23e148) 반영 — refreshRegionStats ST_Covers→equi 치환·등가성 논거·테스트 23개·벤치 설계(미실행). index/hot 갱신.
 - 2026-07-28 — [[ADR 장소 검색 카카오 로컬 프록시]](04-decisions) 신규: MSG-251 공급자 결정 ingest — 카카오 로컬 채택 근거·약관 조건(캐시 금지)·스모크 실측, 지도 SDK ADR 재검토 트리거 발동 기록. index/hot 갱신.
 - 2026-07-30 — Confluence sync 9건 조회(스크럼 6·회고 1 제외 — 지도 홈 개편·확정 허브·viewport §6·PRD v4는 7/25 세션 기수집이라 skip) → 신규 3: [[MSG-234 상권 작도 결정 공공데이터 검수]](04-decisions, cf-26181633+cf-26116098), [[2026-07-26 이광헌 멘토 멘토링]]·[[2026-07-26 박원형 멘토 멘토링]](05-meetings). 갱신: [[ADR 격자 표시명 zone]](MSG-234 보류 해제·재개), [[FillMap API 스펙 통합]](source→7/26 발행 스냅샷). 역링크 6건. lastSync 00:24Z.
+- 2026-07-30 — 재-sync 점검(01:50Z): Confluence 변경 3건 전부 skip(스크럼 1·멘토링 2건은 내용 동일 재검출 — 타임존 경계), Drive 신규 raw 없음. lastSync만 01:50Z로 갱신.
