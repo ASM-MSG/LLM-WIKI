@@ -6,8 +6,8 @@ class: decision
 status: active
 source: "raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md"
 created: 2026-07-22
-updated: 2026-07-22
-keywords: [개인 도감, 도감, collection, 도감 화면, 수집률, 탐험률, exploration rate, progressRate, 격자 중심, grid-centric, 최근 수집 격자, RECENT, 30개 제한, 페이지네이션 없음, 역지오코딩, reverse geocode, region_stats, regions stats, 행정동, 격자 중심점, visitedRegionCount, MSG-153, MSG-152, MSG-155, MSG-156, PO 확정, 디자인 ver4, Owner A, Owner B, 6404, no-match, 빈 상태]
+updated: 2026-07-30
+keywords: [개인 도감, 도감, collection, 도감 화면, 수집률, 탐험률, exploration rate, progressRate, 격자 중심, grid-centric, 최근 수집 격자, RECENT, 30개 제한, 페이지네이션 없음, 역지오코딩, reverse geocode, region_stats, regions stats, 행정동, 격자 중심점, visitedRegionCount, by-grid, MSG-153, MSG-152, MSG-155, MSG-156, MSG-167, MSG-246, PO 확정, 디자인 ver4, Owner A, Owner B, 6404, no-match, 빈 상태]
 aliases: [도감 확정 설계, 개인 도감 UX, 탐험률 설계, 수집률 설계, MSG-153 설계]
 related: ["[[Collection API 예정]]", "[[Region API 예정]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[IA v2 초안 (화면·기능 트리)]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[FillMap DB Schema v5 MVP]]"]
 ---
@@ -16,12 +16,12 @@ related: ["[[Collection API 예정]]", "[[Region API 예정]]", "[[PRD FillMap M
 
 > [!tldr]
 > **PO 확정(2026-07-22)**: 개인 도감은 "격자 중심" UX — 진입 시 최근 수집 격자 목록(RECENT 고정·30개·페이지네이션 없음) + 현재 위치 기반 탐험률 패널("지금 여기, 역삼1동 25%"). 행정동/시군구 리스트 나열안은 기각, 디자인 ver4 시안의 "지역별 수집 현황(구 단위)"은 이 UX로 대체(시안 갱신 필요).
-> 탐험률 축은 **격자 중심점의 행정동**(MSG-155 D2), 방문 지역 수는 **업로드 좌표**(MSG-152) — 두 축이 달라 라벨을 구분해야 한다.
+> 탐험률 축은 **격자 중심점의 행정동**(MSG-155 D2), 방문 지역 수도 **격자 귀속으로 통일**(MSG-246 정정, 2026-07-30 — 구 "업로드 좌표" 축 폐기). 두 지표가 같은 축을 쓴다.
 > API는 기존 자산(summary·grids?bbox·reverse-geocode·region_stats·regions/stats 모두 merge) 재사용, 신규는 **MSG-153**(`GET /api/collections/grids` 목록+클릭 응답)뿐.
 
 ## 이 노트로 답할 수 있는 질문
 - 개인 도감 첫 화면에는 뭐가 나오나? (격자 목록 vs 지역 리스트)
-- 탐험률("역삼1동 25%")은 어떤 축으로 계산하나? 방문 지역 수와 왜 다르나?
+- 탐험률("역삼1동 25%")은 어떤 축으로 계산하나? 방문 지역 수와 같은 축인가?
 - 도감 화면의 각 요소는 어떤 API를 쓰고, 뭐가 구현돼 있나?
 - MSG-153에서 아직 확정해야 할 쟁점은?
 - FE는 탐험률 빈 응답·에러 코드(6404)·progressRate를 어떻게 처리하나?
@@ -37,9 +37,9 @@ related: ["[[Collection API 예정]]", "[[Region API 예정]]", "[[PRD FillMap M
 | 지표 | 축 | 근거 |
 | --- | --- | --- |
 | 탐험률(수집률) | **격자 중심점**이 속한 행정동 | 격자당 행정동 1개로 결정적, 경계 이중 카운트 없음 (MSG-155 D2) |
-| 방문 지역 수(visitedRegionCount) | 영상 **업로드 좌표** | 방문 = 이벤트의 위치 (MSG-152) |
+| 방문 지역 수(visitedRegionCount) | 영상이 속한 **격자의 행정동** (`videos JOIN grids` → `grids.region_code`) | 라벨 귀속은 by-grid 단일 축 (MSG-167 ADR, MSG-246 정정) |
 
-경계 지역에서 두 지표가 어긋나 보일 수 있음 → 한 화면에서 라벨 구분("방문 지역 N곳" vs "탐험률"). 노출 문구는 FE/기획 확정 필요.
+**정정 이력 (2026-07-30, MSG-246)**: 구 축 "영상 업로드 좌표"(MSG-152)는 폐기 — 구현이 `videos.region_code`를 세는데 이 컬럼을 채우는 코드가 없어 모든 사용자의 방문 지역 수가 항상 0이었다. MSG-167이 라벨 귀속을 `grids.region_code`로 확정한 원칙에 맞춰 격자 축으로 통일 정정. 두 지표가 같은 축을 쓰므로 구 caveat(경계 지역에서 두 지표 어긋남 → 라벨 구분 필요)도 소멸.
 
 ## 3. API 매핑 — 기존 자산 재사용
 | 화면 요소 | API | 상태 |
