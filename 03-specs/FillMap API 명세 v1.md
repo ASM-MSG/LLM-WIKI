@@ -16,7 +16,7 @@ related: ["[[Auth API]]", "[[Grid API]]", "[[Video API]]", "[[FillMap API 설계
 
 > [!tldr]
 > 실제 구현된 REST API의 단일 진실(2026-07-21 코드 기준, 추측 없음): 컨트롤러 5개(Auth·DevAuth·Grid·GridVideo·Video), 엔드포인트 14개.
-> 공통 규약: 모든 응답은 ApiResponseDto(developCode·httpStatus·message·body), JWT Bearer(access 1시간 + refresh 2주 — MSG-135: Redis 저장·로테이션·재사용 감지·블랙리스트, POST /api/auth/reissue로 재발급).
+> 공통 규약: 모든 응답은 ApiResponseDto(developCode·message·body — httpStatus는 MSG-265에서 제거, HTTP 상태는 status line으로만), JWT Bearer(access 1시간 + refresh 2주 — MSG-135: Redis 저장·로테이션·재사용 감지·블랙리스트, POST /api/auth/reissue로 재발급).
 > 퍼블릭: /auth/signup·login·oauth·reissue + /auth/dev/social-login(local/dev 프로파일 전용). developCode 대역: 1xxx user · 2xxx auth · 3xxx video · 4xxx grid.
 
 ## 이 노트로 답할 수 있는 질문
@@ -29,7 +29,7 @@ related: ["[[Auth API]]", "[[Grid API]]", "[[Video API]]", "[[FillMap API 설계
 
 ## 개요
 - 구현: [[Auth API]](5 + dev 전용 1) · [[Grid API]](2) · GridVideo(2) · [[Video API]](4) — 총 14개, 컨트롤러 5개.
-- 응답 래퍼: `developCode`(성공 200)·`httpStatus`·`message`·`body`.
+- 응답 래퍼: `developCode`(성공 200)·`message`·`body`. (`httpStatus` 필드는 MSG-265에서 제거 — status line과 중복이라 body에 없음)
 - 인증: JWT Bearer — access TTL 1시간(PT1H) + **refresh 2주(P14D, MSG-135 구현)**. Redis 저장, 디바이스별 세션, 로테이션+재사용 감지, 로그아웃 시 access 블랙리스트(Redis). 재발급은 `POST /api/auth/reissue`(웹=HttpOnly 쿠키, 앱=body).
 - 퍼블릭: signup·login·oauth·reissue + dev/social-login(local/dev 프로파일 전용, prod 미노출).
 - 에러 대역: 1xxx user / 2xxx auth / 3xxx video / 4xxx grid / 4xx·5xx 공통.
