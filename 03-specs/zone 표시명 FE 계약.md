@@ -9,7 +9,7 @@ created: 2026-07-30
 updated: 2026-07-31
 keywords: [zone, 표시명, display name, 서면 A-14, FE 계약, 프론트, GET /api/zones, 명명 산술, 로컬 계산, 폴백, regionName, priority, zoneKey, 겹침, 픽스처, fixture, 드리프트, MSG-234, MSG-259, 캐시]
 aliases: [zone FE 계약, 표시명 계약, 격자 이름 계약]
-related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 표시명 zone]]", "[[zone 표시명 데이터 파이프라인 해설]]", "[[ADR 상권 작도 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[ADR 장소 검색 카카오 로컬 프록시]]"]
+related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 표시명 zone]]", "[[zone 표시명 데이터 파이프라인 해설]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[ADR 장소 검색 카카오 로컬 프록시]]"]
 ---
 
 # zone 표시명 FE 계약 — "서면 A-14"를 화면이 만드는 규칙

@@ -9,7 +9,7 @@ created: 2026-07-30
 updated: 2026-07-31
 keywords: [zone, 구역, 표시명, display name, 서면 A-14, 홍대, 상권, 공공데이터, 소상공인시장진흥공단, 파이프라인, 시딩, seeding, zones.json, 검수, 검증, validate, FE 로컬 산술, 격자 이름, MSG-234, MSG-259, 드라이런, 통명화, 겹침, priority]
 aliases: [zone 파이프라인, 표시명 해설, 상권 변환 해설]
-related: ["[[ADR 격자 표시명 zone]]", "[[ADR 상권 작도 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[zone 표시명 FE 계약]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 행정동 라벨 grids.region_code]]"]
+related: ["[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[zone 표시명 FE 계약]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 행정동 라벨 grids.region_code]]"]
 ---
 
 # zone 표시명 데이터 파이프라인 해설 — 공공데이터에서 "서면 A-14"까지
@@ -196,4 +196,4 @@ FillMap의 격자는 내부적으로 `"39070_112223"` 같은 **기계용 번호*
 ## 출처
 raw: `raw/confluence/2026-07-30 MSG-259 진행 정리 — zone 데이터 검수 가이드·확정 결정 (2026-07-30) (cf-27983873).md` (검수 규칙·검증 3층·PR #76 산출물)
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/27983873
-BE 레포: `docs/prd/MSG-259-prd.md` · `scripts/zones-draft/`(convert-zones·build-candidate·validate-zones.py, zones-manual.json 12곳 포함 후보 29건) · 작도 결정은 [[ADR 상권 작도 공공데이터 검수]](cf-26181633) · zone ADR cf-18972673 · 실측치는 2026-07-30 세션 (초안 233건 기준)
+BE 레포: `docs/prd/MSG-259-prd.md` · `scripts/zones-draft/`(convert-zones·build-candidate·validate-zones.py, zones-manual.json 12곳 포함 후보 29건) · 작도 결정은 [[MSG-234 상권 작도 결정 공공데이터 검수]](cf-26181633) · zone ADR cf-18972673 · 실측치는 2026-07-30 세션 (초안 233건 기준)
