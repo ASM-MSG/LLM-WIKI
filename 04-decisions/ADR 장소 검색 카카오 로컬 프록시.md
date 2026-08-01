@@ -10,7 +10,7 @@ created: 2026-07-28
 updated: 2026-07-28
 keywords: [검색, 장소 검색, POI, 카카오, 로컬 API, keyword.json, 네이버 지도, 혼용, 약관, 실시간 호출, 캐시 금지, WGS84, 좌표, gridId, GridEncoder, 프록시, MSG-251, MSG-234, MSG-238, 지역 검색, 부산대, 홍대]
 aliases: [MSG-251 결정, 장소 검색 공급자, 카카오 로컬 채택]
-related: ["[[ADR 지도 SDK 네이버 전환]]", "[[ADR 격자 표시명 zone]]", "[[ADR 격자 행정동 라벨 grids.region_code]]"]
+related: ["[[ADR 지도 SDK 네이버 전환]]", "[[ADR 격자 표시명 zone]]", "[[ADR 격자 행정동 라벨 grids.region_code]]", "[[zone 표시명 FE 계약]]", "[[zone 표시명 데이터 파이프라인 해설]]", "[[zone 상권 공공데이터 근거]]"]
 ---
 
 # ADR 장소 검색 — 카카오 로컬 프록시 (MSG-251)
