@@ -6,7 +6,7 @@ class: log
 status: draft
 source: "raw/confluence/2026-07-17 Collection API (예정) (cf-17498218).md"
 created: 2026-07-17
-updated: 2026-07-22
+updated: 2026-08-01
 keywords: [Collection, 도감, 컬렉션, 갤러리, 뱃지, badge, 스트릭, streak, 수집률, user_grids, 페이지네이션, pagination, Owner B, 예정 API]
 aliases: [도감 API, 컬렉션 API]
 related: ["[[Grid API]]", "[[Video 재생 조회 API 예정]]", "[[FillMap API 설계 v2 draft]]", "[[2026-07-13 격자 방문 체크 표시 아이디어]]", "[[그라운드 플립 뱃지 시스템 사례]]", "[[개인 도감 화면 확정 UX·API 설계]]"]
@@ -29,6 +29,12 @@ related: ["[[Grid API]]", "[[Video 재생 조회 API 예정]]", "[[FillMap API �
 
 > [!note] 2026-07-22 PO 확정으로 일부 대체됨
 > 도감 화면 UX·API가 [[개인 도감 화면 확정 UX·API 설계]]로 확정: `grids`는 **RECENT 고정·30개 제한·페이지네이션 없음**(MSG-153), 탐험률은 현재 위치 기반 패널. 이 노트의 sort 옵션·페이지네이션 쟁점은 그 범위에서 종결.
+
+> [!note] 2026-08-01 뱃지 축 구현 완료로 대체됨 (MSG-239·MSG-201)
+> 이 노트의 `GET /api/collections/badges?earnedOnly=` 제안은 실구현에서 **`GET /api/badges`** 로 확정 (BE PR #92, 스펙 = 레포 `docs/MSG-201.md`).
+> 응답 = 마스터 전체(미획득 포함, 시딩 순) + `earned·earnedAt·isNew·featuredRank` — `earnedOnly` 파라미터·`conditionType` 노출 없음,
+> progress도 미노출(진행률 조회는 PRD 비목표). 조회가 미확인(새 뱃지) 확인 처리를 겸한다(같은 트랜잭션 `notified_at` 스탬프).
+> 열린 질문이던 마스터 시딩(V9~V12 17종)·지급 주체(동기, MSG-239)·스트릭 갱신(업로드 훅·KST, MSG-200)도 모두 확정.
 
 ## 설계 요지
 - `GET /api/collections/summary` — totalGridCount·totalVideoCount·badgeCount·currentStreak·maxStreak·lastRecordedDate. streaks row 없는 사용자 처리 미정.
