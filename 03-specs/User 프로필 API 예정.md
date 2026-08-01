@@ -6,7 +6,7 @@ class: log
 status: draft
 source: "raw/confluence/2026-07-17 User 프로필 API (예정) (cf-17891397).md"
 created: 2026-07-17
-updated: 2026-07-21
+updated: 2026-08-01
 keywords: [User, 프로필, profile, 계정 삭제, 닉네임, nickname, gridColor, 도감 색상, PATCH, 소프트 삭제, soft delete, Owner B, 예정 API]
 aliases: [유저 API, 프로필 API]
 related: ["[[FillMap API 설계 v2 draft]]", "[[Auth API]]", "[[FillMap DB Schema v5 MVP]]"]
@@ -15,9 +15,17 @@ related: ["[[FillMap API 설계 v2 draft]]", "[[Auth API]]", "[[FillMap DB Schem
 # User 프로필 API (예정)
 
 > [!tldr]
-> 프로필 조회(GET /api/users/me)·수정(PATCH)·계정 삭제(DELETE) 설계 초안 — 전부 미구현(service·controller·dto 없음), 담당 Owner B.
-> 최대 쟁점: 닉네임 길이 20 vs 50 불일치, 계정 삭제가 reports FK 때문에 하드 삭제 불가(소프트/NULL/익명화 중 결정 + 마이그레이션 선행).
-> 닉네임 중복 허용 여부·프로필 이미지 업로드 방식·email 변경도 열린 질문.
+> 프로필 조회(GET /api/users/me)·수정(PATCH)·계정 삭제(DELETE) 설계 초안 — 담당 Owner B.
+> **계정 삭제(DELETE)는 구현 완료** (아래 노트), 조회·수정은 미구현(MSG-203 예정).
+> 최대 쟁점: 닉네임 길이 20 vs 50 불일치. 닉네임 중복 허용 여부·프로필 이미지 업로드 방식·email 변경도 열린 질문.
+
+> [!note] 2026-08-01 계정 삭제 축 구현 완료로 대체됨 (MSG-205)
+> `DELETE /api/users/me` 확정 구현 (BE PR #96, 정본 = 레포 `docs/MSG-205.md`). 열린 질문이던 **삭제 방식은
+> "즉시 물리 삭제"로 확정** — 소프트/NULL/익명화가 아니라 **V15 마이그레이션으로 reports FK에 ON DELETE
+> 정책(reporter_id CASCADE·reviewed_by SET NULL)을 부여**해 하드 삭제 차단을 해소했다 (이 노트의 선택지
+> a/b/c 밖의 4안). S3 정리는 MSG-133 관례대로 커밋 후 best-effort(1000키 청크) + refresh 전 기기
+> 소멸·요청 토큰 블랙리스트. 재가입은 UNIQUE 자동 해제로 신규 가입 취급. 프로필 조회/수정은 여전히
+> 이 노트의 초안이 유효 (단, 색상 변경은 디자인 ver9에 UI 없음 — MSG-203 범위 재논의 중).
 
 ## 이 노트로 답할 수 있는 질문
 - 프로필 조회/수정/삭제 API의 잠정 설계는?
