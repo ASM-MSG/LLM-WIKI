@@ -6,13 +6,21 @@ class: log
 status: draft
 source: "raw/confluence/2026-07-17 Social API (예정) (cf-18448512).md"
 created: 2026-07-17
-updated: 2026-07-21
+updated: 2026-08-03
 keywords: [Social, 소셜, 친구, friend, friendships, 친구 요청, 수락, 차단, block, 초대 코드, invite code, 방향성, PENDING, ACCEPTED, 예정 API]
 aliases: [친구 API, 소셜 API]
 related: ["[[FillMap API 설계 v2 draft]]", "[[Notification API 예정]]", "[[User 프로필 API 예정]]"]
 ---
 
 # Social API (예정) — 친구·차단
+
+> [!warning] 대체됨 (2026-08-03) — 정본은 레포 `BE/docs/MSG-185.md`
+> 이 초안의 잠정 설계는 MSG-185 스펙·구현(친구 코드·요청/수락/거절/삭제 API, PR 예정)이 대체한다.
+> 아래 "최대 블로커"(상대 특정 불가)는 **고정 친구 코드**(`users.friend_code`, V18 — 혼동 문자 제외
+> 32종 8자)로 해소됐다 — 결정 배경은 Jira MSG-172 코멘트(2026-08-03). 초안과 달라진 것:
+> ① 에러 대역 7xxx → **9xxx** (7xxx 는 badge/MSG-239 선점) ② REJECTED 는 영속되지 않음(거절 = 행
+> DELETE, "행 존재 = 활성 관계" 불변식) ③ 엇갈린 요청은 자동 수락으로 수렴. 차단(BLOCKED)은 후속,
+> 친구 목록/프로필은 MSG-186 몫.
 
 > [!tldr]
 > friendships 테이블 기반 친구 요청·수락/거절·목록·삭제·차단 설계 초안. 담당 미정 — Owner 배정이 선행.
