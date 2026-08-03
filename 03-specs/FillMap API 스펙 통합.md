@@ -27,7 +27,7 @@ related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[개
 **범례**: ✅ 구현(merge) · 🔜 구현 예정(티켓 확정) · 📝 draft(경로·메서드는 제안) · ⛔ 블로커 있음
 
 ## 0. 공통 규약
-- **응답 래퍼**: 모든 응답 `ApiResponseDto` — `developCode`(성공 200)·`message`·`body` (`httpStatus` 필드는 MSG-265에서 제거 — HTTP 상태는 status line으로만)
+- **응답 래퍼**: 모든 응답 `ApiResponseDto` — `developCode`(성공 200)·`message`·`data` (실데이터 키 — `body`에서 rename, MSG-311/PR #105·FE 동시 배포 전제. `httpStatus` 필드는 MSG-265에서 제거 — HTTP 상태는 status line으로만)
 - **인증**: JWT Bearer — access 1시간(PT1H) + refresh 2주(P14D, MSG-135). Redis 저장·디바이스별 세션(X-Device-Id)·로테이션+재사용 감지·로그아웃 블랙리스트. 재발급 `POST /api/auth/reissue`(웹=HttpOnly 쿠키 / 앱=body, X-Client-Type)
 - **퍼블릭 경로**: signup·login·oauth·reissue (+ dev/social-login은 local/dev 프로파일 전용)
 - **에러 대역**: 1xxx user · 2xxx auth · 3xxx video(+3420 INVALID_VISIBILITY 신설) · 4xxx grid · **6xxx region(6400 좌표·6404 코드 — 코드로 확정)** / 5xxx collection · 7xxx social · 8xxx notification — **제안(미확정)**
