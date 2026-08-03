@@ -9,7 +9,7 @@ created: 2026-07-16
 updated: 2026-07-25
 keywords: [ADR, viewport, 뷰포트, polling, 폴링, websocket, 웹소켓, SLO, p95, RPS, 임계점, freshness, 캐시, Redis, k6, fetch-on-pan, 줌 레벨, MSG-134, 핫구역, hotzone, ZSET, Sorted Set, ZINCRBY, MVP 범위 확대]
 aliases: [viewport ADR, 폴링 결정, 핫구역 polling 결정]
-related: ["[[Grid API]]", "[[2026-07-16 박원형 멘토 멘토링]]", "[[2026-07-17 프론트-백 합의]]", "[[그라운드 플립 부하 테스트 사례]]", "[[기획확정 지도 홈 개편 상단 셀]]", "[[FillMap 확정 기획 모음]]"]
+related: ["[[Grid API]]", "[[2026-07-16 박원형 멘토 멘토링]]", "[[2026-07-17 프론트-백 합의]]", "[[그라운드 플립 부하 테스트 사례]]", "[[기획확정 지도 홈 개편 상단 셀]]", "[[FillMap 확정 기획 모음]]", "[[백엔드 학습 로드맵 Redis HA·알림·관측성]]"]
 ---
 
 # ADR — viewport 전송방식 polling · 부하 SLO·임계점 (MSG-134)
