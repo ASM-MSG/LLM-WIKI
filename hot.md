@@ -2,6 +2,7 @@
 
 > ingest/편집 때마다 맨 위에 최신 항목 추가. 오래된 건 자연히 밀려남.
 
+- 2026-08-03 — 친구 기능 2차 병렬 구현분 ingest: [[Friend API]] 신규(구현 기준 — MSG-185 관계 수명주기 + **MSG-186 목록·프로필**, 프라이버시 "친구면 전부 공개" 확정, 은닉 전건 9424·공개 썸네일 LATERAL) · [[Video 공개범위 visibility]] 신규(**MSG-285 FRIENDS 3값째**, 비친구=PRIVATE 동일 403·switch 식·V20 롤백 불가). Confluence 발행 cf-30113794·cf-30179329(다음 sync 때 raw 연결). [[Social API 예정]]·[[Video 재생 조회 API 예정]] 배너 갱신, index 구현 허브에 2노트 등재. ⚠️ [[FillMap API 스펙 통합]] 현황판은 7/26 실사 기준이라 friend 9종·visibility 3값 미반영 — 다음 실사 때 갱신.
 - 2026-08-03 — [[ADR 영속 계층 JPA 유지 MyBatis 반려]] 작성 (+Confluence cf-29917209 발행·스냅샷 수집·source 연결, lastSync 08:14Z): 네이티브 쿼리 실측 ~50곳(커스텀의 ~70%)은 전부 PostgreSQL 전용 기능(ON CONFLICT·PostGIS·advisory lock) 사유라 MyBatis 전환은 무득 판정(Reject) — 하이브리드 컨벤션 유지, 번복 트리거는 동적 쿼리 증식(그때도 QueryDSL OpenFeign 포크·JdbcClient 추가가 1순위). 멘토링·로드맵 2건은 동시 세션(07:29Z) 기수집분 채택 — 중복 신설 없음.
 - 2026-08-03 — Confluence sync 2건 ingest (스크럼 2·회고 2 제외): [[2026-08-01 신기용 멘토 멘토링]](05-meetings) — 취업 관점 판정 "지도·영상·AI는 변별력 없음, Redis 하나를 깊게", Redis+Lua 동시성은 면접에서 털린다, 공공 API는 배치 수집→정제 테이블 구조로. [[백엔드 학습 로드맵 Redis HA·알림·관측성]](06-research) — 그 후속 학습 계획 3트랙(Redis 페일오버 실측 / 알림 파이프라인 = FillMap 미보유 도메인 / 관측성 LGTM·Thanos), FillMap Redis 3사용처(MSG-183·184·135)의 장애 시 동작 차이를 서사 재료로 정리.
 - 2026-08-01 — 재-sync 정리: MSG-259 3건은 7/30~31 세션 기수집 확인(신설 없음), raw 스냅샷 파일명 3건을 source 참조와 정합. [[MSG-234 상권 작도 결정 공공데이터 검수]]에 MSG-259 후속(후보 29=공공 17+수동 12 PASS·PR BE#76) 명기, 카카오 ADR 역링크·index 중복 정리.

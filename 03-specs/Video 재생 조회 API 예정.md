@@ -14,6 +14,11 @@ related: ["[[Video API]]", "[[FillMap API 설계 v2 draft]]", "[[Grid 확장 API
 
 # Video 재생 조회 API (예정)
 
+> [!warning] 구현 반영 (2026-08-03) — 재생은 MSG-206으로 구현됐고, 공개범위는 3값이 됐다
+> 아래 초안과 달라진 실구현: visibility 기본은 PRIVATE가 아니라 **PUBLIC**(MSG-204), BLINDED 타인은
+> 404 확정, PRIVATE 타인은 403 "비공개 영상입니다"(MSG-206), **FRIENDS 3값째 추가(MSG-285)** —
+> 판정·마이그레이션·에러 응답은 [[Video 공개범위 visibility]] 참조.
+
 > [!tldr]
 > `GET /api/videos/{videoId}` 재생 URL 발급 설계 — video 패키지의 유일한 미구현 항목 (Owner B).
 > 접근 제어는 status(DELETED→404, BLINDED→미정)·visibility(PRIVATE+타인→403)·processing_status(READY 아니면 playbackUrl=null)가 결정. visibility 기본 PRIVATE라 공개 전환 API 부재가 큰 구멍.
