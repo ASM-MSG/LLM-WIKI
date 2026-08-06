@@ -6,7 +6,7 @@ class: decision
 status: active
 source: "raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md"
 created: 2026-07-22
-updated: 2026-07-30
+updated: 2026-08-06
 keywords: [개인 도감, 도감, collection, 도감 화면, 수집률, 탐험률, exploration rate, progressRate, 격자 중심, grid-centric, 최근 수집 격자, RECENT, 30개 제한, 페이지네이션 없음, 역지오코딩, reverse geocode, region_stats, regions stats, 행정동, 격자 중심점, visitedRegionCount, by-grid, MSG-153, MSG-152, MSG-155, MSG-156, MSG-167, MSG-246, PO 확정, 디자인 ver4, Owner A, Owner B, 6404, no-match, 빈 상태]
 aliases: [도감 확정 설계, 개인 도감 UX, 탐험률 설계, 수집률 설계, MSG-153 설계]
 related: ["[[Collection API 예정]]", "[[Region API 예정]]", "[[PRD FillMap MVP 화면별 기능·API]]", "[[IA v2 초안 (화면·기능 트리)]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[FillMap DB Schema v5 MVP]]"]
@@ -28,7 +28,7 @@ related: ["[[Collection API 예정]]", "[[Region API 예정]]", "[[PRD FillMap M
 - 기각된 대안(시군구 상위 집계, bbox 응답 추가)은 왜 버렸나?
 
 ## 1. 확정 UX — "격자 중심"
-- 도감 진입: **최근 수집 격자 목록** (RECENT 정렬 고정, 30개 제한, 페이지네이션 없음) + **탐험률 패널**(현재 위치 기반: FE가 lat/lon 전달 → 역지오코딩 → "지금 여기, 역삼1동 25%").
+- 도감 진입: **최근 수집 격자 목록** (RECENT 정렬 고정, 30개 제한, 페이지네이션 없음) + **탐험률 패널**(현재 위치 기반: FE가 lat/lng 전달 → 역지오코딩 → "지금 여기, 역삼1동 25%").
 - 폴백: 위치 권한 거부·바다/해외(no-match) → 빈 상태.
 - 격자 클릭: 그 격자의 정보(영상 수·수집 시각·커버 썸네일) + **소속 행정동의 탐험률을 함께 반환**.
 - 기각된 대안(결정 이력): ① 행정동/시군구 리스트 첫 화면 나열 — 디자인 ver4의 "지역별 수집 현황(구)" 대체, **시안 갱신 필요(FE/디자인 공유)** ② 시군구 상위 집계 API — MVP 이후 (`regions.parent_code` 체인 재료는 준비됨) ③ 수집률 응답에 bbox/중심좌표 — 지도 이동은 격자 목록의 gridY/gridX가 담당.

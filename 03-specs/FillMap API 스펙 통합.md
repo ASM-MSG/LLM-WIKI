@@ -6,7 +6,8 @@ class: log
 status: active
 source: "raw/confluence/2026-07-26 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-22 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md, raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md, raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md, raw/confluence/2026-07-21 FillMap AI Highlight-Blur — 레포 생성부터 dev 배포까지 (cf-21102593).md"
 created: 2026-07-22
-updated: 2026-07-31keywords: [API 스펙, API 명세, 통합, 전체, 한눈에, one page, 멘토링, 스펙 점검, 구현 현황, 예정 API, 에러 코드, developCode, jobs API, AI 서버, 열린 질문]
+updated: 2026-08-06
+keywords: [API 스펙, API 명세, 통합, 전체, 한눈에, one page, 멘토링, 스펙 점검, 구현 현황, 예정 API, 에러 코드, developCode, jobs API, AI 서버, 열린 질문]
 aliases: [API 통합 뷰, API 전체 스펙, API 스펙 한눈에]
 related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[2026-07-21 AI Highlight-Blur 개발 기록]]", "[[2026-07-16 박원형 멘토 멘토링]]"]
 ---
@@ -64,7 +65,7 @@ related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[개
 | API | 핵심 |
 | --- | --- |
 | `POST /api/videos/presigned-url` | extension(mp4/mov)·contentType·contentLength → uploadUrl·s3Key·expiresInSec |
-| `POST /api/videos` | s3Key·lat·lon·durationSec(1~30)·recordedAt → 메타 저장 + 격자 점령. s3Key 3중 검증(MSG-132) |
+| `POST /api/videos` | s3Key·lat·lng·durationSec(1~30)·recordedAt → 메타 저장 + 격자 점령. s3Key 3중 검증(MSG-132) |
 | `GET /api/videos/{videoId}` | **재생 조회 (MSG-206)** — 표시 메타 + presigned GET playbackUrl(READY 아니면 null). 삭제·블라인드(타인) 404 · 비공개(타인) 403 |
 | `PUT /api/videos/{videoId}` | 본인만. 좌표 지정 시 같은 격자 검사(3422 GRID_MISMATCH). 교체 직후 UPLOADED |
 | `PATCH /api/videos/{videoId}/visibility` | **공개 범위 전환 (MSG-162)** — PUBLIC↔PRIVATE, 같은 값 재전환 멱등 |

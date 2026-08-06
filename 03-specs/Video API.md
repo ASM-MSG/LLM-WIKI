@@ -6,7 +6,7 @@ class: log
 status: active
 source: "raw/confluence/2026-07-17 Video API (cf-17498193).md"
 created: 2026-07-17
-updated: 2026-07-21
+updated: 2026-08-06
 keywords: [Video, 영상, API, 업로드, upload, presigned URL, S3, 삭제, 교체, replace, 점령, 롤백, 인코딩, 격자]
 aliases: [영상 API, 비디오 API]
 related: ["[[FillMap API 명세 v1]]", "[[Video 재생 조회 API 예정]]", "[[트러블슈팅 파일 없이 격자 점령 MSG-132]]"]
@@ -31,7 +31,7 @@ related: ["[[FillMap API 명세 v1]]", "[[Video 재생 조회 API 예정]]", "[[
 | 메서드/경로 | 핵심 |
 | --- | --- |
 | `POST /api/videos/presigned-url` | extension(mp4/mov)·contentType·contentLength → uploadUrl·s3Key·expiresInSec |
-| `POST /api/videos` | s3Key·lat·lon·durationSec(1~30)·recordedAt → videoId·gridId·processingStatus·occupied(첫 점령 여부) |
+| `POST /api/videos` | s3Key·lat·lng·durationSec(1~30)·recordedAt → videoId·gridId·processingStatus·occupied(첫 점령 여부) |
 | `PUT /api/videos/{videoId}` | 본인만. 좌표 생략=파일만 교체, 좌표 지정=같은 격자 검사(다르면 3422). 교체 후 상태 UPLOADED(재인코딩) |
 | `DELETE /api/videos/{videoId}` | 본인만. 격자 내 영상 0개 되면 점령 롤백. 시간 제한 없음 |
 
