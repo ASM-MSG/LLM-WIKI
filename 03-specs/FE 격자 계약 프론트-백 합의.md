@@ -6,11 +6,16 @@ class: log
 status: active
 source: "raw/confluence/2026-07-23 프론트-백 합의 사항 — 격자 계약 (격자 사전 생성 정정) (cf-23199747).md"
 created: 2026-07-23
-updated: 2026-07-30
+updated: 2026-08-07
 keywords: [격자 계약, grid contract, FE, 프론트, 사전 생성, 전역 고정 눈금, GRID_LAT_STEP, GRID_LNG_STEP, 0.0009, 0.00115, Math.floor, GridEncoder, gridId, bbox, 네이버 지도, v3, WGS84, TM128, naver.maps, getBounds, Rectangle, regionName, nullable, thumbnailUrl, zones, zone 보류, MSG-234, displayName, 서면 A-14, 장소 검색, api/search, by-point, by-grid, regionCode]
 aliases: [격자 계약, FE 격자 계약, 격자 사전 생성 정정, 네이버 v3 격자 연동]
 related: ["[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[ADR 지도 SDK 네이버 전환]]", "[[Grid API]]", "[[FillMap API 스펙 통합]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 표시명 FE 계약]]"]
 ---
+
+
+> **⚠️ 결정 변경 (2026-08-08, MSG-347)**: 격자 계산 규칙 자체가 **EPSG:5179 미터 좌표 기반**으로 바뀌었다. 아래 "전역 고정 눈금 0.0009°×0.00115°, `Math.floor`" 산술은 **이력**이다. 새 규칙은 위경도를 5179로 투영한 뒤 `floor(x/100)`·`floor(y/100)`이고, FE는 proj4js로 BE와 **같은 proj4 정의 문자열**을 쓴다. 셀이 위경도 축과 평행하지 않아 렌더는 `Rectangle` → **`Polygon`(꼭짓점 4점)**, 뷰포트 격자 범위도 SW·NE 2점 → **꼭짓점 4점 min/max**로 바뀐다. gridId 포맷·API 계약·nullable 2종·zone 캐시 용도는 불변이고 **값만** 바뀐다(서울 `41642_110458` → `19422_9582` 대역). 검증은 BE 픽스처 `grid-epsg5179-samples.json` 200건 전수 대조. 정본: [[ADR 격자 계산 EPSG5179 전환]] · BE 레포 `docs/MSG-347.md`.
+>
+> **⚠️ 결정 변경 (2026-08-07, MSG-341)**: 표시명 계산 주체가 **서버**로 바뀌었다. 격자를 담는 조회 응답 9종에 `zoneName`·`zoneCell` 필드가 실려 오고, FE는 조립(`zoneName + " " + zoneCell`)과 행정동 폴백 표시만 한다. 이 문서의 "화면이 만드는 규칙"(FE 로컬 산술) 서술은 이력이다. 명명 규칙 자체와 폴백 번호 없음, zones 캐시의 검색 이동 용도(§D6)는 불변. 정본: BE 레포 `docs/MSG-341.md`.
 
 # FE 격자 계약 — 프론트-백 합의 (격자 사전 생성 정정)
 
