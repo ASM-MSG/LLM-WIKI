@@ -9,7 +9,7 @@ created: 2026-08-08
 updated: 2026-08-09
 keywords: [ADR, MSG-347, 격자, grid, EPSG:5179, 5179, EPSG:4326, 4326, WGS84, 좌표계, 투영, projection, tmerc, 횡축 메르카토르, proj4, proj4js, Proj4J, ST_Transform, PostGIS, 100m, 격자 계산 규칙, GridEncoder, GridConstants, GRID_LAT_STEP, GRID_LNG_STEP, 0.0009, 0.00115, grid_id, 자오선 수렴, meridian convergence, Polygon, Rectangle, 뷰포트, viewport, V28, 마이그레이션, migration, 데이터 이행, zone 재산출, region_stats, 김민수 멘토, 8/8 멘토링, H3, 클러스터링]
 aliases: [격자 5179 전환, EPSG5179 ADR, MSG-347 ADR, 격자 계산 규칙 전환]
-related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[ADR 지도 SDK 네이버 전환]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[ADR viewport polling SLO]]", "[[2026-08-08 김민수 멘토 멘토링]]", "[[지도·공간 데이터 설계 멘토 설명용]]", "[[지도 홈 API 연동 가이드 FE]]"]
+related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[ADR 지도 SDK 네이버 전환]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[ADR viewport polling SLO]]", "[[2026-08-08 김민수 멘토 멘토링]]", "[[지도·공간 데이터 설계 멘토 설명용]]", "[[지도 홈 API 연동 가이드 FE]]", "[[트러블슈팅 격자 이행 좌표변환 dev 배포 지연 MSG-347]]"]
 ---
 
 # ADR — 격자 계산을 위경도 근사에서 EPSG:5179 미터 좌표로 전환
@@ -45,7 +45,9 @@ FE·BE 계약은 **proj4 정의 문자열 하나**다(글자 단위 동일해야
 +proj=tmerc +lat_0=38 +lon_0=127.5 +k=0.9996 +x_0=1000000 +y_0=2000000 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs
 ```
 
-BE는 Proj4J, FE는 proj4js, 마이그레이션 SQL은 PostGIS `ST_Transform`에 **SRID 번호 대신 이 문자열을 직접 전달**한다(DB 내장 정의와 어긋날 여지 제거). 정본은 `GridConstants.CRS_DEF_EPSG5179` 한 곳이고, FE 검증 픽스처(200건)에도 메타로 실려 나간다.
+BE는 Proj4J, FE는 proj4js를 쓴다. 정본은 `GridConstants.CRS_DEF_EPSG5179` 한 곳이고, FE 검증 픽스처(200건)에도 메타로 실려 나간다.
+
+마이그레이션 SQL은 PostGIS `ST_Transform`에 **SRID 5179를 넘기고, 이행 전에 두 경로(SRID·문자열)를 전국 221점에 실제로 돌려 같은 좌표가 나오는지 대조**한다(최대 차이 1e-6m 초과 시 이행 중단, 현재 차이 0m). 원안은 "SRID 대신 문자열을 직접 전달"이었는데, 그러면 PostGIS가 호출마다 변환 경로를 새로 만들어 **106배 느려진다**(실측 0.846ms → 0.008ms). 2026-08-09 dev 배포에서 이행이 수 분간 멈춰 기동 헬스체크가 실패해 바꿨다. 문자열은 이제 변환 인자가 아니라 검사 기준으로 쓴다 — 어긋날 여지를 없앤다는 목적은 그대로다. **`spatial_ref_sys.proj4text` 컬럼 비교로는 안 된다**(`auth_name='EPSG'`면 PostGIS가 그 컬럼 대신 PROJ 내장 EPSG DB를 쓴다 — 실증 근거는 [[트러블슈팅 격자 이행 좌표변환 dev 배포 지연 MSG-347]]).
 
 ## 함께 내린 결정과 기각 대안
 레포에는 결론만 남으므로 기각 근거를 여기 남긴다.
