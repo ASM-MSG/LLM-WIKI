@@ -4,9 +4,9 @@ type: research
 product: fillmap
 class: log
 status: active
-source: "raw/confluence/2026-08-01 백엔드 학습 로드맵 (cf-29032474).md"
+source: "raw/confluence/2026-08-01 백엔드 학습 로드맵 (cf-29032474).md, raw/confluence/2026-08-04 백엔드 학습 로드맵 (cf-29032474).md, raw/confluence/2026-08-01 백엔드 학습 로드맵 (cf-29032474) (1).md"
 created: 2026-08-01
-updated: 2026-08-03
+updated: 2026-08-09
 keywords: [학습 로드맵, 공부 계획, Redis, 고가용성, HA, 센티널, Sentinel, 클러스터, Cluster, 레플리카, replication, 페일오버, failover, SDOWN, ODOWN, quorum, 해시 슬롯, hash slot, MOVED, ASK, hash tag, Lettuce, 토폴로지 갱신, Valkey, 알림, 푸시, notification, FCM, 배치 발송, Spring Batch, ShedLock, 스로틀링, throttling, rate limit, 멱등, 중복 방지, outbox, DLQ, 관측성, observability, 옵저버빌리티, LGTM, Loki, Grafana, Tempo, Mimir, Prometheus, Thanos, 타노스, ELK, Grafana Alloy, OpenTelemetry, OTel, 부하 테스트, k6, p95, pg_stat_statements, auto_explain, slow query, 트레이싱, 메트릭]
 aliases: [백엔드 학습 로드맵, Redis HA 로드맵, 관측성 학습 계획, 08-01 후속 로드맵]
 related: ["[[2026-08-01 신기용 멘토 멘토링]]", "[[ADR viewport polling SLO]]", "[[PostgreSQL 실무 가이드 모음]]", "[[분산락 적용 주의점]]", "[[그라운드 플립 부하 테스트 사례]]"]
@@ -114,7 +114,29 @@ FillMap에 알림 도메인이 **아직 없다** — 이벤트 소스(뱃지 획
 - 트랙 2는 **FillMap 신규 기능 제안**이기도 하다 — 진행하려면 팀 합의·티켓화가 선행되어야 한다(현재는 개인 학습 계획 단계).
 - 트랙 3의 dev EC2(t3.small 2GB) 제약 때문에 관측성 스택 실습은 로컬 또는 별도 인스턴스가 전제.
 
-## 원본 링크
+## 근거 자료 (2026-08-04 보강 — 국내 1차 자료)
+
+전부 본문을 열어 인용을 대조한 것만 싣는다. **발행연도를 병기**했다 — Redis·관측성은 3년만 지나도 낡아서, 오래된 글은 "지금 이렇게 한다"가 아니라 "당시엔 이랬다"로 읽어야 한다.
+
+**트랙 1 · Redis HA**
+- [NHN Cloud — Redis Cluster에서 Spring Boot + Lettuce 설정](https://meetup.nhncloud.com/posts/379) (2026-05) · **실습 4단계 전에 읽을 것.** 우리 스택과 정확히 일치하고 마스터 장애 시 클라이언트가 겪는 일을 설정 수준까지 다룬다 — 토폴로지 미갱신 상태에서도 `MOVED` 응답으로 정확한 노드를 응답받는다는 서술.
+- [카카오페이증권 — Redis on Kubernetes](https://tech.kakaopay.com/post/kakaopaysec-redis-on-kubernetes/) (2024-09) · Sentinel vs Cluster에 **용량 기준**을 준다: Sentinel은 "2~10GB 정도의 비교적 저용량", Cluster는 "대용량 저장 또는 Sharding 필요". 무중단 마이그레이션 절차(신규를 Replica로 붙인 뒤 Master 승격)도 참고 가능.
+- [카카오 — DNS 기반 Redis HA](https://tech.kakao.com/posts/316) (2016, **10년 경과 — 대조군**) · Sentinel/Cluster 없이 DNS 스위칭으로 만든 초기 접근. "왜 Sentinel/Cluster가 표준이 됐나"를 반대편에서 이해하는 용도.
+
+**트랙 2 · 대규모 알림**
+- [컬리 — outbox 패턴과 retry topic](https://helloworld.kurly.com/blog/2026-outbox-pattern-and-retry-topic/) (2026-01) · 이중 쓰기 문제를 정면으로 다루고 `@RetryableTopic` **실제 파라미터까지 공개**("총 컨슘 시도 최대 145회", "10분 간격 최대 24시간"). DLQ 직전 단계 설계의 국내 레퍼런스.
+- [우아한형제들 — 카프카 컨슈머 동적 쓰로틀링](https://techblog.woowahan.com/20156/) (2025-01) · **스로틀링 항목에 가장 가까운 국내 자료.** 컨슈머를 늘리면 "마스터 DB CPU 80% 이상 급증"하는 사례에서 출발해 `pause()`/`resume()`·ConsumerInterceptor 등 3종 비교.
+- [우아한형제들 — 메시지 발송 이중화 여정기](https://techblog.woowahan.com/7724/) (2022-03) · 실제 SMS 장애(2021-06-18)에서 출발해 Weighted Routing으로 두 벤더 분산. 멱등·중복방지는 다루지 않음.
+- [당근마켓 — 푸시알림 Node.js 서비스](https://medium.com/daangn/당근마켓의-푸시알림을-지탱하고-있는-node-js-서비스-19023ad86fc) (2020-07, **6년 경과 — 골격만**) · FCM 대량 발송을 큐로 처리하며 멱등까지 다룬 유일한 국내 자료("초당 1500 요청", at-least-once, 토큰 관리).
+
+**트랙 3 · 관측성**
+- [우아한형제들 — ELK에서 Loki로 전환한 이유](https://techblog.woowahan.com/14505/) (2023-11) · **"LGTM vs ELK"를 실측 수치로 답하는 국내 최고 품질 자료.** 전환 결과가 "수집량 1.6배인데 비용은 약 23% 절감", 압축률 약 65%.
+- [SK텔레콤 DEVOCEAN — Thanos 멀티클러스터 모니터링](https://devocean.sk.com/blog/techBoardDetail.do?ID=163458) (2021-11, 5년 경과) · 멘토 키워드 "타노스 아키텍처"를 같은 구조로 설명. Prometheus 단일 노드 HA 한계에서 출발.
+- [LINE — Prometheus를 서비스로 제공하기](https://engineering.linecorp.com/ko/blog/providing-prometheus-as-a-service) (2018-01, **8년 경과 — 대조군**) · Thanos 이전 시대의 확장 한계 체감용.
+
+**조사 공백 — 국내 1차 자료를 못 찾은 주제** (영어권 자료로 가야 한다는 뜻이라 3-2는 난이도를 한 단계 높여 잡을 것): Valkey 전환기 · Redis 장애 포스트모템(복구 타임라인·근본원인 회고) · Mimir/Cortex 도입 사례 · Grafana Alloy · OpenTelemetry 분산 트레이싱 실전 · DLQ 운영 전담 글.
+
+## 원본 링크 (해외 — 실습 튜토리얼)
 - [ELK vs. Grafana Stack: A Practical Comparison for Observability](https://medium.com/@krunalpatel1530/elk-vs-grafana-stack-a-practical-comparison-for-observability-5b6b90fc980a)
 - [Arbitrating Your Observability Architecture (ELK vs LGTM)](https://medium.com/@elammarisoufiane/one-stack-to-rule-them-all-arbitrating-your-observability-architecture-elk-vs-lgtm-one-choice-per-1af7410152fc)
 - [How to Build a Complete LGTM Stack with OpenTelemetry](https://oneuptime.com/blog/post/2026-02-06-lgtm-stack-opentelemetry/view)
@@ -123,5 +145,5 @@ FillMap에 알림 도메인이 **아직 없다** — 이벤트 소스(뱃지 획
 - [Redis cluster with Docker Compose](https://github.com/AliyunContainerService/redis-cluster)
 
 ## 출처
-raw: `raw/confluence/2026-08-01 백엔드 학습 로드맵 (cf-29032474).md`
+raw: `raw/confluence/2026-08-04 백엔드 학습 로드맵 (cf-29032474).md` (국내 1차 자료 보강판) · `raw/confluence/2026-08-01 백엔드 학습 로드맵 (cf-29032474).md` (초판)
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/29032474

@@ -4,9 +4,9 @@ type: hub
 product: fillmap
 class: log
 status: active
-source: "raw/confluence/2026-07-26 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-22 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md, raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md, raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md, raw/confluence/2026-07-21 FillMap AI Highlight-Blur — 레포 생성부터 dev 배포까지 (cf-21102593).md"
+source: "raw/confluence/2026-07-26 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-22 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294).md, raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md, raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md, raw/confluence/2026-07-22 개인 도감 화면 — 확정 UX·API 설계 (수집률·탐험률) (cf-21528615).md, raw/confluence/2026-07-21 FillMap AI Highlight-Blur — 레포 생성부터 dev 배포까지 (cf-21102593).md, raw/confluence/2026-07-26 FillMap API 스펙 통합 (전체 한눈에) (cf-21430294) (1).md"
 created: 2026-07-22
-updated: 2026-08-06
+updated: 2026-08-09
 keywords: [API 스펙, API 명세, 통합, 전체, 한눈에, one page, 멘토링, 스펙 점검, 구현 현황, 예정 API, 에러 코드, developCode, jobs API, AI 서버, 열린 질문]
 aliases: [API 통합 뷰, API 전체 스펙, API 스펙 한눈에]
 related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[2026-07-21 AI Highlight-Blur 개발 기록]]", "[[2026-07-16 박원형 멘토 멘토링]]"]

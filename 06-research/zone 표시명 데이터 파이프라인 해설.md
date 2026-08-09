@@ -4,12 +4,12 @@ type: research
 product: fillmap
 class: log
 status: active
-source: "raw/confluence/2026-07-30 MSG-259 진행 정리 — zone 데이터 검수 가이드·확정 결정 (2026-07-30) (cf-27983873).md, BE 레포 docs/prd/MSG-259-prd.md · scripts/zones-draft/{convert-zones,build-candidate,validate-zones}.py (MSG-259, 2026-07-30)"
+source: "raw/confluence/2026-07-30 MSG-259 진행 정리 — zone 데이터 검수 가이드·확정 결정 (2026-07-30) (cf-27983873).md, BE 레포 docs/prd/MSG-259-prd.md · scripts/zones-draft/{convert-zones,build-candidate,validate-zones}.py (MSG-259, 2026-07-30), raw/confluence/2026-07-30 MSG-259 진행 정리 — zone 데이터 검수 가이드·확정 결정 (2026-07-30) (cf-27983873) (1).md"
 created: 2026-07-30
-updated: 2026-07-31
+updated: 2026-08-09
 keywords: [zone, 구역, 표시명, display name, 서면 A-14, 홍대, 상권, 공공데이터, 소상공인시장진흥공단, 파이프라인, 시딩, seeding, zones.json, 검수, 검증, validate, FE 로컬 산술, 격자 이름, MSG-234, MSG-259, 드라이런, 통명화, 겹침, priority]
 aliases: [zone 파이프라인, 표시명 해설, 상권 변환 해설]
-related: ["[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[zone 표시명 FE 계약]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 행정동 라벨 grids.region_code]]"]
+related: ["[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[zone 표시명 FE 계약]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 행정동 라벨 grids.region_code]]", "[[지도·공간 데이터 설계 멘토 설명용]]"]
 ---
 
 # zone 표시명 데이터 파이프라인 해설 — 공공데이터에서 "서면 A-14"까지

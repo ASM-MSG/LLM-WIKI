@@ -6,10 +6,10 @@ class: log
 status: active
 source: "raw/confluence/2026-07-18 FillMap 지도·격자 DB 설계 상세 - MVP (cf-13992079).md"
 created: 2026-07-18
-updated: 2026-07-21
+updated: 2026-08-09
 keywords: [지도, 격자, DB 설계, grids, user_grids, 뷰포트, viewport, ST_Intersects, bbox_geom, GIST, upsert, 커버 영상, 대표 영상, 지오코딩 배치, 인덱스]
 aliases: [지도 격자 DB 설계, 지도 DB 상세]
-related: ["[[FillMap DB Schema v5 MVP]]", "[[FillMap DB 자료형·ENUM·GeoJSON 기준]]", "[[Grid API]]", "[[2026-07-18 김태완 멘토 DB 피드백]]"]
+related: ["[[FillMap DB Schema v5 MVP]]", "[[FillMap DB 자료형·ENUM·GeoJSON 기준]]", "[[Grid API]]", "[[2026-07-18 김태완 멘토 DB 피드백]]", "[[지도·공간 데이터 설계 멘토 설명용]]", "[[2026-08-08 김민수 멘토 멘토링]]"]
 ---
 
 # FillMap 지도·격자 DB 설계 상세 — MVP

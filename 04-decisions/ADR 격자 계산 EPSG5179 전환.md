@@ -6,10 +6,10 @@ class: decision
 status: active
 source: "raw/confluence/2026-08-08 김민수 멘토님 (cf-33685514).md, raw/confluence/2026-08-08 김민수 멘토님(규호 버전) (cf-33685556).md"
 created: 2026-08-08
-updated: 2026-08-08
+updated: 2026-08-09
 keywords: [ADR, MSG-347, 격자, grid, EPSG:5179, 5179, EPSG:4326, 4326, WGS84, 좌표계, 투영, projection, tmerc, 횡축 메르카토르, proj4, proj4js, Proj4J, ST_Transform, PostGIS, 100m, 격자 계산 규칙, GridEncoder, GridConstants, GRID_LAT_STEP, GRID_LNG_STEP, 0.0009, 0.00115, grid_id, 자오선 수렴, meridian convergence, Polygon, Rectangle, 뷰포트, viewport, V28, 마이그레이션, migration, 데이터 이행, zone 재산출, region_stats, 김민수 멘토, 8/8 멘토링, H3, 클러스터링]
 aliases: [격자 5179 전환, EPSG5179 ADR, MSG-347 ADR, 격자 계산 규칙 전환]
-related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[ADR 지도 SDK 네이버 전환]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[ADR viewport polling SLO]]"]
+related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[ADR 지도 SDK 네이버 전환]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[ADR viewport polling SLO]]", "[[2026-08-08 김민수 멘토 멘토링]]", "[[지도·공간 데이터 설계 멘토 설명용]]", "[[지도 홈 API 연동 가이드 FE]]"]
 ---
 
 # ADR — 격자 계산을 위경도 근사에서 EPSG:5179 미터 좌표로 전환

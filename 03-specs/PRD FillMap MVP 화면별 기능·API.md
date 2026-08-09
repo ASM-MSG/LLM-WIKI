@@ -4,9 +4,9 @@ type: spec
 product: fillmap
 class: log
 status: active
-source: "raw/confluence/2026-07-25 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md"
+source: "raw/confluence/2026-07-25 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-18 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709).md, raw/confluence/2026-07-25 PRD FillMap MVP — 화면별 기능·API 명세 (cf-18972709) (1).md"
 created: 2026-07-18
-updated: 2026-07-25
+updated: 2026-08-09
 keywords: [PRD, 화면, 피그마, Figma, 와이어프레임, 7개 화면, 지도 홈, 격자 상세, 핫구역, 업로드, 개인 도감, 신고, API 매핑, MVP 범위, 상단 셀, 칩, 전체 모드 폐지, 단일 선택 토글]
 aliases: [화면별 PRD, PRD]
 related: ["[[FillMap API 명세 v1]]", "[[FillMap API 설계 v2 draft]]", "[[갭 분석 디자인 문서 코드 싱크]]", "[[ADR 격자 표시명 zone]]", "[[Collection API 예정]]", "[[Region API 예정]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[기획확정 지도 홈 개편 상단 셀]]"]

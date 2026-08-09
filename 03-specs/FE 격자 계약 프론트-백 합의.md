@@ -6,10 +6,10 @@ class: log
 status: active
 source: "raw/confluence/2026-07-23 프론트-백 합의 사항 — 격자 계약 (격자 사전 생성 정정) (cf-23199747).md"
 created: 2026-07-23
-updated: 2026-08-07
+updated: 2026-08-09
 keywords: [격자 계약, grid contract, FE, 프론트, 사전 생성, 전역 고정 눈금, GRID_LAT_STEP, GRID_LNG_STEP, 0.0009, 0.00115, Math.floor, GridEncoder, gridId, bbox, 네이버 지도, v3, WGS84, TM128, naver.maps, getBounds, Rectangle, regionName, nullable, thumbnailUrl, zones, zone 보류, MSG-234, displayName, 서면 A-14, 장소 검색, api/search, by-point, by-grid, regionCode]
 aliases: [격자 계약, FE 격자 계약, 격자 사전 생성 정정, 네이버 v3 격자 연동]
-related: ["[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[ADR 지도 SDK 네이버 전환]]", "[[Grid API]]", "[[FillMap API 스펙 통합]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 표시명 FE 계약]]"]
+related: ["[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[ADR 지도 SDK 네이버 전환]]", "[[Grid API]]", "[[FillMap API 스펙 통합]]", "[[개인 도감 화면 확정 UX·API 설계]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 표시명 FE 계약]]", "[[지도 홈 API 연동 가이드 FE]]", "[[지도·공간 데이터 설계 멘토 설명용]]", "[[2026-08-08 김민수 멘토 멘토링]]"]
 ---
 
 
