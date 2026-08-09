@@ -6,11 +6,16 @@ class: log
 status: active
 source: 'raw/confluence/2026-07-30 격자 표시명 "서면 A-14" — 동작 원리 해설 + FE 구현 계약 (MSG-259) (cf-27852802).md, BE 레포 src/test/java/com/msg/fillmap/zone/ZoneNamingContractTest.java(실행형 정본) · docs/MSG-234.md §D2~D5 · docs/prd/MSG-259-prd.md'
 created: 2026-07-30
-updated: 2026-08-09
+updated: 2026-08-10
 keywords: [zone, 표시명, display name, 서면 A-14, FE 계약, 프론트, GET /api/zones, 명명 산술, 로컬 계산, 폴백, regionName, priority, zoneKey, 겹침, 픽스처, fixture, 드리프트, MSG-234, MSG-259, 캐시]
 aliases: [zone FE 계약, 표시명 계약, 격자 이름 계약]
 related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR 격자 표시명 zone]]", "[[zone 표시명 데이터 파이프라인 해설]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[zone 상권 공공데이터 근거]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[지도 홈 API 연동 가이드 FE]]"]
 ---
+
+
+> **⚠️ 결정 보완 (2026-08-10, MSG-349)**: 행정동 폴백 재료(`regionName`)도 이제 **모든 격자 응답에 실려 온다** — MSG-341이 "폴백 미제공"으로 남겼던 뷰포트(`GET /api/grids`, 친구 격자 공용)·단일 격자(`GET /api/grids/{gridId}`, 미점령 빈 칸 포함)·핫구역(`GET /api/hotzones`)까지. FE 조립은 응답 무관 한 줄이다: `label = zoneName ? zoneName+" "+zoneCell : regionName`. 이름 목적의 by-grid 병행 호출은 더 필요 없다. `regionName`은 구역 안 격자에도 항상 실린다(위치줄 "부산 부산진구 서면"의 시/구 재료 — 시 이름 축약과 조립은 FE 몫). 바다 위 등 무귀속 격자만 null이며 그때는 이름 없음이 정상. 정본: BE 레포 `docs/MSG-349.md`.
+
+> **⚠️ 결정 변경 (2026-08-07, MSG-341)**: 표시명 계산 주체가 **서버**로 바뀌었다. 격자를 담는 조회 응답 9종에 `zoneName`·`zoneCell` 필드가 실려 오고, FE는 조립(`zoneName + " " + zoneCell`)과 행정동 폴백 표시만 한다. 이 문서의 "화면이 만드는 규칙"(FE 로컬 산술) 서술은 이력이다. 명명 규칙 자체와 폴백 번호 없음, zones 캐시의 검색 이동 용도(§D6)는 불변. 정본: BE 레포 `docs/MSG-341.md`.
 
 # zone 표시명 FE 계약 — "서면 A-14"를 화면이 만드는 규칙
 
