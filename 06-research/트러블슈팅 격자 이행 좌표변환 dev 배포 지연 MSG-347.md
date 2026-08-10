@@ -4,7 +4,7 @@ type: research
 product: fillmap
 class: log
 status: active
-source: "세션 기록 2026-08-09 (dev 배포 장애 대응) · BE 레포 docs/MSG-347.md 작업 로그"
+source: "세션 기록 2026-08-09 (dev 배포 장애 대응) · BE 레포 docs/spec/MSG-347.md 작업 로그"
 created: 2026-08-09
 updated: 2026-08-09
 keywords: [트러블슈팅, troubleshooting, MSG-347, 배포 실패, CD 실패, 헬스체크, health check, 타임아웃, timeout, Flyway, V28, 마이그레이션, migration, ST_Transform, PostGIS, PROJ, proj4, proj4text, spatial_ref_sys, SRID, EPSG:5179, 5179, 좌표 변환, 성능, 느림, 파이프라인, 좌표계 캐시, count(*), 플래너, 벤치마크, 측정 오류, DROP SCHEMA, 스키마 초기화, 시더, seeder, 미션 시딩, mission_grids, courses-seed.json, 재현, 사전 검사, 가드]
@@ -101,7 +101,7 @@ dev 복구 과정에서 드러났다. `courses-seed.json` 이 격자 ID를 직�
 - `.claude/docs/infrastructure.md` 가 DB를 RDS로 적고 있으나 실제 dev·prod는 EC2 위 `postgis/postgis:16-3.4-alpine` 컨테이너다.
 
 ## 출처
-- BE 레포 `docs/MSG-347.md` 작업 로그 (2026-08-09 항목)
+- BE 레포 `docs/spec/MSG-347.md` 작업 로그 (2026-08-09 항목)
 - PR: https://github.com/ASM-MSG/BE/pull/135 (커밋 8b693a8 · 8af6e3b · 07eaced · b45baac · f5a0407)
 - 실패한 CD: https://github.com/ASM-MSG/BE/actions/runs/31256846159
 - 세션 대시보드: https://claude.ai/code/artifact/0407c5de-de8b-4244-ab69-0632f5c4183d
