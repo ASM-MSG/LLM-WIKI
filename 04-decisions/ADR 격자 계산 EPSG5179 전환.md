@@ -6,7 +6,7 @@ class: decision
 status: active
 source: "raw/confluence/2026-08-08 김민수 멘토님 (cf-33685514).md, raw/confluence/2026-08-08 김민수 멘토님(규호 버전) (cf-33685556).md"
 created: 2026-08-08
-updated: 2026-08-09
+updated: 2026-08-10
 keywords: [ADR, MSG-347, 격자, grid, EPSG:5179, 5179, EPSG:4326, 4326, WGS84, 좌표계, 투영, projection, tmerc, 횡축 메르카토르, proj4, proj4js, Proj4J, ST_Transform, PostGIS, 100m, 격자 계산 규칙, GridEncoder, GridConstants, GRID_LAT_STEP, GRID_LNG_STEP, 0.0009, 0.00115, grid_id, 자오선 수렴, meridian convergence, Polygon, Rectangle, 뷰포트, viewport, V28, 마이그레이션, migration, 데이터 이행, zone 재산출, region_stats, 김민수 멘토, 8/8 멘토링, H3, 클러스터링]
 aliases: [격자 5179 전환, EPSG5179 ADR, MSG-347 ADR, 격자 계산 규칙 전환]
 related: ["[[FE 격자 계약 프론트-백 합의]]", "[[ADR MSG-167 후속 결정 탐험률 축·격자 표시명·격자 계약]]", "[[ADR 격자 표시명 zone]]", "[[MSG-234 상권 작도 결정 공공데이터 검수]]", "[[ADR 지도 SDK 네이버 전환]]", "[[ADR 장소 검색 카카오 로컬 프록시]]", "[[ADR viewport polling SLO]]", "[[2026-08-08 김민수 멘토 멘토링]]", "[[지도·공간 데이터 설계 멘토 설명용]]", "[[지도 홈 API 연동 가이드 FE]]", "[[트러블슈팅 격자 이행 좌표변환 dev 배포 지연 MSG-347]]"]
@@ -54,7 +54,7 @@ BE는 Proj4J, FE는 proj4js를 쓴다. 정본은 `GridConstants.CRS_DEF_EPSG5179
 
 | 쟁점 | 결정 | 기각한 대안과 이유 |
 | --- | --- | --- |
-| grid_id 형식 | `"{gridY}_{gridX}"` 문자열 유지 | **단일 정수 ID 기각** — 멘토가 인덱스 비용을 이유로 제시했으나, 성능이 걸리는 뷰포트 조회는 이미 정수 컬럼 `grid_y`/`grid_x` 범위 스캔이다(MSG-90 k6 확정). 이득은 MVP 규모에서 측정 불가인 반면 전 계층 타입 변경·FE 계약 파괴는 확실. **재검토 트리거**: `grids`가 수천만 행이 되어 인덱스가 메모리를 압박한다는 실측 |
+| grid_id 형식 | `"{gridY}_{gridX}"` 문자열 유지 | **단일 정수 ID 기각** — 멘토가 인덱스 비용을 이유로 제시했으나, 성능이 걸리는 뷰포트 조회는 이미 정수 컬럼 `grid_y`/`grid_x` 범위 스캔이다(MSG-90 k6 확정). 이득은 MVP 규모에서 측정 불가인 반면 전 계층 타입 변경·FE 계약 파괴는 확실. **재검토 트리거**: `grids`가 수천만 행이 되어 인덱스가 메모리를 압박한다는 실측. **재검토 시 인코딩은 Morton(Z-order) 1순위** — 2026-08-10 멘토가 Morton encoding(geohash의 인코딩 원리, bigint 하나)으로 재제안. 판정은 동일하게 "시점의 문제"다: 뷰포트는 이미 `(grid_y, grid_x)` btree BETWEEN 2개가 최적이고(Morton은 bbox가 Z-구간 여러 개로 분해돼 오히려 복잡), zone 매칭은 DB 없는 메모리 부등식 48건이라 이길 대상이 없으며(임의 사각형은 geohash prefix 매칭이 성립 안 함 — 2^k 정렬 타일 전용), 줌아웃 클러스터링도 `(y>>k, x>>k)` GROUP BY로 등가. 실이득은 PK+FK 3곳의 varchar 11~12B → bigint 8B 축소뿐이라 트리거 규모라야 체감된다. 단 트리거 발동 시엔 순번 정수가 아니라 Morton이 맞다 — 공간 지역성으로 인덱스 페이지 접근이 실제로 준다 |
 | 검색 provider | 카카오 로컬 유지(무료) | **네이버로 통일 기각** — 멘토 권고는 지하철 출구·건물 출입구처럼 정밀 위치 정합이 중요할 때. 검색 결과는 100m 격자 매핑 입력이라 수 미터 오차가 무의미 |
 | zone 사각형 재산출 | 확정 시드 48건을 **위경도로 역산 후 재양자화** | **원천 파이프라인 재실행 기각** — 소진공 원천에서 다시 뽑으면 합집합·경계 조정·수동작도 31건 검수를 반복해야 한다. 작도 산출물에 WGS84 bbox가 소수 5자리로 보존돼(233건 전수 확인) 위치는 그대로 두고 번호만 다시 매길 수 있다 |
 | 재양자화 방식 | 각 변을 가장 가까운 셀 경계로 스냅(상한 배타) | **꼭짓점 min/max floor 기각** — 변마다 1칸씩 부풀어 맞닿은 이웃 zone **7쌍이 겹치고** 검수 스크립트가 FAIL(실측) |
