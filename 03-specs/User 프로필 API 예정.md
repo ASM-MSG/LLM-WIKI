@@ -20,7 +20,7 @@ related: ["[[FillMap API 설계 v2 draft]]", "[[Auth API]]", "[[FillMap DB Schem
 > 최대 쟁점: 닉네임 길이 20 vs 50 불일치. 닉네임 중복 허용 여부·프로필 이미지 업로드 방식·email 변경도 열린 질문.
 
 > [!note] 2026-08-01 계정 삭제 축 구현 완료로 대체됨 (MSG-205)
-> `DELETE /api/users/me` 확정 구현 (BE PR #96, 정본 = 레포 `docs/MSG-205.md`). 열린 질문이던 **삭제 방식은
+> `DELETE /api/users/me` 확정 구현 (BE PR #96, 정본 = 레포 `docs/spec/MSG-205.md`). 열린 질문이던 **삭제 방식은
 > "즉시 물리 삭제"로 확정** — 소프트/NULL/익명화가 아니라 **V15 마이그레이션으로 reports FK에 ON DELETE
 > 정책(reporter_id CASCADE·reviewed_by SET NULL)을 부여**해 하드 삭제 차단을 해소했다 (이 노트의 선택지
 > a/b/c 밖의 4안). S3 정리는 MSG-133 관례대로 커밋 후 best-effort(1000키 청크) + refresh 전 기기

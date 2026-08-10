@@ -35,8 +35,8 @@ related: ["[[Auth API]]", "[[Grid API]]", "[[Video API]]", "[[FillMap API 설계
 - 에러 대역: 1xxx user / 2xxx auth / 3xxx video / 4xxx grid / 4xx·5xx 공통.
 
 ### GridVideo (격자 상세 — video 패키지, Owner B)
-- `GET /api/grids/{gridId}/my-videos` (MSG-127) — 그 격자에 내가 올린 영상 리스트, createdAt DESC. 항목: videoId·thumbnailUrl(presigned GET, READY 전 null)·processingStatus·durationSec·createdAt. 미점령/타인 격자/없는 gridId는 빈 배열. 상세: 레포 `docs/MSG-127.md`.
-- `GET /api/grids/{gridId}/cover` (MSG-87) — 격자 전역 대표 영상 1건. PUBLIC·READY 중 조회수→최신 순, 본인·타인 모두 후보. 응답: videoId·thumbnailUrl·durationSec·viewCount·recordedAt, 후보 없으면 body null. 작성자 정보 미포함(프라이버시). 상세: 레포 `docs/MSG-87.md`.
+- `GET /api/grids/{gridId}/my-videos` (MSG-127) — 그 격자에 내가 올린 영상 리스트, createdAt DESC. 항목: videoId·thumbnailUrl(presigned GET, READY 전 null)·processingStatus·durationSec·createdAt. 미점령/타인 격자/없는 gridId는 빈 배열. 상세: 레포 `docs/spec/MSG-127.md`.
+- `GET /api/grids/{gridId}/cover` (MSG-87) — 격자 전역 대표 영상 1건. PUBLIC·READY 중 조회수→최신 순, 본인·타인 모두 후보. 응답: videoId·thumbnailUrl·durationSec·viewCount·recordedAt, 후보 없으면 body null. 작성자 정보 미포함(프라이버시). 상세: 레포 `docs/spec/MSG-87.md`.
 
 ## 미구현·예정 (§4 요약)
 - 구현 도메인 내 누락: 재생 조회([[Video 재생 조회 API 예정]]) · 개인 도감([[Collection API 예정]]) — 전부 Owner B. (Refresh Token은 MSG-135로 구현 완료 → [[Auth API]])

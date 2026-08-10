@@ -4,7 +4,7 @@ type: decision
 product: fillmap
 class: decision
 status: active
-source: "BE 레포 docs/MSG-236.md (feature/MSG-236-recompute-equi, b23e148)"
+source: "BE 레포 docs/spec/MSG-236.md (feature/MSG-236-recompute-equi, b23e148)"
 created: 2026-07-26
 updated: 2026-07-26
 keywords: [region_stats, recompute, refreshRegionStats, equi-join, equi, ST_Covers, geospatial, 수집률, 재계산, 점령, 롤백, grids.region_code, 행정동 라벨, 무라벨, no-op 가드, RegionRepository, 벤치, bench, EXPLAIN, MSG-236, MSG-167, MSG-155, MSG-165, seedLabeledGrid, GridFixtures]
@@ -41,7 +41,7 @@ related: ["[[ADR 격자 행정동 라벨 grids.region_code]]", "[[ADR MSG-167 �
 
 ## 브랜치 상태 (2026-07-26)
 - `feature/MSG-236-recompute-equi` origin 푸시됨, HEAD b23e148. 커밋 6개(docs 4 · feat 1 · test 1), develop 대비 8파일 +612/−31.
-- 잔여: 벤치 실행 → 결과를 docs/MSG-236.md에 기록·채택 판정 → PR(develop). 리캡 대시보드: https://claude.ai/code/artifact/df3f2f68-fa1d-4b79-b1ca-49465933f29f
+- 잔여: 벤치 실행 → 결과를 docs/spec/MSG-236.md에 기록·채택 판정 → PR(develop). 리캡 대시보드: https://claude.ai/code/artifact/df3f2f68-fa1d-4b79-b1ca-49465933f29f
 
 ## 출처
-raw: `BE 레포 docs/MSG-236.md · scripts/bench-msg236.sql · git diff develop...feature/MSG-236-recompute-equi (b23e148)`
+raw: `BE 레포 docs/spec/MSG-236.md · scripts/bench-msg236.sql · git diff develop...feature/MSG-236-recompute-equi (b23e148)`

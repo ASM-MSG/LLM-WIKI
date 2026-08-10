@@ -4,7 +4,7 @@ type: spec
 product: fillmap
 class: log
 status: active
-source: "BE/docs/MSG-285.md, raw/confluence/2026-08-03 Video 공개범위 FRIENDS 확장 (MSG-285, 구현) (cf-30179329).md"
+source: "BE/docs/spec/MSG-285.md, raw/confluence/2026-08-03 Video 공개범위 FRIENDS 확장 (MSG-285, 구현) (cf-30179329).md"
 created: 2026-08-03
 updated: 2026-08-09
 keywords: [visibility, 공개범위, 공개 범위, FRIENDS, 친구만 보기, 친구 공개, PUBLIC, PRIVATE, 재생 판정, playback, 403, VIDEO_FORBIDDEN, 3403, 3420, V20, CHECK, switch, isFriend, existsAcceptedPair]
@@ -37,6 +37,6 @@ related: ["[[Video API]]", "[[Video 재생 조회 API 예정]]", "[[Friend API]]
 | 허용 외 값 | 3420 / 400 | "visibility 는 PUBLIC, PRIVATE, FRIENDS 중 하나여야 합니다" |
 
 ## 출처
-raw: `BE/docs/MSG-285.md` (스펙 정본 + 작업 로그·런타임 동작) · glossary "친구 공개 (FRIENDS)" (`BE/.claude/rules/glossary.md`)
+raw: `BE/docs/spec/MSG-285.md` (스펙 정본 + 작업 로그·런타임 동작) · glossary "친구 공개 (FRIENDS)" (`BE/.claude/rules/glossary.md`)
 raw: `raw/confluence/2026-08-03 Video 공개범위 FRIENDS 확장 (MSG-285, 구현) (cf-30179329).md` (2026-08-09 sync 스냅샷)
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/30179329

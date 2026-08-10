@@ -4,7 +4,7 @@ type: spec
 product: fillmap
 class: log
 status: active
-source: 'raw/confluence/2026-07-30 격자 표시명 "서면 A-14" — 동작 원리 해설 + FE 구현 계약 (MSG-259) (cf-27852802).md, BE 레포 src/test/java/com/msg/fillmap/zone/ZoneNamingContractTest.java(실행형 정본) · docs/MSG-234.md §D2~D5 · docs/prd/MSG-259-prd.md'
+source: 'raw/confluence/2026-07-30 격자 표시명 "서면 A-14" — 동작 원리 해설 + FE 구현 계약 (MSG-259) (cf-27852802).md, BE 레포 src/test/java/com/msg/fillmap/zone/ZoneNamingContractTest.java(실행형 정본) · docs/spec/MSG-234.md §D2~D5 · docs/prd/MSG-259-prd.md'
 created: 2026-07-30
 updated: 2026-08-10
 keywords: [zone, 표시명, display name, 서면 A-14, FE 계약, 프론트, GET /api/zones, 명명 산술, 로컬 계산, 폴백, regionName, priority, zoneKey, 겹침, 픽스처, fixture, 드리프트, MSG-234, MSG-259, 캐시]
@@ -125,4 +125,4 @@ BE의 실행형 정본(`ZoneNamingContractTest`, 테스트 7건)과 같은 값. 
 ## 출처
 raw: `raw/confluence/2026-07-30 격자 표시명 "서면 A-14" — 동작 원리 해설 + FE 구현 계약 (MSG-259) (cf-27852802).md` (Confluence 발행본 — 이 노트에서 발행, 재ingest 시 이 노트 갱신)
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/27852802
-BE 레포: `src/test/java/com/msg/fillmap/zone/ZoneNamingContractTest.java`(명명 규칙 실행형 정본) · `docs/MSG-234.md` §D2(산술)·§D3(FE-local)·§D4(폴백)·§D5(겹침) · `ZoneResponseDto`(응답 형태) · 성능 실측치는 [[zone 표시명 데이터 파이프라인 해설]]
+BE 레포: `src/test/java/com/msg/fillmap/zone/ZoneNamingContractTest.java`(명명 규칙 실행형 정본) · `docs/spec/MSG-234.md` §D2(산술)·§D3(FE-local)·§D4(폴백)·§D5(겹침) · `ZoneResponseDto`(응답 형태) · 성능 실측치는 [[zone 표시명 데이터 파이프라인 해설]]

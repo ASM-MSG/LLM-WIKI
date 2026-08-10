@@ -31,7 +31,7 @@ related: ["[[Grid API]]", "[[Video 재생 조회 API 예정]]", "[[FillMap API �
 > 도감 화면 UX·API가 [[개인 도감 화면 확정 UX·API 설계]]로 확정: `grids`는 **RECENT 고정·30개 제한·페이지네이션 없음**(MSG-153), 탐험률은 현재 위치 기반 패널. 이 노트의 sort 옵션·페이지네이션 쟁점은 그 범위에서 종결.
 
 > [!note] 2026-08-01 뱃지 축 구현 완료로 대체됨 (MSG-239·MSG-201)
-> 이 노트의 `GET /api/collections/badges?earnedOnly=` 제안은 실구현에서 **`GET /api/badges`** 로 확정 (BE PR #92, 스펙 = 레포 `docs/MSG-201.md`).
+> 이 노트의 `GET /api/collections/badges?earnedOnly=` 제안은 실구현에서 **`GET /api/badges`** 로 확정 (BE PR #92, 스펙 = 레포 `docs/spec/MSG-201.md`).
 > 응답 = 마스터 전체(미획득 포함, 시딩 순) + `earned·earnedAt·isNew·featuredRank` — `earnedOnly` 파라미터·`conditionType` 노출 없음,
 > progress도 미노출(진행률 조회는 PRD 비목표). 조회가 미확인(새 뱃지) 확인 처리를 겸한다(같은 트랜잭션 `notified_at` 스탬프).
 > 열린 질문이던 마스터 시딩(V9~V12 17종)·지급 주체(동기, MSG-239)·스트릭 갱신(업로드 훅·KST, MSG-200)도 모두 확정.

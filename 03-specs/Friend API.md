@@ -4,7 +4,7 @@ type: spec
 product: fillmap
 class: log
 status: active
-source: "BE/docs/MSG-186.md, raw/confluence/2026-08-03 Friend 목록·프로필 API (MSG-186, 구현) (cf-30113794).md"
+source: "BE/docs/spec/MSG-186.md, raw/confluence/2026-08-03 Friend 목록·프로필 API (MSG-186, 구현) (cf-30113794).md"
 created: 2026-08-03
 updated: 2026-08-09
 keywords: [Friend, 친구, friendships, 친구 목록, friend list, 친구 프로필, friend profile, 도감 요약, 친구 코드, friend code, 수락, ACCEPTED, PENDING, 9xxx, 9420, 9424, existsAcceptedPair, 은닉, LATERAL, 썸네일, sort, respondedAt]
@@ -43,6 +43,6 @@ related: ["[[Social API 예정]]", "[[Video 공개범위 visibility]]", "[[Video
 - 경계면: friend → usergrid 단방향 소비(`getCollectionGridsForFriend` 비파괴 추가), usergrid는 friend 미참조.
 
 ## 출처
-raw: `BE/docs/MSG-186.md` (스펙 정본 + 작업 로그·런타임 동작) · `BE/docs/MSG-185.md`
+raw: `BE/docs/spec/MSG-186.md` (스펙 정본 + 작업 로그·런타임 동작) · `BE/docs/spec/MSG-185.md`
 raw: `raw/confluence/2026-08-03 Friend 목록·프로필 API (MSG-186, 구현) (cf-30113794).md` (2026-08-09 sync 스냅샷)
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/30113794

@@ -79,4 +79,4 @@ BE는 Proj4J, FE는 proj4js를 쓴다. 정본은 `GridConstants.CRS_DEF_EPSG5179
 ## 출처
 raw: `raw/confluence/2026-08-08 김민수 멘토님 (cf-33685514).md`, `raw/confluence/2026-08-08 김민수 멘토님(규호 버전) (cf-33685556).md`
 Confluence: https://soma17-msg.atlassian.net/wiki/spaces/M/pages/33685514 · https://soma17-msg.atlassian.net/wiki/spaces/M/pages/33685556
-구현 정본(레포): `docs/MSG-347.md`(스펙·작업 로그) · `docs/prd/MSG-347-prd.md` · BE PR [#134](https://github.com/ASM-MSG/BE/pull/134) · Jira [MSG-347](https://soma17-msg.atlassian.net/browse/MSG-347)
+구현 정본(레포): `docs/spec/MSG-347.md`(스펙·작업 로그) · `docs/prd/MSG-347-prd.md` · BE PR [#134](https://github.com/ASM-MSG/BE/pull/134) · Jira [MSG-347](https://soma17-msg.atlassian.net/browse/MSG-347)
