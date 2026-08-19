@@ -6,13 +6,19 @@ class: log
 status: draft
 source: "raw/confluence/2026-07-17 FillMap API 설계 — 예정 (v2 draft) (cf-17793077).md"
 created: 2026-07-17
-updated: 2026-07-21
+updated:   2026-08-19
 keywords: [API 설계, v2, draft, 예정, 근거 등급, developCode 대역, 선행 과제, Redis, 페이지네이션, Owner, 초안]
 aliases: [v2 draft, 예정 API]
 related: ["[[FillMap API 명세 v1]]", "[[Auth 확장 API 예정 Refresh Token]]", "[[User 프로필 API 예정]]", "[[Video 재생 조회 API 예정]]", "[[Collection API 예정]]", "[[Region API 예정]]", "[[Grid 확장 API 예정]]", "[[Social API 예정]]", "[[Notification API 예정]]"]
 ---
 
 # FillMap API 설계 v2 draft (예정 API 허브)
+
+> [!warning] 이 트리는 끝났다 (2026-08-19)
+> 하위 8개 도메인이 전부 구현됐다. 경로·필드가 초안과 다른 곳이 많으니 지금 계약은 [[FillMap API 스펙 통합]]과 코드·Swagger를 본다. 이 트리는 "무엇을 왜 그렇게 제안했나"의 기록으로 남긴다.
+> 신규 대역 제안(5xxx collection · 7xxx social · 8xxx notification)은 **전부 다르게 확정**됐다 — 5xxx는 search, 7xxx는 badge, 8xxx는 hotzone, friend는 9xxx, notification은 10xxx, moderation 11xxx, mission 12xxx다. 6xxx region만 제안대로 갔다.
+> 선행 과제 10건과 열린 질문도 전부 결말이 났다(친구 코드 도입, 공개 범위 전환 구현, 알림 테이블 2개 신설, 뱃지 시딩, 계정 삭제 FK 정리, 핫존 Redis 설계, 커서 페이지네이션 확정, 닉네임 20자, 친구 도감 MVP 편입).
+
 
 > [!tldr]
 > 앞으로 만들 API를 필드 수준까지 뽑아둔 초안 트리의 허브 — 경로·메서드는 전부 제안(🔴), 구현 기준은 언제나 v1. 구현되면 v1으로 승격 후 폐기.

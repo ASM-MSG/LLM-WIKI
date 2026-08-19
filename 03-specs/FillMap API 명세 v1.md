@@ -6,13 +6,18 @@ class: log
 status: active
 source: "raw/confluence/2026-07-17 FillMap API 명세 (v1 — 구현 기준) (cf-17891367).md"
 created: 2026-07-17
-updated: 2026-07-21
+updated:   2026-08-19
 keywords: [API 명세, API spec, v1, 구현 기준, ApiResponseDto, 응답 래퍼, developCode, JWT, Bearer, 인증, 에러코드 대역, 미구현, 예정]
 aliases: [API 명세, v1 명세, FillMap API]
 related: ["[[Auth API]]", "[[Grid API]]", "[[Video API]]", "[[FillMap API 설계 v2 draft]]"]
 ---
 
 # FillMap API 명세 v1 (구현 기준)
+
+> [!warning] 이 노트는 2026-07-21 시점 스냅숏이다 (2026-08-19 확인)
+> 지금 현황판은 [[FillMap API 스펙 통합]]이다. 그때 14개였던 엔드포인트가 **71개**이고, 아래 "미구현·예정"으로 적힌 도메인은 user·region·grid 확장·Social·Notification·Moderation까지 전부 구현을 마쳤다.
+> 응답 래퍼도 그 뒤에 실데이터 키가 `body`에서 **`data`**로 바뀌었다(MSG-311). 컨플루언스 원본에도 같은 배너를 달았다.
+
 
 > [!tldr]
 > 실제 구현된 REST API의 단일 진실(2026-07-21 코드 기준, 추측 없음): 컨트롤러 5개(Auth·DevAuth·Grid·GridVideo·Video), 엔드포인트 14개.
